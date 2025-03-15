@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -12,58 +13,47 @@ class BookController extends Controller
      */
     public function getall()
     {
-        $books = Book::all();
-        $totalBooks = $books->count();
-        return view('books.home', compact('books', 'totalBooks'));
+        $books = Book::paginate(20); // Lấy 20 sản phẩm mỗi trang
+        $totalBooks = Book::count(); // Đếm tổng số sách
+        $categories = Book::select('category')->distinct()->get();
+        return view('books.home', compact('books', 'totalBooks', 'categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function getdetail($id)
-    {
-        $book = Book::find($id);
-        return view('books.detail', compact('book'));
-    }
-
-    public function processCart(Request $request)
+    public function getDetail($id)
 {
-    $amount = $request->input('amount');
-    $action = $request->input('action'); // Xác định nút nào được bấm
-    $book = Book::find($request['id']);
+    $book = Book::findOrFail($id);
 
-    if ($action === 'buy_now') {
-        // Xử lý mua ngay
-        return view('books.checkout', compact('amount','book'));
-    } elseif ($action === 'add_to_cart') {
-        // Xử lý thêm vào giỏ hàng
-        // Ví dụ: Lưu sản phẩm vào session hoặc database
-        // Cart::add([
-        //     'id' => 1, // ID sản phẩm (thay bằng sản phẩm thực tế)
-        //     'quantity' => $amount,
-        // ]);
+    // Lấy 5 quyển sách cùng thể loại nhưng không trùng với sách hiện tại
+    $relatedBooks = Book::where('category', $book->category)
+                        ->where('id', '!=', $id)
+                        ->inRandomOrder() // Chọn ngẫu nhiên
+                        ->limit(5)
+                        ->get();
 
-        return redirect()->back()->with('success', 'Đã thêm vào giỏ hàng!');
-    }
-
-    return redirect()->back()->with('error', 'Hành động không hợp lệ!');
+    return view('books.detail', compact('book', 'relatedBooks'));
 }
-
 
     public function search(Request $request)
     {
         $keyword = $request['keyword'];
-        $books = Book::whereRaw('LOWER(title) LIKE ?', ['%'.strtolower($keyword).'%'])->get();
+        $books = Book::whereRaw('LOWER(title) LIKE ?', ['%'.strtolower($keyword).'%'])->paginate(20);
         $totalBooks = Book::where('title', 'LIKE', '%'.$keyword.'%')->count();
-        return view('books.home', compact('books', 'totalBooks'));
+        $categories = Book::select('category')->distinct()->get();
+        return view('books.home', compact('books', 'totalBooks', 'categories'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function filter(string $category)
     {
-        //
+        $books = Book::with('category','=', $category);
+        $totalBooks = $books->count();
+        $categories = Book::select('category')->distinct()->get();
+        return view('books.home', compact('books', 'totalBooks', 'categories'));
     }
 
     /**

@@ -20,8 +20,18 @@
     
     </style>
     <div class="container-fluid row">
+        @if(session('error'))
+    <div class="alert alert-danger text-center">
+        {{ session('error') }}
+    </div>
+@endif
+@if(session('success'))
+    <div class="alert alert-success text-center">
+        {{ session('success') }}
+    </div>
+@endif
         <div class="col-5 text-center book-img">
-            <img src="https://i.imgflip.com/2/6pwb6a.jpg" alt="">
+            <img src="https://static.kinhtedothi.vn/w960/images/upload/2021/12/24/sach-huan-1.jpg" alt="">
         </div>
         <div class="col-7 position-relative">
             <div>
@@ -36,7 +46,7 @@
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
                     
                     <div class="col-3">
-                        <input name="amount" class="form-control" type="number" value="1" min="1" required>
+                        <input name="amount" class="form-control" type="number" value="1" min="1" max="999" required>
                     </div>
                 
                     <div class="col-auto">
@@ -48,6 +58,26 @@
                     </div>
                 </form>
                 
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-4">
+        <div class="mb-3">
+            <h4 class="fw-bold">SÁCH LIÊN QUAN</h4>
+            <div class="row row-col-md-5">
+                @foreach($relatedBooks as $rBook)
+                <div class="col">
+                    <div class="card h-100">
+                      <img src="https://i.imgflip.com/2/6pwb6a.jpg" class="card-img-top" alt="Image">
+                      <div class="card-body">
+                        <p class="card-text fw-bold fs-5 text-center"> <a class="text-decoration-none text-dark" href="{{ route('books.detail', $rBook->id) }}"> {{ $rBook->title }} </a> </p>
+                      </div>
+                      <div class="card-footer">
+                          <p class="text text-danger fw-bolder text-center"> ${{ $rBook->price }} </p>
+                      </div>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>

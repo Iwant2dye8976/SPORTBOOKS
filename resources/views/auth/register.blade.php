@@ -16,32 +16,31 @@
                 <div class="col col-xl-10">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="row g-0">
-                            <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <div class="col-md-6 col-lg-5 d-none d-md-flex align-items-md-center">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                                    alt="login form" class="h-100 img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                                    alt="register form" class="h-100 img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
-
-                                    <form action="{{ route('login') }}" method="POST">
+                                    <form action="{{ route('register') }}" method="POST">
                                         @csrf
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             <i class="fas fa-cubes fa-2x mt-1 me-3" style="color: #ff6219;"></i>
                                             <span class="h1 fw-bold mb-0">SPORTBOOKS</span>
                                         </div>
+                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Tạo tài khoản mới
+                                        </h5>
 
-                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Đăng nhập</h5>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="name">Họ và tên</label>
+                                            <input type="text" id="name" name="name"
+                                                class="form-control form-control-lg" required />
+                                        </div>
+
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="email">Địa chỉ Email</label>
                                             <input type="email" id="email" name="email"
                                                 class="form-control form-control-lg" required />
-                                            @if ($errors->any())
-
-                                                @foreach ($errors->all() as $error)
-                                                    <p class="ps-1 text text-danger">{{ $error }}</p>
-                                                @endforeach
-
-                                            @endif
                                         </div>
 
                                         <div class="form-outline mb-4">
@@ -50,15 +49,32 @@
                                                 class="form-control form-control-lg" required />
                                         </div>
 
-                                        <div class="pt-1 mb-4">
-                                            <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng
-                                                nhập</button>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="password_confirmation">Xác nhận mật
+                                                khẩu</label>
+                                            <input type="password" id="password_confirmation"
+                                                name="password_confirmation" class="form-control form-control-lg"
+                                                required />
                                         </div>
 
-                                        <a class="small text-muted" href="">Quên mật khẩu?</a>
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+
+                                        <div class="pt-1 mb-4">
+                                            <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng
+                                                ký</button>
+                                        </div>
+
                                         <p class="mb-5 pb-lg-2" style="color: #393f81;">
-                                            Chưa có tài khoản? <a href="{{ route('register') }}"
-                                                style="color: #393f81;">Đăng kí tài khoản tại đây</a>
+                                            Đã có tài khoản? <a href="{{ route('login') }}" style="color: #393f81;">Đăng
+                                                nhập ngay</a>
                                         </p>
                                         <a href="#" class="small text-muted">Terms of use.</a>
                                         <a href="#" class="small text-muted">Privacy policy</a>
