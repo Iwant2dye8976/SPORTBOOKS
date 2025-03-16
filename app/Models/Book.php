@@ -9,4 +9,10 @@ class Book extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'author', 'category', 'description', 'price', 'isOnDiscount'];
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
 }

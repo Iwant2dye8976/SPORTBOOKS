@@ -42,9 +42,9 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-        <div class="container-fluid">
+        <div class="container-fluid py-3">
             <!-- Logo -->
-            <a class="navbar-brand fw-bold text-primary" href="{{ url('/home') }}">SPORTBOOKS</a>
+            <a class="navbar-brand fw-bold text-primary fs-2" href="{{ url('/home') }}">SPORTBOOKS</a>
 
             <!-- Toggle button cho mobile -->
             {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -68,15 +68,35 @@
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="account"
                             data-bs-toggle="dropdown">
                             {{ Auth::user()->name }}
+                            @if ($cart_count > 0)
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                </span>
+                            @endif
+                            </a>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
+                            <li><a class="dropdown-item" href="{{ route('cart') }}">Giỏ hàng
+                                    @if ($cart_count > 0)
+                                        <span
+                                            class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ $cart_count > 99 ? '99+' : $cart_count }}
+                                        </span>
+                                    @endif
+                                </a>
+                            </li>
                             <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">Đăng
+                                        xuất</a>
+                                </form>
+                            </li>
                         </ul>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-danger">Đăng xuất</button>
-                        </form>
+
                     </div>
                 @endauth
 

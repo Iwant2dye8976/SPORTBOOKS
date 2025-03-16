@@ -27,10 +27,9 @@
                                         @csrf
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             <i class="fas fa-cubes fa-2x mt-1 me-3" style="color: #ff6219;"></i>
-                                            <span class="h1 fw-bold mb-0">SPORTBOOKS</span>
+                                            <a class="text-decoration-none text-dark" href="{{ route('home') }}"><span class="h1 fw-bold mb-0">SPORTBOOKS</span></a>
                                         </div>
 
-                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Đăng nhập</h5>
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="email">Địa chỉ Email</label>
                                             <input type="email" id="email" name="email"

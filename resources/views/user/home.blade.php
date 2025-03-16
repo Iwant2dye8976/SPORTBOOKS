@@ -13,10 +13,18 @@
                 <div class="col d-flex align-items-center">
                     <h4 class="text-decoration-underline"><i class="fa-solid fa-filter"></i>Bộ lọc tìm kiếm</h4>
                 </div>
-                <form action="" method="GET" class="row row-cols-auto">
+                <form action="{{ route('filter') }}" method="GET" class="row row-cols-auto">
+                    <div class="col">
+                        <button class="text-uppercase btn" type="submit" name="category" value="all"
+                            style="{{ request()->query('category', 'all') == 'all' ? 'background-color: blue; color: white;' : '' }}">
+                            All
+                        </button>
+                    </div>
                     @foreach ($categories as $category)
                         <div class="col">
-                            <button class="text-uppercase btn" type="submit" name="category" value=" {{ $category }} ">
+                            <button class="text-uppercase btn" type="submit" name="category"
+                                value="{{ $category['category'] }}"
+                                style="{{ request()->query('category', 'all') == $category['category'] ? 'background-color: blue; color: white;' : '' }}">
                                 {{ $category['category'] }}
                             </button>
                         </div>
@@ -39,7 +47,7 @@
                             class="card-img-top" alt="Image">
                         <div class="card-body">
                             <p class="card-text fw-bold fs-5 text-center">
-                                <a class="text-decoration-none text-dark" href="{{ route('books.detail', $book->id) }}">
+                                <a class="text-decoration-none text-dark" href="{{ route('user.detail', $book->id) }}">
                                     {{ $book->title }}
                                 </a>
                             </p>
@@ -56,7 +64,7 @@
 
         <!-- Hiển thị phân trang -->
         <div class="d-flex justify-content-center mt-4">
-            {{ $books->links('pagination::bootstrap-4') }}
+            {{ $books->appends(request()->query())->links('pagination::bootstrap-4') }}
         </div>
     @endif
 @endsection

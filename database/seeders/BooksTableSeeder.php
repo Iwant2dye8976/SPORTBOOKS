@@ -12,7 +12,7 @@ class BooksTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             DB::table('books')->insert([
                 'title'       => $faker->sentence(3), // Tiêu đề sách ngẫu nhiên
                 'author'      => $faker->name, // Tác giả ngẫu nhiên
