@@ -17,8 +17,11 @@ class BookController extends Controller
         $books = Book::paginate(20); // Lấy 20 sản phẩm mỗi trang
         $totalBooks = Book::count(); // Đếm tổng số sách
         $categories = Book::select('category')->distinct()->get();
-        $cart_count = Cart::with('user_id', '=', Auth::user()->id)->count();
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        if (Auth::check()) {
+            $cart_count = Cart::with('user_id', '=', Auth::user()->id)->count();
+            return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        }
+        return view('user.home', compact('books', 'totalBooks', 'categories'));
     }
 
     /**
@@ -35,8 +38,11 @@ class BookController extends Controller
             ->limit(5)
             ->get();
 
-        $cart_count = Cart::with('user_id', '=', Auth::user()->id)->count();
-        return view('user.detail', compact('book', 'relatedBooks', 'cart_count'));
+        if (Auth::check()) {
+            $cart_count = Cart::with('user_id', '=', Auth::user()->id)->count();
+            return view('user.detail', compact('book', 'relatedBooks', 'cart_count'));
+        }
+        return view('user.detail', compact('book', 'relatedBooks'));
     }
 
     public function search(Request $request)
@@ -45,8 +51,11 @@ class BookController extends Controller
         $books = Book::whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%'])->paginate(20);
         $totalBooks = Book::where('title', 'LIKE', '%' . $keyword . '%')->count();
         $categories = Book::select('category')->distinct()->get();
-        $cart_count = Cart::with('user_id', '=', Auth::user()->id)->count();
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        if (Auth::check()) {
+            $cart_count = Cart::with('user_id', '=', Auth::user()->id)->count();
+            return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        }
+        return view('user.home', compact('books', 'totalBooks', 'categories'));
     }
 
     /**
@@ -63,9 +72,11 @@ class BookController extends Controller
         $books = $query->paginate(20); // Phân trang 10 sách mỗi trang
         $totalBooks = $books->total(); // Lấy tổng số sách
         $categories = Book::select('category')->distinct()->get();
-        $cart_count = Cart::where('user_id', Auth::id())->count();
-
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        if (Auth::check()) {
+            $cart_count = Cart::where('user_id', Auth::id())->count();
+            return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        }
+        return view('user.home', compact('books', 'totalBooks', 'categories'));
     }
 
 

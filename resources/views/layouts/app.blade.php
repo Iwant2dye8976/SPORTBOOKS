@@ -33,6 +33,9 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        body {
+            background-color: #F6FCFA;
+        }
     </style>
 
     @stack('styles') <!-- Cho phép trang con thêm CSS riêng -->

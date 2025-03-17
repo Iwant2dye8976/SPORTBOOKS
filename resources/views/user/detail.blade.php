@@ -30,7 +30,7 @@
             </div>
         @endif
         @if (session('success'))
-            <div class="alert alert-success text-center">
+            <div class="alert alert-success text-center" id="success-alert">
                 {{ session('success') }}
             </div>
         @endif
@@ -66,6 +66,7 @@
 
             </div>
         </div>
+
     </div>
     <div class="container-fluid mt-4">
         <div class="mb-3">
@@ -88,4 +89,20 @@
             </div>
         </div>
     </div>
+    <script>
+        setTimeout(function() {
+            let success_alert = document.getElementById('success-alert');
+            let error_alert = document.getElementById('error-alert');
+            if (success_alert) {
+                success_alert.style.transition = "opacity 0.5s ease";
+                success_alert.style.opacity = "0";
+                setTimeout(() => success_alert.remove(), 500);
+            }
+            if (error_alert) {
+                error_alert.style.transition = "opacity 0.5s ease";
+                error_alert.style.opacity = "0";
+                setTimeout(() => error_alert.remove(), 500);
+            }
+        }, 3000); // Ẩn sau 3 giây (3000ms)
+    </script>
 @endsection
