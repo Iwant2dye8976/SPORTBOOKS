@@ -3,12 +3,6 @@
 @section('title', 'Giỏ hàng')
 
 @section('content')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item fs-4"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item fs-4 active" aria-current="page">Giỏ hàng</li>
-        </ol>
-    </nav>
     <div class="mt-5">
         @if (session('success'))
             <div class="alert alert-success text-center" id="success-alert">
@@ -35,7 +29,7 @@
                     @foreach ($cartItems as $item)
                         <div class="row">
                             <div class="col">
-                                <a href="{{ route('user.detail', $item->book->id) }}">
+                                <a href="{{ route('admin.detail', $item->book->id) }}">
                                     <img class="img-fluid"
                                         src="https://static.kinhtedothi.vn/w960/images/upload/2021/12/24/sach-huan-1.jpg"
                                         alt="Ảnh sách" width="200">
@@ -52,10 +46,10 @@
                                 ${{ number_format($item->book->price, 2) }}
                             </div>
                             <div class="col d-flex justify-content-center align-items-center fw-bold">
-                                <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                <form action="{{ route('admin.cart.remove', $item->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="text-decoration-none fs-4" href="{{ route('cart.remove', $item->id) }}"
+                                    <a class="text-decoration-none fs-4" href="{{ route('admin.cart.remove', $item->id) }}"
                                         onclick="event.preventDefault();
                             this.closest('form').submit();"><span
                                             class="text text-secondary">X</span></a>

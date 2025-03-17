@@ -44,7 +44,9 @@ class CartProcessController extends Controller
         $cartItems = Auth::user()->carts()->with('book')->get(); // Lấy giỏ hàng và thông tin sách
         $cart_count = $cartItems->count();
         $total_price = $cartItems->sum(fn($item) => $item->book->price * $item->book_quantity); // Tính tổng tiền
-
+        if (Auth::check() && Auth::user()->type === 'admin') {
+            return view('admin.cart', compact('cartItems', 'cart_count', 'total_price'));
+        }
         return view('user.cart', compact('cartItems', 'cart_count', 'total_price'));
     }
 
@@ -53,11 +55,19 @@ class CartProcessController extends Controller
         $item = Auth::user()->carts()->find($request->id);
 
         if (!$item) {
+            if (Auth::check() && Auth::user()->type === 'admin') {
+                return redirect()->route('admin.cart')->with('error', 'Sản phẩm không tồn tại trong giỏ hàng.');
+            }
             return redirect()->route('cart')->with('error', 'Sản phẩm không tồn tại trong giỏ hàng.');
         }
 
         $item->delete();
-
-        return redirect()->route('cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
+        if (Auth::check() && Auth::user()->type === 'admin') {
+            return redirect()->route('admin.cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
+        }
+        else{
+            return redirect()->route('cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
+        }
+        
     }
 }

@@ -23,9 +23,15 @@
             /* Bo góc ảnh nếu cần */
         }
     </style>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item fs-4"><a href="{{ route('home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item fs-4 active" aria-current="page">Chi tiết sách</li>
+        </ol>
+    </nav>
     <div class="container-fluid row">
         @if (session('error'))
-            <div class="alert alert-danger text-center">
+            <div class="alert alert-danger text-center" id="error-alert">
                 {{ session('error') }}
             </div>
         @endif

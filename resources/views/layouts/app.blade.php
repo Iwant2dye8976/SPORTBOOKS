@@ -11,6 +11,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        .menu a {
+            font-size: 20px;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            padding: 4px 0;
+        }
+
+        .menu a::before {
+            content: "";
+            width: 100%;
+            height: 4px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            background: #fff;
+            transition: 0.5s transform ease;
+            transform: scale3d(0, 1, 1);
+            transform-origin: 0 50%;
+        }
+
+        .menu a::before {
+            transform-origin: 50% 50%;
+            background: #8FD14F;
+        }
+
+        .menu a:hover::before {
+            transform: scale3d(1, 1, 1);
+        }
+
         .search-box {
             position: relative;
             display: inline-block;
@@ -33,6 +63,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         body {
             background-color: #F6FCFA;
         }
@@ -45,18 +76,38 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-        <div class="container-fluid py-3">
+        <div class="container-fluid ps-4">
             <!-- Logo -->
-            <a class="navbar-brand fw-bold text-primary fs-2" href="{{ url('/home') }}">SPORTBOOKS</a>
+            <a class="navbar-brand fw-bold text-primary fs-2"
+                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/home')) : url('home') }}">SPORTBOOKS</a>
 
             <!-- Toggle button cho mobile -->
-            {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button> --}}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav menu">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page"
+                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/home')) : url('home') }}">Trang
+                            chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('cart') : route('admin.cart')) : route('cart') }}">Giỏ
+                            hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Liên hệ</a>
+                    </li>
+                </ul>
+            </div>
 
             <div class="d-flex justify-content-end collapse navbar-collapse" id="navbarNav">
                 <!-- Thanh tìm kiếm -->
-                <form class="me-2" action=" {{ route('search') }} " method="GET">
+                <form class="me-2"
+                    action=" {{ Auth::check() ? (Auth::user()->type === 'user' ? route('search') : route('admin.search')) : route('search') }} "
+                    method="GET">
                     <div class="search-box">
                         <button type="submit" class="nav-link">
                             <i class="fa fa-search"></i>
@@ -67,9 +118,9 @@
                 </form>
 
                 @auth
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="account"
-                            data-bs-toggle="dropdown">
+                    <div class="dropdown pe-4">
+                        <button class="btn btn-outline-secondary position-relative dropdown-toggle" type="button"
+                            id="account" data-bs-toggle="dropdown">
                             {{ Auth::user()->name }}
                             @if ($cart_count > 0)
                                 <span
@@ -79,7 +130,9 @@
                             </a>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('cart') }}">Giỏ hàng
+                            <li><a class="dropdown-item"
+                                    href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('cart') : route('admin.cart')) : route('cart') }}">Giỏ
+                                    hàng
                                     @if ($cart_count > 0)
                                         <span
                                             class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">

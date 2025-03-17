@@ -16,9 +16,9 @@
                 <div class="col col-xl-10">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="row g-0">
-                            <div class="col-md-6 col-lg-5 d-none d-md-flex align-items-md-center">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                                    alt="register form" class="h-100 img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                            <div class="col-md-6 col-lg-5 d-none d-md-block border border-3 border-dark" style="border-radius: 1rem 0 0 1rem;">
+                                <img src="{{ asset('/imgs/datkoi.gif') }}"
+                                    alt="register password form" class="h-100 img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
