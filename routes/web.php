@@ -45,7 +45,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/cart', [CartProcessController::class, 'getcart'])->name('admin.cart');
     Route::delete('admin/cart/remove/{id}', [CartProcessController::class, 'destroy'])->name('admin.cart.remove');
     //Tài khoản admin
-    Route::get('admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('admin/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('admin/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('admin/profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::patch('admin/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
+    Route::delete('admin/profile', [ProfileController::class, 'destroy'])->name('admin.profile.destroy');
 });

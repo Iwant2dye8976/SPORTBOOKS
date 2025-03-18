@@ -148,7 +148,7 @@
                                     @endif
                                 </a>
                             </li> --}}
-                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Tài khoản</a></li>
+                            <li><a class="dropdown-item" href="{{Auth::check() && Auth::user()->type === 'admin' ? route('admin.profile.edit') : route('profile.edit') }}">Tài khoản</a></li>
                             @if (Auth::check() && Auth::user()->type === 'admin')
                                 <li>
                                     <a class="dropdown-item" href="{{ route('admin.index') }}">Quản lý</a>

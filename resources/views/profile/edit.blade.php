@@ -23,19 +23,27 @@
 
             <div class="col-12 ps-2 py-3">
                 <h4 class="fw-bold text-secondary">Thông tin cơ bản</h4>
-                <form class="w-25" action="{{ route('password.update') }}" method="POST">
-                    @method('PUT')
+                <form class="w-25"
+                    action="{{ Auth::user()->type === 'admin' ? route('admin.profile.update') : route('profile.update') }}"
+                    method="POST">
+                    @method('patch')
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label" for="full-name">Họ và tên</label>
-                        <input class="form-control" id="full-name" type="text" name="full-name"
-                            value="{{ Auth::user()->name }}" disabled>
+                        <label class="form-label" for="name">Họ và tên</label>
+                        <input class="form-control" id="name" type="text" name="name"
+                            value="{{ Auth::user()->name }}" autocomplete="name">
+                        @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="email">Địa chỉ email</label>
                         <input class="form-control" id="email" type="email" name="email"
-                            value="{{ Auth::user()->email }}" disabled>
+                            value="{{ Auth::user()->email }}">
+                        @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button class="btn btn-outline-primary form-control">
                         Xác nhận
@@ -96,7 +104,8 @@
                 <h6 class="text text-secondary">Khi tài khoản của bạn bị xóa, tất cả tài nguyên và dữ liệu của nó sẽ bị xóa
                     vĩnh viễn. Vui lòng nhập mật khẩu của bạn để xác nhận rằng bạn muốn xóa tài khoản của mình vĩnh viễn.
                 </h6>
-                <form class="w-25" method="POST" action="{{ route('profile.destroy') }}">
+                <form class="w-25" method="POST"
+                    action="{{ Auth::user()->type === 'admin' ? route('admin.profile.destroy') : route('profile.destroy') }}">
                     @csrf
                     @method('DELETE')
                     <div class="mb-3">

@@ -16,9 +16,10 @@
                 <div class="col col-xl-10">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="row g-0">
-                            <div class="col-md-6 col-lg-5 d-none d-md-block border border-3 border-dark" style="border-radius: 1rem 0 0 1rem;">
-                                <img src="{{ asset('/imgs/datkoi.gif') }}"
-                                    alt="register password form" class="h-100 img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                            <div class="col-md-6 col-lg-5 d-none d-md-block border border-3 border-dark"
+                                style="border-radius: 1rem 0 0 1rem;">
+                                <img src="{{ asset('/imgs/datkoi.gif') }}" alt="register password form"
+                                    class="h-100 img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
@@ -26,7 +27,8 @@
                                         @csrf
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             <i class="fas fa-cubes fa-2x mt-1 me-3" style="color: #ff6219;"></i>
-                                            <a class="text-decoration-none text-dark" href="{{ route('home') }}"><span class="h1 fw-bold mb-0">SPORTBOOKS</span></a>
+                                            <a class="text-decoration-none text-dark" href="{{ route('home') }}"><span
+                                                    class="h1 fw-bold mb-0">SPORTBOOKS</span></a>
                                         </div>
                                         <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Tạo tài khoản mới
                                         </h5>
@@ -35,18 +37,27 @@
                                             <label class="form-label" for="name">Họ và tên</label>
                                             <input type="text" id="name" name="name"
                                                 class="form-control form-control-lg" required />
+                                            @error('name')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="email">Địa chỉ Email</label>
                                             <input type="email" id="email" name="email"
                                                 class="form-control form-control-lg" required />
+                                            @error('email')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="password">Mật khẩu</label>
                                             <input type="password" id="password" name="password"
                                                 class="form-control form-control-lg" required />
+                                            @error('password')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
                                         <div class="form-outline mb-4">
@@ -55,17 +66,10 @@
                                             <input type="password" id="password_confirmation"
                                                 name="password_confirmation" class="form-control form-control-lg"
                                                 required />
+                                            @error('password_confirmation')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
-
-                                        @if ($errors->any())
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
 
                                         <div class="pt-1 mb-4">
                                             <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng
@@ -88,4 +92,5 @@
         </div>
     </section>
 </body>
+
 </html>

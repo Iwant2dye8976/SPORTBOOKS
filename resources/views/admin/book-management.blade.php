@@ -2,7 +2,7 @@
     <h2 class="mb-4">Quản lý sách</h2>
 
     <!-- Nút thêm sách -->
-    <div class="mb-3 text-end">
+    <div class="text-end">
         <a href="" class="btn btn-success">+ Thêm sách</a>
     </div>
     <!-- Bảng danh sách sách -->
