@@ -65,9 +65,6 @@
             border-radius: 5px;
         }
 
-        body {
-            background-color: #F6FCFA;
-        }
     </style>
 
     @stack('styles') <!-- Cho phép trang con thêm CSS riêng -->
@@ -79,7 +76,8 @@
         <div class="container-fluid ps-4">
             <!-- Logo -->
             <a class="navbar-brand fw-bold text-primary fs-2"
-                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/home')) : url('home') }}">SPORTBOOKS</a>
+                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/home')) : url('home') }}">SPORTBOOKS
+                ADMIN</a>
 
             <!-- Toggle button cho mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -93,61 +91,22 @@
                             chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l"
-                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('cart') : route('admin.cart')) : route('cart') }}">Giỏ
-                            hàng
-                            @if ($cart_count > 0)
-                                <span
-                                    class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ $cart_count > 99 ? '99+' : $cart_count }}
-                                </span>
-                            @endif
-                        </a>
-
+                        <a class="nav-link l" href="{{ route('admin.book-m') }}">Quản lý sách</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l" href="">Liên hệ</a>
+                        <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý khách hàng</a>
                     </li>
                 </ul>
             </div>
 
             <div class="d-flex justify-content-end collapse navbar-collapse menu" id="navbarNav">
-                <!-- Thanh tìm kiếm -->
-                <form class="me-2"
-                    action=" {{ Auth::check() ? (Auth::user()->type === 'user' ? route('search') : route('admin.search')) : route('search') }} "
-                    method="GET">
-                    <div class="search-box">
-                        <button type="submit" class="nav-link">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <input class="form-control" type="text" name="keyword" placeholder="Tìm kiếm..."
-                            value=" {{ request('keyword') }}">
-                    </div>
-                </form>
-
                 @auth
                     <div class="dropdown pe-4">
                         <button class="btn btn-outline-secondary position-relative dropdown-toggle" type="button"
                             id="account" data-bs-toggle="dropdown">
                             {{ Auth::user()->name }}
-                            {{-- @if ($cart_count > 0)
-                                <span
-                                    class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                                </span>
-                            @endif --}}
                         </button>
                         <ul class="dropdown-menu">
-                            {{-- <li><a class="dropdown-item"
-                                    href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('cart') : route('admin.cart')) : route('cart') }}">Giỏ
-                                    hàng
-                                    @if ($cart_count > 0)
-                                        <span
-                                            class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {{ $cart_count > 99 ? '99+' : $cart_count }}
-                                        </span>
-                                    @endif
-                                </a>
-                            </li> --}}
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Tài khoản</a></li>
                             @if (Auth::check() && Auth::user()->type === 'admin')
                                 <li>
@@ -198,8 +157,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     @stack('scripts') <!-- Cho phép trang con thêm JS riêng -->
-    <!-- Remove the container if you want to extend the Footer to full width. -->
-    
 </body>
 
 </html>

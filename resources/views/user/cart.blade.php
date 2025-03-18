@@ -3,12 +3,12 @@
 @section('title', 'Giỏ hàng')
 
 @section('content')
-    <nav aria-label="breadcrumb">
+    {{-- <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item fs-4"><a href="{{ route('home') }}">Trang chủ</a></li>
             <li class="breadcrumb-item fs-4 active" aria-current="page">Giỏ hàng</li>
         </ol>
-    </nav>
+    </nav> --}}
     <div class="mt-5">
         @if (session('success'))
             <div class="alert alert-success text-center" id="success-alert">
