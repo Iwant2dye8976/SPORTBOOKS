@@ -14,14 +14,14 @@
                     <h4 class="text-decoration-underline"><i class="fa-solid fa-filter"></i>Bộ lọc</h4>
                 </div>
                 <form action="{{ route('filter') }}" method="GET" class="row row-cols-auto">
-                    <div class="col">
+                    <div class="col-12 col-md">
                         <button class="text-uppercase btn" type="submit" name="category" value="all"
                             style="{{ request()->query('category', 'all') == 'all' ? 'background-color: #0892d0; color: white;' : '' }}">
                             All
                         </button>
                     </div>
                     @foreach ($categories as $category)
-                        <div class="col">
+                        <div class="col-12 col-md">
                             <button class="text-uppercase btn" type="submit" name="category"
                                 value="{{ $category['category'] }}"
                                 style="{{ request()->query('category', 'all') == $category['category'] ? 'background-color: #0892d0; color: white;' : '' }}">
@@ -39,7 +39,7 @@
             KHÔNG TÌM THẤY SÁCH
         </div>
     @else
-        <div class="row row-sm-1 row-cols-md-5 g-4">
+        <div class="row row-cols-1 row-cols-sm-3 row-cols-md-5 g-4">
             @foreach ($books as $book)
                 <div class="col">
                     <div class="card h-100" style="background-color: #f2f3f4">

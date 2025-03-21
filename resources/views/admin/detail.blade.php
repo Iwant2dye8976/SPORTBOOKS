@@ -34,7 +34,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        <div class="col-5 text-center book-img">
+        <div class="col-12 col-md-5 text-center book-img">
             <img src="https://static.kinhtedothi.vn/w960/images/upload/2021/12/24/sach-huan-1.jpg" alt="">
         </div>
         <div class="col-7 position-relative">
@@ -44,21 +44,21 @@
                 <p class="fs-6 fw-medium mb-1">Mô tả:</p>
                 <p class="fs-6"> {{ $book->description }} </p>
             </div>
-            <div class="position-absolute bottom-0 start-1">
+            <div class="">
                 <form class="row justify-content-start" method="POST"
                     action="{{ route('admin.cart.process', $book->id) }}">
                     @csrf
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
 
-                    <div class="col-3">
+                    <div class="col-12 col-md-3 mb-1">
                         <input type="number" name="amount" class="form-control" value="1" min="1" required>
                     </div>
 
-                    <div class="col-auto">
+                    <div class="col-auto col-md-2 text-lg-center col-lg-3">
                         <button type="submit" name="action" value="buy_now" class="btn btn-success">Mua ngay</button>
                     </div>
 
-                    <div class="col-auto">
+                    <div class="col-auto col-md-4">
                         <button type="submit" name="action" value="add_to_cart" class="btn btn-success">Thêm vào giỏ
                             hàng</button>
                     </div>
@@ -70,9 +70,9 @@
     <div class="container-fluid mt-4">
         <div class="mb-3">
             <h4 class="fw-bold">SÁCH LIÊN QUAN</h4>
-            <div class="row row-col-md-5">
+            <div class="row row-cols-1 row-cols-md-5">
                 @foreach ($relatedBooks as $rBook)
-                    <div class="col">
+                    <div class="col my-2">
                         <div class="card h-100">
                             <img src="https://i.imgflip.com/2/6pwb6a.jpg" class="card-img-top" alt="Image">
                             <div class="card-body">

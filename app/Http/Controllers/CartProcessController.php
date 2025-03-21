@@ -17,7 +17,8 @@ class CartProcessController extends Controller
         $amount = $request->input('amount');
         $action = $request->input('action'); // Xác định nút nào được bấm
         $book = Book::find($request->id);
-        $cart_count = Cart::with('user_id', '=', Auth::user()->id)->count();
+        $cart_count = 0;
+        $cart_count = Cart::where('user_id', Auth::user()->id)->count();
 
         if (!$book) {
             return redirect()->back()->with('error', 'Sách không tồn tại.');
