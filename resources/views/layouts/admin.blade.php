@@ -96,6 +96,9 @@
                     <li class="nav-item">
                         <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý khách hàng</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý đơn hàng</a>
+                    </li>
                 </ul>
             </div>
 

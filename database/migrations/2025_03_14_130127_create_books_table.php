@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string("title", 255);
             $table->string("author", 255);
-            $table->enum("category", ["normal", "science", "fiction"]);
+            $table->enum("category", ['Tình cảm', 'Tâm lý', 'Tài chính', 'Thể thao']);
             $table->text("description");
             $table->double("price");
+            $table->string('image_url')->nullable();
             $table->boolean("isOnDiscount")->default(false);
             $table->timestamps();
         });

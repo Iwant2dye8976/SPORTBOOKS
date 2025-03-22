@@ -36,9 +36,7 @@
                         <div class="row">
                             <div class="col">
                                 <a href="{{ route('user.detail', $item->book->id) }}">
-                                    <img class="img-fluid"
-                                        src="https://static.kinhtedothi.vn/w960/images/upload/2021/12/24/sach-huan-1.jpg"
-                                        alt="Ảnh sách" width="200">
+                                    <img class="img-fluid" src="{{ $item->book->image_url }}" alt="Ảnh sách" width="200">
                                 </a>
                             </div>
                             <div class="col d-flex justify-content-start align-items-center fw-bold">
@@ -46,9 +44,10 @@
                             </div>
                             <div class="col d-flex justify-content-center align-items-center fw-bold">
                                 <input class="form-control w-50 border border-dark" name="book_quantity" type="number"
-                                    min="1" max="999", value="{{ $item->book_quantity }}">
+                                    min="1" max="999" value="{{ $item->book_quantity }}" id="{{$item->book->title}}">
                             </div>
-                            <div class="col d-flex justify-content-center align-items-center fw-bold">
+                            <div class="col d-flex justify-content-center align-items-center fw-bold"
+                                id="{{ $item->book->id }}.price">
                                 ${{ number_format($item->book->price, 2) }}
                             </div>
                             <div class="col d-flex justify-content-center align-items-center fw-bold">
@@ -123,6 +122,29 @@
                     totalPriceElement.textContent = "$" + (totalPrice + fee).toFixed(2);
 
                 }
+
+                function updateBookPrice(book_id) {
+                    let book = document.getElementById(book_id); // Lấy phần tử sách
+                    let priceElement = document.getElementById(book_id + "price"); // Lấy giá
+                    let totalPriceElement = document.getElementById("total-price"); // Phần tử tổng tiền
+
+                    if (!book || !priceElement || !totalPriceElement) {
+                        console.error("Không tìm thấy phần tử!");
+                        return;
+                    }
+
+                    let quantity = parseInt(book.value) || 0; // Chuyển đổi số lượng từ input
+                    let price = parseFloat(priceElement.textContent.replace("$", "")) || 0; // Chuyển đổi giá
+
+                    let total = quantity * price;
+
+                    let currentTotalPrice = parseFloat(totalPriceElement.textContent.replace("$", "")) || 0;
+                    let newTotalPrice = currentTotalPrice + total;
+
+                    totalPriceElement.textContent = "$" + newTotalPrice.toFixed(2);
+                }
+
+
                 window.onload = function() {
                     updateTotalPrice();
                 };

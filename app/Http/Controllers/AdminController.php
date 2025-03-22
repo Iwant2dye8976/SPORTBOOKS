@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Book;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -29,6 +30,12 @@ class AdminController extends Controller
     {
         $users = User::paginate(10);
         return view('admin.index', compact('users'));
+    }
+
+    public function order_m()
+    {
+        $orders = Order::paginate(10);
+        return view('admin.index', compact('orders'));
     }
 
     /**

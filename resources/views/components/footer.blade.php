@@ -33,8 +33,9 @@
                     <h6 class="text-uppercase fw-bold">SPORTBOOKS</h6>
                     <hr class="mb-4 mt-0 d-inline-block mx-auto"
                         style="width: 60px; background-color: #7c4dff; height: 2px" />
+                    <p>Thế giới tri thức trong tầm tay!</p>
                     <p>
-                        Thắng Ngọt Chuyên Phân Bón.
+                        Khám phá kho sách đa dạng với nhiều thể loại hấp dẫn. Chúng tôi mang đến cho bạn những tựa sách hay nhất, giúp mở rộng hiểu biết và nuôi dưỡng đam mê đọc sách mỗi ngày.
                     </p>
                 </div>
                 <!-- Grid column -->

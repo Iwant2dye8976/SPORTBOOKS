@@ -3,7 +3,7 @@
 @section('title', 'Trang Chủ')
 
 @section('banner')
-    <img class="img-fluid" src="{{ asset('imgs/tc-banner-t5.png') }}" alt="Banner">
+    <img class="img-fluid" src="{{ asset('imgs/banner.png') }}" alt="Banner">
 @endsection
 
 @section('content')
@@ -13,16 +13,16 @@
                 <div class="col d-flex align-items-center">
                     <h4 class="text-decoration-underline"><i class="fa-solid fa-filter"></i>Bộ lọc</h4>
                 </div>
-                <form action="{{ route('admin.filter') }}" method="GET" class="row row-cols-auto">
-                    <div class="col-12 col-md">
-                        <button class="text-uppercase btn" type="submit" name="category" value="all"
+                <form action="{{ route('admin.filter') }}" method="GET" class="col-12 row row-cols-auto">
+                    <div class="col-12 col-md text-center">
+                        <button class="text-uppercase btn w-100" type="submit" name="category" value="all"
                             style="{{ request()->query('category', 'all') == 'all' ? 'background-color: #0892d0; color: white;' : '' }}">
                             All
                         </button>
                     </div>
                     @foreach ($categories as $category)
-                        <div class="col-12 col-md">
-                            <button class="text-uppercase btn" type="submit" name="category"
+                        <div class="col-12 col-md text-center">
+                            <button class="text-uppercase btn w-100" type="submit" name="category"
                                 value="{{ $category['category'] }}"
                                 style="{{ request()->query('category', 'all') == $category['category'] ? 'background-color: #0892d0; color: white;' : '' }}">
                                 {{ $category['category'] }}
@@ -43,7 +43,7 @@
             @foreach ($books as $book)
                 <div class="col">
                     <div class="card h-100" style="background-color: #f2f3f4">
-                        <img src="https://static.kinhtedothi.vn/w960/images/upload/2021/12/24/sach-huan-1.jpg"
+                        <img src="{{ $book->image_url }}"
                             class="card-img-top" alt="Image">
                         <div class="card-body">
                             <p class="card-text fw-bold fs-5 text-center">

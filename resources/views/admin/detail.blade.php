@@ -35,7 +35,7 @@
             </div>
         @endif
         <div class="col-12 col-md-5 text-center book-img">
-            <img src="https://static.kinhtedothi.vn/w960/images/upload/2021/12/24/sach-huan-1.jpg" alt="">
+            <img src="{{$book->image_url}}" alt="">
         </div>
         <div class="col-7 position-relative">
             <div>
@@ -74,7 +74,7 @@
                 @foreach ($relatedBooks as $rBook)
                     <div class="col my-2">
                         <div class="card h-100">
-                            <img src="https://i.imgflip.com/2/6pwb6a.jpg" class="card-img-top" alt="Image">
+                            <img src="{{$rBook->image_url}}" class="card-img-top" alt="Image">
                             <div class="card-body">
                                 <p class="card-text fw-bold fs-5 text-center"> <a class="text-decoration-none text-dark"
                                         href="{{ route('admin.detail', $rBook->id) }}"> {{ $rBook->title }} </a> </p>

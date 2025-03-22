@@ -1,33 +1,30 @@
-@extends('layouts.app')
-
-@section('title', 'Đặt hàng')
-
-@section('content')
-    {{-- <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item fs-4"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item fs-4 active" aria-current="page">Giỏ hàng</li>
-        </ol>
-    </nav> --}}
-    <div class="mt-5">
+<div class="mt-5">
+    @if (session('success'))
+        <div class="alert alert-success text-center" id="success-alert">
+            {{ session('success') }}
+        </div>
+    @endif
+    {{-- @if ($order_count === 0)
+        <div class="alert alert-warning text-center">Không có đơn hàng!</div>
+    @else --}}
         <div class="row row-cols-auto" style="min-height:max-content;">
             <div class="col-8 border border-start rounded-start"
                 style="background-color: #fffaf0; max-height: 500px; overflow-y: auto;">
                 <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0">
                     <div class="col">
-                        <h2 class="text-start sticky-top">Giỏ hàng</h2>
+                        <h2 class="text-start sticky-top">Quản lý đơn hàng</h2>
                     </div>
                     <div class="col mb-4">
-                        <h4 class="text-end text-secondary">{{ $cart_count }} sản phẩm</h4>
+                        <h4 class="text-end text-secondary">{{ $orders_count }} đơn hàng</h4>
                     </div>
                     <div class="col-12 mt-3">
                         <hr>
                     </div>
                 </div>
-                @foreach ($cartItems as $item)
+                @foreach ($oders as $oder)
                     <div class="row">
                         <div class="col">
-                            <a href="{{ route('user.detail', $item->book->id) }}">
+                            <a href="{{ route('admin.detail', $item->book->id) }}">
                                 <img class="img-fluid" src="{{ $item->book->image_url }}" alt="Ảnh sách" width="200">
                             </a>
                         </div>
@@ -42,10 +39,10 @@
                             ${{ number_format($item->book->price, 2) }}
                         </div>
                         <div class="col d-flex justify-content-center align-items-center fw-bold">
-                            <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                            <form action="{{ route('admin.cart.remove', $item->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <a class="text-decoration-none fs-4" href="{{ route('cart.remove', $item->id) }}"
+                                <a class="text-decoration-none fs-4" href="{{ route('admin.cart.remove', $item->id) }}"
                                     onclick="event.preventDefault();
                             this.closest('form').submit();"><span
                                         class="text text-secondary">X</span></a>
@@ -125,6 +122,5 @@
                 }
             }, 3000); // Ẩn sau 3 giây (3000ms)
         </script>
-        @endif
-    </div>
-@endsection
+    @endif
+</div>
