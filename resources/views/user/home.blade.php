@@ -3,7 +3,7 @@
 @section('title', 'Trang Chủ')
 
 @section('banner')
-    <img class="img-fluid" src="{{ asset('imgs/banner.png') }}" alt="Banner" style="height: 320px;">
+    <img class="img-fluid" src="{{ asset('imgs/banner-2.png') }}" alt="Banner" style="height: 320px;">
 @endsection
 
 @section('content')
@@ -47,7 +47,7 @@
                             class="card-img-top" alt="Image">
                         <div class="card-body">
                             <p class="card-text fw-bold fs-5 text-center">
-                                <a class="text-decoration-none text-dark" href="{{ route('user.detail', $book->id) }}">
+                                <a class="text-decoration-none text-dark" href="{{ route('detail', $book->id) }}">
                                     {{ $book->title }}
                                 </a>
                             </p>

@@ -12,15 +12,10 @@
     <style>
         .book-img img {
             max-width: 100%;
-            /* Ảnh luôn chiếm toàn bộ chiều rộng của khung */
             height: 300px;
-            /* Đặt chiều cao cố định cho khung */
             object-fit: fill;
-            /* Cắt ảnh để vừa với khung mà không bị méo */
             object-position: center;
-            /* Căn giữa ảnh */
             border-radius: 10px;
-            /* Bo góc ảnh nếu cần */
         }
     </style>
     <div class="container-fluid row">
@@ -35,7 +30,7 @@
             </div>
         @endif
         <div class="col-12 col-md-5 text-center book-img">
-            <img src="{{$book->image_url}}" alt="">
+            <img src="{{ $book->image_url }}" alt="">
         </div>
         <div class="col-7 position-relative">
             <div>
@@ -46,7 +41,7 @@
             </div>
             <div class="">
                 <form class="row justify-content-start" method="POST"
-                    action="{{ route('admin.cart.process', $book->id) }}">
+                    action="{{ route('admin.cart.add', $book->id) }}">
                     @csrf
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
 
@@ -55,11 +50,11 @@
                     </div>
 
                     <div class="col-auto col-md-2 text-lg-center col-lg-3">
-                        <button type="submit" name="action" value="buy_now" class="btn btn-success">Mua ngay</button>
+                        <a class="btn btn-success text-decoration-none" href="{{route('admin.buynow-v', $book->id)}}">Mua ngay</a>
                     </div>
 
                     <div class="col-auto col-md-4">
-                        <button type="submit" name="action" value="add_to_cart" class="btn btn-success">Thêm vào giỏ
+                        <button type="submit" class="btn btn-success">Thêm vào giỏ
                             hàng</button>
                     </div>
                 </form>
@@ -74,7 +69,7 @@
                 @foreach ($relatedBooks as $rBook)
                     <div class="col my-2">
                         <div class="card h-100">
-                            <img src="{{$rBook->image_url}}" class="card-img-top" alt="Image">
+                            <img src="{{ $rBook->image_url }}" class="card-img-top" alt="Image">
                             <div class="card-body">
                                 <p class="card-text fw-bold fs-5 text-center"> <a class="text-decoration-none text-dark"
                                         href="{{ route('admin.detail', $rBook->id) }}"> {{ $rBook->title }} </a> </p>
@@ -102,6 +97,6 @@
                 error_alert.style.opacity = "0";
                 setTimeout(() => error_alert.remove(), 500);
             }
-        }, 3000); // Ẩn sau 3 giây (3000ms)
+        }, 3000);
     </script>
 @endsection

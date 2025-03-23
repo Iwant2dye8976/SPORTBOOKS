@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,16 +19,18 @@ class BookController extends Controller
         $totalBooks = Book::count();
         $categories = Book::select('category')->distinct()->get();
 
-        $cart_count = 0; // Mặc định giỏ hàng trống
+        $cart_count = 0;
+        $order_count = 0;
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();
             if (Auth::user()->type === 'admin') {
-                return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+                return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
             }
         }
 
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
     }
 
 
@@ -45,14 +48,16 @@ class BookController extends Controller
             ->limit(5)
             ->get();
 
-        $cart_count = Auth::check() ? Cart::where('user_id', Auth::id())->count() : 0;
 
-        // Kiểm tra nếu là admin thì có thể điều hướng sang một trang khác
-        if (Auth::check() && Auth::user()->type === 'admin') {
-            return view('admin.detail', compact('book', 'relatedBooks', 'cart_count'));
+        if (Auth::check()) {
+            $cart_count = Cart::where('user_id', Auth::id())->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();
+            if (Auth::user()->type === 'admin') {
+                return view('admin.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count'));
+            }
         }
 
-        return view('user.detail', compact('book', 'relatedBooks', 'cart_count'));
+        return view('user.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count'));
     }
 
 
@@ -71,13 +76,15 @@ class BookController extends Controller
         $totalBooks = $books->total();
         $categories = Book::select('category')->distinct()->get();
 
-        $cart_count = Auth::check() ? Cart::where('user_id', Auth::id())->count() : 0;
-
-        if (Auth::check() && Auth::user()->type === 'admin') {
-            return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        if (Auth::check()) {
+            $cart_count = Cart::where('user_id', Auth::id())->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();
+            if (Auth::user()->type === 'admin') {
+                return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
+            }
         }
 
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
     }
 
 
@@ -97,13 +104,15 @@ class BookController extends Controller
         $totalBooks = $books->total();
         $categories = Book::select('category')->distinct()->get();
 
-        $cart_count = Auth::check() ? Cart::where('user_id', Auth::id())->count() : 0;
-
-        if (Auth::check() && Auth::user()->type === 'admin') {
-            return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        if (Auth::check()) {
+            $cart_count = Cart::where('user_id', Auth::id())->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();
+            if (Auth::user()->type === 'admin') {
+                return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
+            }
         }
 
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count'));
+        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
     }
 
 

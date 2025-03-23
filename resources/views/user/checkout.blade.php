@@ -27,7 +27,7 @@
                 @foreach ($cartItems as $item)
                     <div class="row">
                         <div class="col">
-                            <a href="{{ route('user.detail', $item->book->id) }}">
+                            <a href="{{ route('detail', $item->book->id) }}">
                                 <img class="img-fluid" src="{{ $item->book->image_url }}" alt="Ảnh sách" width="200">
                             </a>
                         </div>

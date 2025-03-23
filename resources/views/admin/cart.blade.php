@@ -9,17 +9,17 @@
                 {{ session('success') }}
             </div>
         @endif
-        {{-- @if (session('error-alert'))
+        @if (session('error-alert'))
             <div class="alert alert-danger text-center" id="error-alert">
                 {{ session('error-alert') }}
             </div>
-        @endif --}}
+        @endif
         @if ($cart_count === 0)
             <div class="alert alert-warning text-center">Giỏ hàng trống!</div>
         @else
             <div class="row row-cols-auto" style="min-height:max-content;">
                 <div class="col-12 border border-dark rounded-start"
-                    style="background-color: #fffaf0; max-height: 500px; overflow-y: auto;">
+                    style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
                     <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0">
                         <div class="col">
                             <h2 class="text-start sticky-top">Giỏ hàng</h2>
@@ -44,8 +44,8 @@
                             <div class="col d-flex justify-content-center align-items-center fw-bold">
                                 <input class="form-control w-50 border border-dark book-quantity" name="book_quantity"
                                     type="number" min="1" max="999" value="{{ $item->book_quantity }}"
-                                    id="quantity-{{ $item->book->id }}" onchange="updateTotalPrice();"
-                                    onblur="updateCart({{ $item->book->id }});" required>
+                                    id="quantity-{{ $item->book->id }}" onblur="updateCart({{ $item->book->id }});"
+                                    required>
                             </div>
                             <div class="col d-flex justify-content-center align-items-center fw-bold book-price"
                                 id="{{ $item->book->id }}price">
@@ -65,47 +65,6 @@
                         <hr>
                     @endforeach
                 </div>
-                {{-- <div class="col-4 border border-dark border-start-0 rounded-end pt-1 px-4" style="background-color: #c4c3d0">
-                    <div class="row row-cols-2 mb-4">
-                        <div class="col pt-4">
-                            <h2 class="text-start">Tổng kết</h2>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row rows-col">
-                        <div class="col-12">
-                            <h4 class="fw-bold">Hình thức vận chuyển</h4>
-                            <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice()">
-                                <option value="economy" data-fee="0.6">Tiết kiệm (+$0.60)</option>
-                                <option value="standard" data-fee="1.2">Tiêu chuẩn (+$1.20)</option>
-                                <option value="fast" data-fee="2">Nhanh (+$2.00)</option>
-                                <option value="express" data-fee="4">Hỏa tốc (+$4.00)</option>
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <hr>
-                            <h4 class="fw-bold">Chi tiết</h4>
-                            <div>
-                                <div class="d-flex justify-content-between">
-                                    <p>Tiền sách:</p>
-                                    <p><span id="book-price"
-                                            class="text-dark"><span>+</span>${{ number_format($total_price, 2) }}</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p>Phí vận chuyển:</p>
-                                    <p><span>+</span><span id="shipping-fee" class="text-dark">$</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex-row align-items-end mb-4">
-                        <hr>
-                        <div class="d-flex justify-content-between">
-                            <h4 class="fw-bold">Tổng chi phí:</h4>
-                            <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         @endif
 
@@ -140,10 +99,10 @@
                     <div class="mb-3">
                         <label class="form-label" for="shipping">Phương thức vận chuyển</label>
                         <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice()">
-                            <option value="economy" data-fee="0.6">Tiết kiệm (+$0.60)</option>
-                            <option value="standard" data-fee="1.2">Tiêu chuẩn (+$1.20)</option>
-                            <option value="fast" data-fee="2">Nhanh (+$2.00)</option>
-                            <option value="express" data-fee="4">Hỏa tốc (+$4.00)</option>
+                            <option value="0.6" data-fee="0.6">Tiết kiệm (+$0.60)</option>
+                            <option value="1.2" data-fee="1.2">Tiêu chuẩn (+$1.20)</option>
+                            <option value="2" data-fee="2">Nhanh (+$2.00)</option>
+                            <option value="4" data-fee="4">Hỏa tốc (+$4.00)</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -152,9 +111,11 @@
                         <div>
                             <div class="d-flex justify-content-between">
                                 <p>Tiền sách:</p>
-                                <p><span id="book-price"
+                                <p id="book-price-detail"><span
                                         class="text-dark"><span>+</span>${{ number_format($total_price, 2) }}
                                 </p>
+                                <input name="books-price" id="book-price-detail-i" type="number" step="0.01"
+                                    value="{{ number_format($total_price, 2) }}" hidden>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>Phí vận chuyển:</p>
@@ -169,8 +130,8 @@
                             <div class="d-flex justify-content-end">
                                 <h4 class="total-price"></h4>
                                 <input name="total-price" id="total-price"
-                                    class="p-0 form-control w-50 text-end fs-4 fw-bold border-0" type="number"
-                                    step="0.01" value="{{ $total_price }}" readonly hidden>
+                                    class="p-0 form-control w-50 text-end fs-4 fw-bold border-0 total-price"
+                                    type="number" step="0.01" value="{{ $total_price }}" readonly hidden>
                             </div>
                             {{-- <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4> --}}
                         </div>
@@ -198,14 +159,16 @@
                 totalBookPrice += quantity * price;
             });
 
+            document.getElementById('book-price-detail').textContent = "$" + totalBookPrice.toFixed(2);
+            document.getElementById('book-price-detail-i').value = totalBookPrice.toFixed(2);
+
             let totalPrice = (totalBookPrice + fee).toFixed(2);
 
-            // Cập nhật tất cả các phần tử có class "total-price"
             document.querySelectorAll('.total-price').forEach(element => {
-                if (element.tagName.toLowerCase() === "input") {
-                    element.value = totalPrice; // Nếu là input, cập nhật value
+                if (element.tagName === "INPUT") {
+                    element.value = totalPrice;
                 } else {
-                    element.textContent = "$" + totalPrice; // Nếu không phải input, cập nhật textContent
+                    element.textContent = "$" + totalPrice;
                 }
             });
         }
@@ -215,12 +178,13 @@
             let quantityInput = document.getElementById("quantity-" + bookId);
             let quantity = parseInt(quantityInput.value);
 
-            if (quantity < 1) {
-                quantity = 1; // Đảm bảo số lượng tối thiểu là 1
+            if (!quantity || quantity < 1 || quantity > 999) {
                 quantityInput.value = 1;
             }
 
-            fetch(`cart/update`, {
+            updateTotalPrice();
+
+            fetch(`/cart/update`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -236,6 +200,7 @@
                         console.log("Cập nhật giỏ hàng thành công");
                     }
                 }).catch(error => console.error("Lỗi cập nhật giỏ hàng:", error));
+
         }
 
         window.onload = function() {
@@ -248,7 +213,7 @@
                 alert.style.opacity = "0";
                 setTimeout(() => alert.remove(), 500);
             }
-        }, 3000); // Ẩn sau 3 giây (3000ms)
+        }, 3000);
     </script>
 
 @endsection

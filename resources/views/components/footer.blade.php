@@ -13,7 +13,8 @@
                     class="fab fa-facebook-f"></i></a>
             <a href="" class="text-white me-4"><i class="fab fa-twitter"></i></a>
             <a href="" class="text-white me-4"><i class="fab fa-google"></i></a>
-            <a href="https://www.instagram.com/_qoocdat/" class="text-white me-4" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com/_qoocdat/" class="text-white me-4" target="_blank"><i
+                    class="fab fa-instagram"></i></a>
             <a href="" class="text-white me-4"><i class="fab fa-linkedin"></i></a>
             <a href="https://github.com/Iwant2dye8976" class="text-white me-4" target="_blank"><i
                     class="fab fa-github"></i></a>
@@ -35,7 +36,8 @@
                         style="width: 60px; background-color: #7c4dff; height: 2px" />
                     <p>Thế giới tri thức trong tầm tay!</p>
                     <p>
-                        Khám phá kho sách đa dạng với nhiều thể loại hấp dẫn. Chúng tôi mang đến cho bạn những tựa sách hay nhất, giúp mở rộng hiểu biết và nuôi dưỡng đam mê đọc sách mỗi ngày.
+                        Khám phá kho sách đa dạng với nhiều thể loại hấp dẫn. Chúng tôi mang đến cho bạn những tựa sách
+                        hay nhất, giúp mở rộng hiểu biết và nuôi dưỡng đam mê đọc sách mỗi ngày.
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -68,11 +70,15 @@
                     <hr class="mb-4 mt-0 d-inline-block mx-auto"
                         style="width: 60px; background-color: #7c4dff; height: 2px" />
                     <p>
-                        <a href="{{ route('profile.edit') }}" class="text-white">Tài khoản của bạn</a>
+                        <a href="{{ route('profile.edit') }}" class="text-white">Tài khoản</a>
                     </p>
                     <p>
                         <a href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('cart') : route('admin.cart')) : route('cart') }}"
                             class="text-white">Giỏ hàng</a>
+                    </p>
+                    <p>
+                        <a href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('orders') : route('admin.orders')) : route('orders') }}"
+                            class="text-white">Đơn hàng</a>
                     </p>
                     {{-- <p>
                         <a href="#!" class="text-white">Shipping Rates</a>

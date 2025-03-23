@@ -17,7 +17,6 @@ Route::get('/home/filter', [BookController::class, 'filter'])->name('filter');
 Route::get('home/detail/{id}', [BookController::class, 'getdetail'])->name('detail');
 Route::get('/home/search', [BookController::class, 'search'])->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'sendEmail'])->name('contact.send');
 
 
 // Route yêu cầu đăng nhập

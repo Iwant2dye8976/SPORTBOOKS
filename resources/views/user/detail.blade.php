@@ -12,38 +12,27 @@
     <style>
         .book-img img {
             max-width: 100%;
-            /* Ảnh luôn chiếm toàn bộ chiều rộng của khung */
             height: 300px;
-            /* Đặt chiều cao cố định cho khung */
             object-fit: fill;
-            /* Cắt ảnh để vừa với khung mà không bị méo */
             object-position: center;
-            /* Căn giữa ảnh */
             border-radius: 10px;
-            /* Bo góc ảnh nếu cần */
         }
     </style>
-    {{-- <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item fs-4"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item fs-4 active" aria-current="page">Chi tiết sách</li>
-        </ol>
-    </nav> --}}
-    <div class="container-fluid row row-cols-auto">
+    <div class="container-fluid row">
         @if (session('error'))
-            <div class="col-12 alert alert-danger text-center" id="error-alert">
+            <div class="alert alert-danger text-center" id="error-alert">
                 {{ session('error') }}
             </div>
         @endif
         @if (session('success'))
-            <div class="col-12 alert alert-success text-center" id="success-alert">
+            <div class="alert alert-success text-center" id="success-alert">
                 {{ session('success') }}
             </div>
         @endif
         <div class="col-12 col-md-5 text-center book-img">
-            <img src="{{$book->image_url}}" alt="">
+            <img src="{{ $book->image_url }}" alt="">
         </div>
-        <div class="row col col-md-7 position-relative">
+        <div class="col-7 position-relative">
             <div>
                 <h4 class="fw-bolder"> {{ $book->title }} </h4>
                 <p class="fs-6 fw-medium">Giá bán: <span class="text text-danger"> ${{ $book->price }} </span></p>
@@ -51,27 +40,27 @@
                 <p class="fs-6"> {{ $book->description }} </p>
             </div>
             <div class="">
-                <form class="row justify-content-start" method="POST" action="{{ route('cart.process', $book->id) }}">
+                <form class="row justify-content-start" method="POST"
+                    action="{{ route('cart.add', $book->id) }}">
                     @csrf
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
 
                     <div class="col-12 col-md-3 mb-1">
-                        <input name="amount" class="form-control" type="number" value="1" min="1"
-                            max="999" required>
+                        <input type="number" name="amount" class="form-control" value="1" min="1" required>
                     </div>
 
                     <div class="col-auto col-md-2 text-lg-center col-lg-3">
-                        <button type="submit" name="action" value="buy_now" class="btn btn-success">Mua ngay</button>
+                        <a class="btn btn-success text-decoration-none" href="{{route('buynow-v', $book->id)}}">Mua ngay</a>
                     </div>
 
                     <div class="col-auto col-md-4">
-                        <button type="submit" name="action" value="add_to_cart" class="btn btn-success">Thêm vào giỏ
+                        <button type="submit" class="btn btn-success">Thêm vào giỏ
                             hàng</button>
                     </div>
                 </form>
+
             </div>
         </div>
-
     </div>
     <div class="container-fluid mt-4">
         <div class="mb-3">
@@ -80,10 +69,10 @@
                 @foreach ($relatedBooks as $rBook)
                     <div class="col my-2">
                         <div class="card h-100">
-                            <img src="{{$rBook->image_url}}" class="card-img-top" alt="Image">
+                            <img src="{{ $rBook->image_url }}" class="card-img-top" alt="Image">
                             <div class="card-body">
                                 <p class="card-text fw-bold fs-5 text-center"> <a class="text-decoration-none text-dark"
-                                        href="{{ route('user.detail', $rBook->id) }}"> {{ $rBook->title }} </a> </p>
+                                        href="{{ route('detail', $rBook->id) }}"> {{ $rBook->title }} </a> </p>
                             </div>
                             <div class="card-footer">
                                 <p class="text text-danger fw-bolder text-center"> ${{ $rBook->price }} </p>
@@ -108,6 +97,6 @@
                 error_alert.style.opacity = "0";
                 setTimeout(() => error_alert.remove(), 500);
             }
-        }, 3000); // Ẩn sau 3 giây (3000ms)
+        }, 3000);
     </script>
 @endsection

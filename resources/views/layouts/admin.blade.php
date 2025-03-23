@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'SPORTBOOKS')</title>
 
     <!-- Bootstrap CSS -->
@@ -17,7 +18,7 @@
             display: block;
             position: relative;
             padding: 4px 0;
-            margin: 7px;
+            margin: 10px;
         }
 
         .menu .l::before {
@@ -33,13 +34,17 @@
             transform-origin: 0 50%;
         }
 
+        .menu .l:hover::before {
+            transform: scale3d(1, 1, 1);
+        }
+
         .menu .l::before {
-            transform-origin: 50% 50%;
-            background: #8FD14F;
+            background: #524bcb;
+            transform-origin: 100% 50%;
         }
 
         .menu .l:hover::before {
-            transform: scale3d(1, 1, 1);
+            transform-origin: 0 50%;
         }
 
         .search-box {
@@ -64,7 +69,6 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-
     </style>
 
     @stack('styles') <!-- Cho phép trang con thêm CSS riêng -->
@@ -97,7 +101,7 @@
                         <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý khách hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý đơn hàng</a>
+                        <a class="nav-link l" href="{{ route('admin.order-m') }}">Quản lý đơn hàng</a>
                     </li>
                 </ul>
             </div>

@@ -18,7 +18,7 @@
             display: block;
             position: relative;
             padding: 4px 0;
-            margin: 7px;
+            margin: 10px;
         }
 
         .menu .l::before {
@@ -31,16 +31,20 @@
             background: #fff;
             transition: 0.5s transform ease;
             transform: scale3d(0, 1, 1);
-            transform-origin: 0 50%;
-        }
-
-        .menu .l::before {
-            transform-origin: 50% 50%;
-            background: #8FD14F;
+            transform-origin: 100% 50%;
         }
 
         .menu .l:hover::before {
             transform: scale3d(1, 1, 1);
+        }
+
+        .menu .l::before {
+            background: #524bcb;
+            transform-origin: 100% 50%;
+        }
+
+        .menu .l:hover::before {
+            transform-origin: 0 50%;
         }
 
         .search-box {
@@ -71,7 +75,7 @@
         }
     </style>
 
-    @stack('styles') <!-- Cho phép trang con thêm CSS riêng -->
+    @stack('styles')
 </head>
 
 <body>
@@ -107,7 +111,19 @@
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l" href="">Liên hệ</a>
+                        <a class="nav-link l"
+                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('orders') : route('admin.orders')) : route('orders') }}">Đơn
+                            hàng
+                            @if ($order_count > 0)
+                                <span
+                                    class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $order_count > 99 ? '99+' : $order_count }}
+                                </span>
+                            @endif
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link l" href="{{route('contact')}}">Liên hệ</a>
                     </li>
                 </ul>
             </div>
@@ -121,8 +137,8 @@
                         <button type="submit" class="nav-link">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="form-control" type="text" name="keyword" placeholder="Tìm kiếm..."
-                            value=" {{ request('keyword') }}">
+                        <input class="form-control" type="search" name="keyword" placeholder="Tìm kiếm..."
+                            value={{ request('keyword') }}>
                     </div>
                 </form>
 
@@ -149,7 +165,9 @@
                                     @endif
                                 </a>
                             </li> --}}
-                            <li><a class="dropdown-item" href="{{Auth::check() && Auth::user()->type === 'admin' ? route('admin.profile.edit') : route('profile.edit') }}">Tài khoản</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{{ Auth::check() && Auth::user()->type === 'admin' ? route('admin.profile.edit') : route('profile.edit') }}">Tài
+                                    khoản</a></li>
                             @if (Auth::check() && Auth::user()->type === 'admin')
                                 <li>
                                     <a class="dropdown-item" href="{{ route('admin.index') }}">Quản lý</a>
@@ -198,9 +216,8 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    @stack('scripts') <!-- Cho phép trang con thêm JS riêng -->
-    <!-- Remove the container if you want to extend the Footer to full width. -->
-    
+    @stack('scripts')
+
 </body>
 
 </html>

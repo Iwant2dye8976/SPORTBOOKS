@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedSmallInteger('book_quantity')->default(1);
             $table->double('price');
-            $table->double('total_price')->storedAs('book_quantity * price'); // Cột tổng tiền
+            $table->double('total_price')->storedAs('book_quantity * price');
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->timestamps();
