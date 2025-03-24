@@ -5,7 +5,7 @@
 @section('content')
     <div class="mt-5 border border-dark border-1 rounded p-3"
         style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
-        <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0">
+        <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">
                 <h2 class="text-start sticky-top">Đơn hàng</h2>
             </div>
@@ -39,24 +39,24 @@
                 <div class="col-3 text-center">
                     @switch($order->status)
                         @case(-1)
-                            Chờ xử lý
+                            <span class="text text-warning fw-bold">Chờ xử lý</span>
                         @break
 
                         @case(0)
-                            Đã hủy
+                            <span class="text text-danger fw-bold">Đã hủy</span>
                         @break
 
                         @case(1)
-                            Đã hoàn thành
+                            <span class="text text-success fw-bold">Đã xác nhận</span>
                         @break
 
                         @default
-                            Trạng thái không xác định
+                            <span class="text text-dark fw-bold">Trạng thái không xác định</span>
                     @endswitch
                 </div>
                 <div class="col-2 text-center">
-                    <a class="text text-decoration-none text-secondary"
-                        href="{{ route('orders.details', $order->id) }}">Chi tiết</a>
+                    <a class="text text-decoration-none text-secondary" href="{{ route('orders.details', $order->id) }}">Chi
+                        tiết</a>
                 </div>
                 <div class="col-12 my-2">
                     <hr>

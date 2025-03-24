@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     //Đơn hàng
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
     Route::get('/orders/detail/{id}', [OrderController::class, 'show'])->name('orders.details');
+    Route::patch('/orders/detail/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
     //Tài khoản khách hàng
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -51,6 +52,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/index/bookmanagement', [AdminController::class, 'book_m'])->name('admin.book-m');
     Route::get('/admin/index/usermanagement', [AdminController::class, 'user_m'])->name('admin.user-m');
     Route::get('/admin/index/odrermanagement', [AdminController::class, 'order_m'])->name('admin.order-m');
+    Route::get('/admin/index/odrermanagement/detail/{id}', [AdminController::class, 'order_m_show'])->name('admin.order-m.detail');
     //Giỏ hàng admin
     Route::get('/admin/buynow/{id}', [OrderController::class, 'buynow_view'])->name('admin.buynow-v');
     Route::post('/admin/buynow/{id}', [OrderController::class, 'buynow'])->name('admin.buynow');

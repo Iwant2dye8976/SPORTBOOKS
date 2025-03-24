@@ -20,7 +20,7 @@
             <div class="row row-cols-auto" style="min-height:max-content;">
                 <div class="col-12 border border-dark rounded-start"
                     style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
-                    <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0">
+                    <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
                         <div class="col">
                             <h2 class="text-start sticky-top">Giỏ hàng</h2>
                         </div>
@@ -125,14 +125,14 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="address">Địa chỉ nhận hàng</label>
-                        <input class="form-control" type="text" name="address" id="address">
+                        <input class="form-control" type="text" name="address" id="address" value="{{ $user->address }}">
                         @error('address')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="phone-number">Số điện thoại</label>
-                        <input class="form-control" type="tel" name="phone-number" id="phone-number">
+                        <input class="form-control" type="tel" name="phone-number" id="phone-number" value="{{ $user->phone_number }}">
                         @error('phone-number')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

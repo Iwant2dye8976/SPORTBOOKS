@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="border border-2 my-4">
+    <div class="border border-2 my-4" style="background-color: #E4C087;">
         <div class="ms-3 py-2 d-flex align-items-center">
             <div class="row row-cols-auto">
                 <div class="col d-flex align-items-center">

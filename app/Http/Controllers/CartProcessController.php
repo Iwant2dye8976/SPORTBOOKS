@@ -18,11 +18,6 @@ class CartProcessController extends Controller
     {
         $amount = $request->input('amount');
         $book = Book::find($request->id);
-        // if (Auth::check()) {
-        //     $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-        //     $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();
-        //     $user_type = Auth::user()->type;
-        // }
 
         if (!$book) {
             return redirect()->back()->with('error', 'Sách không tồn tại.');
@@ -46,7 +41,7 @@ class CartProcessController extends Controller
         $user = Auth::user();
         if (Auth::check()) {
             $cart_count = $cartItems->count();
-            $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 1])->count();
             if (Auth::user()->type === 'admin') {
                 return view('admin.cart', compact('cartItems', 'cart_count', 'total_price', 'user', 'order_count'));
             }

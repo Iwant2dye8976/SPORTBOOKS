@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="border border-2 my-4">
+    <div class="border border-2 my-4" style="background-color: #E4C087;">
         <div class="ms-3 py-2 d-flex align-items-center">
             <div class="row row-cols-auto">
                 <div class="col d-flex align-items-center">
@@ -16,15 +16,15 @@
                 <form action="{{ route('filter') }}" method="GET" class="col-12 row row-cols-auto">
                     <div class="col-12 col-md text-center">
                         <button class="text-uppercase btn w-100" type="submit" name="category" value="all"
-                            style="{{ request()->query('category', 'all') == 'all' ? 'background-color: #0892d0; color: white;' : '' }}">
-                            All
+                            style="{{ request()->query('category', 'all') == 'all' ? 'background-color: #BC7C7C; color: white;' : '' }}">
+                            Tất cả
                         </button>
                     </div>
                     @foreach ($categories as $category)
                         <div class="col-12 col-md text-center">
                             <button class="text-uppercase btn w-100" type="submit" name="category"
                                 value="{{ $category['category'] }}"
-                                style="{{ request()->query('category', 'all') == $category['category'] ? 'background-color: #0892d0; color: white;' : '' }}">
+                                style="{{ request()->query('category', 'all') == $category['category'] ? 'background-color: #BC7C7C; color: white;' : '' }}">
                                 {{ $category['category'] }}
                             </button>
                         </div>

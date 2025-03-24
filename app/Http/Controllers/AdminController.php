@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Order;
+use App\Models\Cart;
+use App\Models\OrderDetail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -36,6 +39,14 @@ class AdminController extends Controller
     {
         $orders = Order::paginate(10);
         return view('admin.index', compact('orders'));
+    }
+
+    public function order_m_show(Request $request)
+    {
+        $product_count = OrderDetail::where('order_id', $request->id)->count();
+        $order_details = OrderDetail::with('book')->where('order_id', $request->id)->get();
+        $order_information = Order::with('user')->where('id', $request->id)->first();
+        return view('admin.index', compact('product_count', 'order_details', 'order_information'));
     }
 
     /**

@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body style="background-color: #9A616D;">
+<body
+    style="background: rgb(174,209,239);
+background: linear-gradient(103deg, rgba(174,209,239,1) 0%, rgba(185,211,231,1) 16%, rgba(197,214,224,1) 32%, rgba(219,218,208,1) 48%, rgba(219,218,208,1) 63%, rgba(231,221,201,1) 79%);">
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">

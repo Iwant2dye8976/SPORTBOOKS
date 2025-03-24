@@ -17,4 +17,7 @@
     @if (Route::currentRouteName() === 'admin.order-m')
         @include('admin.orders-management')
     @endif
+    @if (Route::currentRouteName() === 'admin.order-m.detail')
+        @include('admin.order-management-detail')
+    @endif
 @endsection

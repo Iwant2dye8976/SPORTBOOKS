@@ -69,15 +69,15 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="address">Địa chỉ nhận hàng</label>
-                <input class="form-control" type="text" name="address" id="address">
+                <input class="form-control" type="text" name="address" id="address" value="{{ $user->address }}">
                 @error('address')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
-                <label class="form-label" for="phone-number">Số điện thoại</label>
-                <input class="form-control" type="tel" name="phone-number" id="phone-number">
-                @error('phone-number')
+                <label class="form-label" for="phone_number">Số điện thoại</label>
+                <input class="form-control" type="tel" name="phone_number" id="phone_number" value="{{ $user->phone_number }}">
+                @error('phone_number')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -159,20 +159,5 @@
         window.onload = function() {
             updateTotalPrice();
         };
-
-        setTimeout(function() {
-            let success_alert = document.getElementById('success-alert');
-            let error_alert = document.getElementById('error-alert');
-            if (success_alert) {
-                success_alert.style.transition = "opacity 0.5s ease";
-                success_alert.style.opacity = "0";
-                setTimeout(() => success_alert.remove(), 500);
-            }
-            if (error_alert) {
-                error_alert.style.transition = "opacity 0.5s ease";
-                error_alert.style.opacity = "0";
-                setTimeout(() => error_alert.remove(), 500);
-            }
-        }, 3000);
     </script>
 @endsection

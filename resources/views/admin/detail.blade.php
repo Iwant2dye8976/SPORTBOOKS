@@ -18,17 +18,17 @@
             border-radius: 10px;
         }
     </style>
+    @if (session('error'))
+        <div class="alert alert-danger text-center" id="error-alert">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success text-center" id="success-alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="container-fluid row border border-dark border-1 rounded py-2">
-        @if (session('error'))
-            <div class="alert alert-danger text-center" id="error-alert">
-                {{ session('error') }}
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success text-center" id="success-alert">
-                {{ session('success') }}
-            </div>
-        @endif
         <div class="col-12 col-md-5 text-center book-img">
             <img src="{{ $book->image_url }}" alt="">
         </div>
@@ -45,7 +45,8 @@
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
 
                     <div class="col-12 col-md-3 mb-1">
-                        <input type="number" name="amount" class="form-control" value="1" min="1" max="999" required>
+                        <input id="amount" type="number" name="amount" class="form-control" value="1" min="1"
+                            max="999" required>
                     </div>
 
                     <div class="col-auto col-md-2 text-lg-center col-lg-3">
@@ -83,20 +84,4 @@
             </div>
         </div>
     </div>
-    <script>
-        setTimeout(function() {
-            let success_alert = document.getElementById('success-alert');
-            let error_alert = document.getElementById('error-alert');
-            if (success_alert) {
-                success_alert.style.transition = "opacity 0.5s ease";
-                success_alert.style.opacity = "0";
-                setTimeout(() => success_alert.remove(), 500);
-            }
-            if (error_alert) {
-                error_alert.style.transition = "opacity 0.5s ease";
-                error_alert.style.opacity = "0";
-                setTimeout(() => error_alert.remove(), 500);
-            }
-        }, 3000);
-    </script>
 @endsection

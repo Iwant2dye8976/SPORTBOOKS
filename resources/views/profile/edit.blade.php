@@ -38,13 +38,32 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="email">Địa chỉ email</label>
+                        <label class="form-label" for="email">Email</label>
                         <input class="form-control" id="email" type="email" name="email"
                             value="{{ Auth::user()->email }}">
                         @error('email')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="phone_numner">Số điện thoại</label>
+                        <input class="form-control" id="phone_numner" type="tel" name="phone_number"
+                            value="{{ Auth::user()->phone_number }}">
+                        @error('phone_number')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="address">Địa chỉ</label>
+                        <input class="form-control" id="address" type="text" name="address"
+                            value="{{ Auth::user()->address }}">
+                        @error('address')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
                     <button class="btn btn-outline-primary form-control">
                         Xác nhận
                     </button>

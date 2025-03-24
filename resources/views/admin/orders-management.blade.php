@@ -12,7 +12,7 @@
     <div class="row row-cols-auto" style="min-height:max-content;">
         <div class="col-12 border border-dark border-1 rounded"
             style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
-            <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0">
+            <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
                 <div class="col">
                     <h2 class="text-start sticky-top">Quản lý đơn hàng</h2>
                 </div>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-1 text-center">
                         <a class="text text-decoration-none text-secondary fs-5"
-                            href="{{ route('admin.order-detail', $order->id) }}">Chi tiết</a>
+                            href="{{ route('admin.order-m.detail', $order->id) }}">Chi tiết</a>
                     </div>
                     <div class="col-12 my-2">
                         <hr>
@@ -90,21 +90,6 @@
                         }
                     }).catch(error => console.error("Lỗi cập nhật đơn hàng:", error));
             }
-
-            setTimeout(function() {
-                let alert = document.getElementById('success-alert');
-                let e_alert = document.getElementById('error-alert');
-                if (alert) {
-                    alert.style.transition = "opacity 0.5s ease";
-                    alert.style.opacity = "0";
-                    setTimeout(() => alert.remove(), 500);
-                }
-                if (e_alert) {
-                    e_alert.style.transition = "opacity 0.5s ease";
-                    e_alert.style.opacity = "0";
-                    setTimeout(() => e_alert.remove(), 500);
-                }
-            }, 3000);
         </script>
     </div>
 </div>

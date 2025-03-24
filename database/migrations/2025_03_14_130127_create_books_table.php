@@ -19,7 +19,6 @@ return new class extends Migration
             $table->text("description");
             $table->double("price");
             $table->string('image_url')->nullable();
-            $table->boolean("isOnDiscount")->default(false);
             $table->timestamps();
         });
     }

@@ -20,11 +20,11 @@ class ProfileController extends Controller
     {
         $cart_count = 0;
         $order_count = 0;
-        if(Auth::check()){
+        if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-            $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 1])->count();
         }
-        
+
         return view('profile.edit', compact('cart_count', 'order_count'))->with('user', $request->user());
     }
 
@@ -49,13 +49,16 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ],
-        [
-            'password.required' => 'Mật khẩu không được để trống.',
-            'password.current_password' => 'Mật khẩu không chính xác.'
-        ]);
+        $request->validateWithBag(
+            'userDeletion',
+            [
+                'password' => ['required', 'current_password'],
+            ],
+            [
+                'password.required' => 'Mật khẩu không được để trống.',
+                'password.current_password' => 'Mật khẩu không chính xác.'
+            ]
+        );
 
         $user = $request->user();
 

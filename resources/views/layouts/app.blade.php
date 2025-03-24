@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        .navbar {
+            position: relative;
+            z-index: 1000;
+        }
+
         .menu .l {
             font-size: 20px;
             text-decoration: none;
@@ -69,10 +74,6 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-
-        body {
-            background-color: #F6FCFA;
-        }
     </style>
 
     @stack('styles')
@@ -123,7 +124,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l" href="{{route('contact')}}">Liên hệ</a>
+                        <a class="nav-link l" href="{{ route('contact') }}">Liên hệ</a>
                     </li>
                 </ul>
             </div>
@@ -147,24 +148,8 @@
                         <button class="btn btn-outline-secondary position-relative dropdown-toggle" type="button"
                             id="account" data-bs-toggle="dropdown">
                             {{ Auth::user()->name }}
-                            {{-- @if ($cart_count > 0)
-                                <span
-                                    class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                                </span>
-                            @endif --}}
                         </button>
                         <ul class="dropdown-menu">
-                            {{-- <li><a class="dropdown-item"
-                                    href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('cart') : route('admin.cart')) : route('cart') }}">Giỏ
-                                    hàng
-                                    @if ($cart_count > 0)
-                                        <span
-                                            class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {{ $cart_count > 99 ? '99+' : $cart_count }}
-                                        </span>
-                                    @endif
-                                </a>
-                            </li> --}}
                             <li><a class="dropdown-item"
                                     href="{{ Auth::check() && Auth::user()->type === 'admin' ? route('admin.profile.edit') : route('profile.edit') }}">Tài
                                     khoản</a></li>
@@ -183,7 +168,6 @@
                                 </form>
                             </li>
                         </ul>
-
                     </div>
                 @endauth
 
@@ -205,7 +189,7 @@
     </div>
 
     <!-- Nội dung của từng trang -->
-    <div class="container-md-fluid container-xxl mt-4 min-vh-100">
+    <div class="container-md-fluid container-xxl mt-4 min-vh-100" style="z-index: 999;">
         @yield('content')
     </div>
 
@@ -217,6 +201,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     @stack('scripts')
+    <script src="{{ asset('js/alert.js') }}"></script>
 
 </body>
 

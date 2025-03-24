@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        .navbar {
+            position: relative;
+            z-index: 1000;
+        }
+
         .menu .l {
             font-size: 20px;
             text-decoration: none;

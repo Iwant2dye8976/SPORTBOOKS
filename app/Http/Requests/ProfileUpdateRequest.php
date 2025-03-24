@@ -16,7 +16,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:100'],
             'email' => [
                 'required',
                 'string',
@@ -25,6 +25,8 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'phone_number' => ['required', 'regex:/^(03|05|07|08|09|01[2689])[0-9]{8}$/'],
+            'address' => ['required', 'max:255']
         ];
     }
 
@@ -34,9 +36,16 @@ class ProfileUpdateRequest extends FormRequest
             'name.required' => 'Vui lòng nhập họ và tên.',
             'name.string' => 'Họ và tên phải là dạng chữ.',
             'name.max' => 'Họ và tên không được dài quá 255 ký tự.',
+
             'email.required' => 'Email là bắt buộc.',
             'email.email' => 'Email không hợp lệ.',
             'email.unique' => 'Email này đã được sử dụng.',
+
+            'phone_number.required' => 'Số điện thoại là bắt buộc.',
+            'phone_number.regex' => 'Số điện thoại không hợp lệ.',
+
+            'address.required' => 'Vui lòng nhập địa chỉ.',
+            'address.max' => 'Địa chỉ không được dài quá 255 ký tự.',
         ];
     }
 }

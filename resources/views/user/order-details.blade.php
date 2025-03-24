@@ -4,18 +4,38 @@
 
 @section('content')
     <div>
-        <a class="text text-decoration-none text-dark fs-4" href="{{ url()->previous() }}">
+        <a class="text text-decoration-none text-dark fs-4" href="{{ url('/orders') }}">
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </div>
-    <div class="row mt-5 border border-dark border-1 rounded px-3 pb-3 mb-2"
+    <div class="row mt-5 border border-dark border-1 rounded px-3 pb-3 mb-2 pt-2"
         style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
-        <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0">
+        <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">
                 <h2 class="text-start sticky-top">Chi tiết đơn hàng</h2>
             </div>
-            <div class="col mb-4">
+            <div class="col mb-3">
                 <h4 class="text-end text-secondary">{{ $product_count }} sản phẩm</h4>
+            </div>
+            <div class="col-4">
+                <h5 class="text text-secondary">Trạng thái đơn hàng: 
+                    @switch($order_information->status)
+                        @case(-1)
+                            <span class="text text-warning fw-bold">Chờ xử lý</span>
+                        @break
+
+                        @case(0)
+                            <span class="text text-danger fw-bold">Đã hủy</span>
+                        @break
+
+                        @case(1)
+                            <span class="text text-success fw-bold">Đã xác nhận</span>
+                        @break
+
+                        @default
+                        <span class="text text-dark fw-bold">Trạng thái không xác định</span>
+                    @endswitch
+                </h5>
             </div>
             <div class="col-12 mt-3">
                 <hr>
@@ -62,7 +82,6 @@
     <div class="d-fex justify-content-center mt-3 row border border-dark border-1 rounded px-3 py-3 mb-5">
         <h2>Thông tin đặt hàng</h2>
         <hr>
-        @csrf
         <div class="w-50">
             <div class="mb-3">
                 <label class="form-label" for="name">Họ và tên</label>
@@ -70,11 +89,11 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="address">Địa chỉ nhận hàng</label>
-                <input class="form-control" type="text" value="{{ $order_information->user->name }}" readonly>
+                <input class="form-control" type="text" value="{{ $order_information->user->address }}" readonly>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="phone-number">Số điện thoại</label>
-                <input class="form-control" type="tel" value="{{ $order_information->user->name }}" readonly>
+                <input class="form-control" type="tel" value="{{ $order_information->user->phone_number }}" readonly>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="shipping">Phương thức vận chuyển</label>
@@ -117,6 +136,14 @@
                     </div>
                 </div>
             </div>
+            @if ($order_information->status == -1)
+                <form class="text-center" action="{{ route('orders.cancel', $order_information->id) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
+                    <button type="submit" class="form-control btn btn-danger">HỦY ĐƠN HÀNG</button>
+                </form>
+            @endif
         </div>
     </div>
 @endsection
