@@ -47,7 +47,8 @@ class BookController extends Controller
             ->inRandomOrder()
             ->limit(5)
             ->get();
-
+        $cart_count = 0;
+        $order_count = 0;
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();

@@ -16,17 +16,14 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Nếu chưa đăng nhập, chuyển hướng về trang chủ
         if (!Auth::check()) {
             return redirect()->route('home');
         }
 
-        // Nếu là admin, cho phép truy cập
         if (Auth::user()->type === 'admin') {
             return $next($request);
         }
 
-        // Nếu không phải admin, chuyển hướng về trang user
         return redirect()->route('home')->with('error', 'Bạn không có quyền truy cập!');
     }
 }
