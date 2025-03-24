@@ -3,24 +3,24 @@
 @section('title', 'Chi tiết đơn hàng')
 
 @section('content')
-    <div>
+    <div class="mb-2">
         <a class="text text-decoration-none text-dark fs-4" href="{{ url('/admin/orders') }}">
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </div>
 
     @if (session('success'))
-        <div class="alert alert-success text-center" id="success-alert">
-            {{ session('success') }}
+        <div class="row alert alert-success text-center" id="success-alert">
+            <p class="p-0 m-0">{{ session('success') }}</p>
         </div>
     @endif
-    @if (session('error-alert'))
-        <div class="alert alert-danger text-center" id="error-alert">
-            {{ session('error-alert') }}
+    @if (session('error'))
+        <div class="row alert alert-danger text-center" id="error-alert">
+            <p class="p-0 m-0">{{ session('error') }}</p>
         </div>
     @endif
 
-    <div class="row mt-5 border border-dark border-1 rounded px-3 pb-3 mb-2 pt-2"
+    <div class="row mt-2 border border-dark border-1 rounded px-3 pb-3 mb-2"
         style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
         <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">

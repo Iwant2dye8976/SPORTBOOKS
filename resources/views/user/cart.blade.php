@@ -5,20 +5,20 @@
 @section('content')
     <div class="my-5">
         @if (session('success'))
-            <div class="alert alert-success text-center" id="success-alert">
-                {{ session('success') }}
+            <div class="row alert alert-success text-center" id="success-alert">
+                <p class="p-0 m-0">{{ session('success') }}</p>
             </div>
         @endif
-        {{-- @if (session('error-alert'))
-            <div class="alert alert-danger text-center" id="error-alert">
-                {{ session('error-alert') }}
+        @if (session('error'))
+            <div class="row alert alert-danger text-center" id="error-alert">
+                <p class="p-0 m-0">{{ session('error') }}</p>
             </div>
-        @endif --}}
+        @endif
         @if ($cart_count === 0)
             <div class="alert alert-warning text-center">Giỏ hàng trống!</div>
         @else
             <div class="row row-cols-auto" style="min-height:max-content;">
-                <div class="col-12 border border-dark rounded-start"
+                <div class="col-12 border border-dark rounded"
                     style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
                     <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
                         <div class="col">

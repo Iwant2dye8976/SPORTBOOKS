@@ -26,12 +26,13 @@ class AdminController extends Controller
     public function book_m()
     {
         $books = Book::paginate(10);
-        return view('admin.index', compact('books'));
+        $book_count = Book::get()->count();
+        return view('admin.index', compact('books', 'book_count'));
     }
 
     public function user_m()
     {
-        $users = User::paginate(10);
+        $users = User::whereNotIn('id', [Auth::user()->id])->paginate(10);
         return view('admin.index', compact('users'));
     }
 
@@ -49,12 +50,23 @@ class AdminController extends Controller
         return view('admin.index', compact('product_count', 'order_details', 'order_information'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function book_m_show(Request $request, $id)
     {
-        //
+        $book = Book::where('id', $id)->first();
+        return view('admin.index', compact('book'));
+    }
+
+    public function book_m_update(Request $request, $id)
+    {
+        $book = Book::where('id', $id)->first();
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->category = $request->category;
+        $book->description = $request->description;
+        $book->price = $request->price;
+        $book->image_url = $request->image_url;
+        $book->save();
+        return redirect()->back()->with('success', 'Cập nhật thông tin sách thành công.');
     }
 
     /**
@@ -84,8 +96,17 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroyBook(Request $request, $id)
     {
-        //
+        $book = Book::where('id', $id)->first();
+        $book->delete();
+        return redirect()->back()->with('success', 'Sách đã bị xóa.');
+    }
+    
+    public function destroyUser(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+        $user->delete();
+        return redirect()->back()->with('success', 'Tài khoản đã bị xóa.');
     }
 }

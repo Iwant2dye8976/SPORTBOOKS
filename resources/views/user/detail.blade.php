@@ -18,17 +18,17 @@
             border-radius: 10px;
         }
     </style>
+    @if (session('error'))
+        <div class="container-fluid alert alert-danger text-center" id="error-alert">
+            <p class="p-0 m-0">{{ session('error') }}</p>
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="container-fluid row alert alert-success text-center" id="success-alert">
+            <p class="p-0 m-0">{{ session('success') }}</p>
+        </div>
+    @endif
     <div class="container-fluid row border border-dark border-1 rounded py-2">
-        @if (session('error'))
-            <div class="alert alert-danger text-center" id="error-alert">
-                {{ session('error') }}
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success text-center" id="success-alert">
-                {{ session('success') }}
-            </div>
-        @endif
         <div class="col-12 col-md-5 text-center book-img">
             <img src="{{ $book->image_url }}" alt="">
         </div>
@@ -40,17 +40,18 @@
                 <p class="fs-6"> {{ $book->description }} </p>
             </div>
             <div class="">
-                <form class="row justify-content-start" method="POST"
-                    action="{{ route('cart.add', $book->id) }}">
+                <form class="row justify-content-start" method="POST" action="{{ route('cart.add', $book->id) }}">
                     @csrf
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
 
                     <div class="col-12 col-md-3 mb-1">
-                        <input id="amount" type="number" name="amount" class="form-control" value="1" min="1" max="999" required>
+                        <input id="amount" type="number" name="amount" class="form-control" value="1"
+                            min="1" max="999" required>
                     </div>
 
                     <div class="col-auto col-md-2 text-lg-center col-lg-3">
-                        <a class="btn btn-success text-decoration-none" href="{{route('buynow-v', $book->id)}}">Mua ngay</a>
+                        <a class="btn btn-success text-decoration-none" href="{{ route('buynow-v', $book->id) }}">Mua
+                            ngay</a>
                     </div>
 
                     <div class="col-auto col-md-4">

@@ -146,14 +146,4 @@
             </div>
         </div>
     </div>
-    <script>
-        setTimeout(function() {
-            let status = document.getElementById('status');
-            if (status) {
-                status.style.transition = "opacity 0.5s ease";
-                status.style.opacity = "0";
-                setTimeout(() => status.remove(), 500);
-            }
-        }, 3000); // Ẩn sau 3 giây (3000ms)
-    </script>
 @endsection

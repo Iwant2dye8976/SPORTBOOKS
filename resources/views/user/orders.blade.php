@@ -3,7 +3,7 @@
 @section('title', 'Đơn hàng')
 
 @section('content')
-    <div class="mt-5 border border-dark border-1 rounded p-3"
+    <div class="mt-5 border border-dark border-1 rounded p-3 mb-5"
         style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
         <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">

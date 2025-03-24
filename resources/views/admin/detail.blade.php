@@ -19,13 +19,13 @@
         }
     </style>
     @if (session('error'))
-        <div class="alert alert-danger text-center" id="error-alert">
-            {{ session('error') }}
+        <div class="container-fluid alert alert-danger text-center" id="error-alert">
+            <p class="p-0 m-0">{{ session('error') }}</p>
         </div>
     @endif
     @if (session('success'))
-        <div class="alert alert-success text-center" id="success-alert">
-            {{ session('success') }}
+        <div class="container-fluid row alert alert-success text-center" id="success-alert">
+            <p class="p-0 m-0">{{ session('success') }}</p>
         </div>
     @endif
     <div class="container-fluid row border border-dark border-1 rounded py-2">

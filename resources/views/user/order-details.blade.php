@@ -3,12 +3,24 @@
 @section('title', 'Chi tiết đơn hàng')
 
 @section('content')
-    <div>
+    <div class="mb-2">
         <a class="text text-decoration-none text-dark fs-4" href="{{ url('/orders') }}">
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </div>
-    <div class="row mt-5 border border-dark border-1 rounded px-3 pb-3 mb-2 pt-2"
+
+    @if (session('success'))
+        <div class="row alert alert-success text-center" id="success-alert">
+            <p class="p-0 m-0">{{ session('success') }}</p>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="row alert alert-danger text-center" id="error-alert">
+            <p class="p-0 m-0">{{ session('error') }}</p>
+        </div>
+    @endif
+
+    <div class="row col-12 mt-2 border border-dark border-1 rounded px-3 pb-3 mb-2"
         style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
         <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">
@@ -18,7 +30,7 @@
                 <h4 class="text-end text-secondary">{{ $product_count }} sản phẩm</h4>
             </div>
             <div class="col-4">
-                <h5 class="text text-secondary">Trạng thái đơn hàng: 
+                <h5 class="text text-secondary">Trạng thái đơn hàng:
                     @switch($order_information->status)
                         @case(-1)
                             <span class="text text-warning fw-bold">Chờ xử lý</span>
@@ -33,7 +45,7 @@
                         @break
 
                         @default
-                        <span class="text text-dark fw-bold">Trạng thái không xác định</span>
+                            <span class="text text-dark fw-bold">Trạng thái không xác định</span>
                     @endswitch
                 </h5>
             </div>
