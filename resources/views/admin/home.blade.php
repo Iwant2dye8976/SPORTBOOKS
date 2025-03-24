@@ -3,7 +3,7 @@
 @section('title', 'Trang Chủ')
 
 @section('banner')
-    <img class="img-fluid" src="{{ asset('imgs/banner.png') }}" alt="Banner">
+    <img class="img-fluid" src="{{ asset('imgs/banner-2.png') }}" alt="Banner">
 @endsection
 
 @section('content')
@@ -43,9 +43,8 @@
             @foreach ($books as $book)
                 <div class="col">
                     <div class="card h-100" style="background-color: #f2f3f4">
-                        <img src="{{ $book->image_url }}"
-                            class="card-img-top" alt="Image">
-                        <div class="card-body">
+                        <img src="{{ $book->image_url }}" class="card-img-top" alt="Image">
+                        <div class="card-body d-flex justify-content-center align-items-center">
                             <p class="card-text fw-bold fs-5 text-center">
                                 <a class="text-decoration-none text-dark" href="{{ route('admin.detail', $book->id) }}">
                                     {{ $book->title }}

@@ -18,7 +18,7 @@
             border-radius: 10px;
         }
     </style>
-    <div class="container-fluid row">
+    <div class="container-fluid row border border-dark border-1 rounded py-2">
         @if (session('error'))
             <div class="alert alert-danger text-center" id="error-alert">
                 {{ session('error') }}
@@ -40,17 +40,17 @@
                 <p class="fs-6"> {{ $book->description }} </p>
             </div>
             <div class="">
-                <form class="row justify-content-start" method="POST"
-                    action="{{ route('admin.cart.add', $book->id) }}">
+                <form class="row justify-content-start" method="POST" action="{{ route('admin.cart.add', $book->id) }}">
                     @csrf
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
 
                     <div class="col-12 col-md-3 mb-1">
-                        <input type="number" name="amount" class="form-control" value="1" min="1" required>
+                        <input type="number" name="amount" class="form-control" value="1" min="1" max="999" required>
                     </div>
 
                     <div class="col-auto col-md-2 text-lg-center col-lg-3">
-                        <a class="btn btn-success text-decoration-none" href="{{route('admin.buynow-v', $book->id)}}">Mua ngay</a>
+                        <a class="btn btn-success text-decoration-none" href="{{ route('admin.buynow-v', $book->id) }}">Mua
+                            ngay</a>
                     </div>
 
                     <div class="col-auto col-md-4">
@@ -62,7 +62,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid mt-4">
+    <div class="container-fluid row border border-dark border-1 rounded py-2 mt-4 mb-5">
         <div class="mb-3">
             <h4 class="fw-bold">SÁCH LIÊN QUAN</h4>
             <div class="row row-cols-1 row-cols-md-5">
@@ -70,7 +70,7 @@
                     <div class="col my-2">
                         <div class="card h-100">
                             <img src="{{ $rBook->image_url }}" class="card-img-top" alt="Image">
-                            <div class="card-body">
+                            <div class="card-body d-flex justify-content-center align-items-center">
                                 <p class="card-text fw-bold fs-5 text-center"> <a class="text-decoration-none text-dark"
                                         href="{{ route('admin.detail', $rBook->id) }}"> {{ $rBook->title }} </a> </p>
                             </div>

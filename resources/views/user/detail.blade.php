@@ -46,7 +46,7 @@
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
 
                     <div class="col-12 col-md-3 mb-1">
-                        <input type="number" name="amount" class="form-control" value="1" min="1" required>
+                        <input type="number" name="amount" class="form-control" value="1" min="1" max="999" required>
                     </div>
 
                     <div class="col-auto col-md-2 text-lg-center col-lg-3">
@@ -70,7 +70,7 @@
                     <div class="col my-2">
                         <div class="card h-100">
                             <img src="{{ $rBook->image_url }}" class="card-img-top" alt="Image">
-                            <div class="card-body">
+                            <div class="card-body d-flex justify-content-center align-items-center">
                                 <p class="card-text fw-bold fs-5 text-center"> <a class="text-decoration-none text-dark"
                                         href="{{ route('detail', $rBook->id) }}"> {{ $rBook->title }} </a> </p>
                             </div>

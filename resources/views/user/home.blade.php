@@ -45,7 +45,7 @@
                     <div class="card h-100" style="background-color: #f2f3f4">{{--https://static.kinhtedothi.vn/w960/images/upload/2021/12/24/sach-huan-1.jpg--}}
                         <img src="{{ $book->image_url}}"
                             class="card-img-top" alt="Image">
-                        <div class="card-body">
+                        <div class="card-body  d-flex justify-content-center align-items-center">
                             <p class="card-text fw-bold fs-5 text-center">
                                 <a class="text-decoration-none text-dark" href="{{ route('detail', $book->id) }}">
                                     {{ $book->title }}
