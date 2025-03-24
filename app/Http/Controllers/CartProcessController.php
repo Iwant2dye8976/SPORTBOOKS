@@ -18,9 +18,6 @@ class CartProcessController extends Controller
     {
         $amount = $request->input('amount');
         $book = Book::find($request->id);
-        $cart_count = 0;
-        $order_count = 0;
-
         // if (Auth::check()) {
         //     $cart_count = Cart::where('user_id', Auth::user()->id)->count();
         //     $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();

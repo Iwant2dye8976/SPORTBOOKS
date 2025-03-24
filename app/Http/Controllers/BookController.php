@@ -76,6 +76,8 @@ class BookController extends Controller
         $books = $query->paginate(20);
         $totalBooks = $books->total();
         $categories = Book::select('category')->distinct()->get();
+        $cart_count = 0;
+        $order_count = 0;
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
@@ -104,7 +106,8 @@ class BookController extends Controller
         $books = $query->paginate(20);
         $totalBooks = $books->total();
         $categories = Book::select('category')->distinct()->get();
-
+        $cart_count = 0;
+        $order_count = 0;
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
             $order_count = Order::where('user_id', Auth::user()->id)->where('status', -1)->count();
