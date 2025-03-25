@@ -128,7 +128,7 @@
                         <label class="form-label" for="shipping_address">Địa chỉ nhận hàng</label>
                         <input class="form-control" type="text" name="shipping_address" id="shipping_address"
                             value="{{ $user->address }}">
-                        @error('address')
+                        @error('shipping_address')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -136,7 +136,7 @@
                         <label class="form-label" for="phone_number">Số điện thoại</label>
                         <input class="form-control" type="tel" name="phone_number" id="phone_number"
                             value="{{ $user->phone_number }}">
-                        @error('phone-number')
+                        @error('phone_number')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
