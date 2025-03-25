@@ -15,16 +15,17 @@
                 </div>
                 <form action="{{ route('admin.filter') }}" method="GET" class="col-12 row row-cols-auto">
                     <div class="col-12 col-md text-center">
+                        <input type="hidden" name="keyword" value="{{ rawurldecode(request('keyword')) }}">
                         <button class="text-uppercase btn w-100" type="submit" name="category" value="all"
-                            style="{{ request()->query('category', 'all') == 'all' ? 'background-color: #0892d0; color: white;' : '' }}">
-                            All
+                            style="{{ request()->query('category', 'all') == 'all' ? 'background-color: #BC7C7C; color: white;' : '' }}">
+                            Tất cả
                         </button>
                     </div>
                     @foreach ($categories as $category)
                         <div class="col-12 col-md text-center">
                             <button class="text-uppercase btn w-100" type="submit" name="category"
                                 value="{{ $category['category'] }}"
-                                style="{{ request()->query('category', 'all') == $category['category'] ? 'background-color: #0892d0; color: white;' : '' }}">
+                                style="{{ request()->query('category', 'all') == $category['category'] ? 'background-color: #BC7C7C; color: white;' : '' }}">
                                 {{ $category['category'] }}
                             </button>
                         </div>

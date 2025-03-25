@@ -17,8 +17,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
-        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 1])->count();
+        $orders = Order::with('user')->where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
+        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
         return view(Auth::user()->type === 'admin' ? 'admin.orders' : 'user.orders', compact('orders', 'order_count', 'cart_count'));
     }
@@ -31,29 +31,36 @@ class OrderController extends Controller
         $book = Book::where('id', $request->id)->first();
         $user = User::where('id', Auth::user()->id)->first();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 1])->count();
+        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
         return view(Auth::user()->type === 'admin' ? 'admin.buynow' : 'user.buynow', compact('book', 'user', 'cart_count', 'cart_count', 'order_count'));
     }
 
     public function buynow(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'address' => 'required|string',
+            'recipient_name' => 'required|string|max:255',
+            'shipping_address' => 'required|string|max:255',
             'phone_number' => ['required', 'regex:/^(03|05|07|08|09|01[2689])[0-9]{8}$/'],
             'total-price' => 'required|numeric',
+            'note' => ['nullable', 'max:255'],
         ], [
-            'name.required' => 'Vui lòng nhập họ và tên.',
-            'address.required' => 'Vui lòng nhập địa chỉ.',
+            'recipient_name.max' => 'Tên quá dài.',
+            'shipping_address.max' => 'Địa chỉ quá dài.',
+            'recipient_name.required' => 'Vui lòng nhập họ và tên.',
+            'shipping_address.required' => 'Vui lòng nhập địa chỉ.',
             'phone_number.required' => 'Vui lòng nhập số điện thoại.',
             'phone_number.regex' => 'Số điện thoại không hợp lệ.',
             'total-price.required' => 'Vui lòng nhập tổng tiền.',
+            'note.max' => 'Độ dài của ghi chú không được vượt quá 255 ký tự.',
         ]);
         $book = Book::where('id', $request->id)->first();
 
         $order = new Order();
         $order->user_id = Auth::user()->id;
-        $order->note = "Khách hàng: " . $request['name'] . ". Địa chỉ: " . $request['address'] . ". SĐT: " . $request['phone_number'];
+        $order->recipient_name = $request->recipient_name;
+        $order->shipping_address = $request->shipping_address;
+        $order->phone_number = $request->phone_number;
+        $order->note = $request->note;
         $order->shipping_fee = $request['shipping'];
         $order->books_price = $request['books-price'];
         $order->save();
@@ -74,23 +81,30 @@ class OrderController extends Controller
     {
 
         $request->validate([
-            'name' => 'required|string',
-            'address' => 'required|string',
-            'phone-number' => ['required', 'regex:/^(03|05|07|08|09|01[2689])[0-9]{8}$/'],
+            'recipient_name' => 'required|string|max:255',
+            'shipping_address' => 'required|string|max:255',
+            'phone_number' => ['required', 'regex:/^(03|05|07|08|09|01[2689])[0-9]{8}$/'],
             'total-price' => 'required|numeric',
+            'note' => ['nullable', 'max:255'],
         ], [
-            'name.required' => 'Vui lòng nhập họ và tên.',
-            'address.required' => 'Vui lòng nhập địa chỉ.',
+            'recipient_name.max' => 'Tên quá dài.',
+            'shipping_address.max' => 'Địa chỉ quá dài.',
+            'recipient_name.required' => 'Vui lòng nhập họ và tên.',
+            'shipping_address.required' => 'Vui lòng nhập địa chỉ.',
             'phone_number.required' => 'Vui lòng nhập số điện thoại.',
             'phone_number.regex' => 'Số điện thoại không hợp lệ.',
             'total-price.required' => 'Vui lòng nhập tổng tiền.',
+            'note.max' => 'Độ dài của ghi chú không được vượt quá 255 ký tự.',
         ]);
 
         $items = Cart::where('user_id', Auth::user()->id)->get();
 
         $order = new Order();
         $order->user_id = Auth::user()->id;
-        $order->note = "Khách hàng: " . $request['name'] . ". Địa chỉ: " . $request['address'] . ". SĐT: " . $request['phone-number'];
+        $order->recipient_name = $request->recipient_name;
+        $order->shipping_address = $request->shipping_address;
+        $order->phone_number = $request->phone_number;
+        $order->note = $request->note;
         $order->shipping_fee = $request['shipping'];
         $order->books_price = $request['books-price'];
         $order->save();
@@ -118,7 +132,7 @@ class OrderController extends Controller
         $order_details = OrderDetail::with('book')->where('order_id', $request->id)->get();
         $product_count = OrderDetail::where('order_id', $request->id)->count();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 1])->count();
+        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
         $order_information = Order::with('user')->where('id', $request->id)->first();
         return view(Auth::user()->type === 'user' ? 'user.order-details' : 'admin.order-details', compact('order_details', 'product_count', 'cart_count', 'order_count', 'order_information'));
     }

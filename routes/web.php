@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CheckoutController;
 
 require __DIR__ . '/auth.php'; // Import routes từ Breeze
 
@@ -38,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    //VN PAY
+    Route::post('/vnpay/payment', [CheckoutController::class, 'vnpay_payment'])->name('checkout.vnpay');
 });
 
 

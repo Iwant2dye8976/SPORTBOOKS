@@ -1,4 +1,4 @@
-<div class="mt-5">
+<div class="mt-5 mb-5">
     @if (session('success'))
         <div class="alert alert-success text-center" id="success-alert">
             {{ session('success') }}
@@ -17,7 +17,7 @@
                     <h2 class="text-start sticky-top">Quản lý đơn hàng</h2>
                 </div>
                 <div class="col mb-4">
-                    <h4 class="text-end text-secondary">{{ $orders->count() }} đơn hàng</h4>
+                    <h4 class="text-end text-secondary">{{ $order_count }} đơn hàng</h4>
                 </div>
                 <div class="col-12 mt-3">
                     <hr>
@@ -25,8 +25,8 @@
                 <div class="col-2 text-center">
                     Mã đơn hàng
                 </div>
-                <div class="col-4 text-center">
-                    Nội dung
+                <div class="col-3 text-center">
+                    Họ tên
                 </div>
                 <div class="col-2 text-center">
                     Tổng tiền
@@ -43,8 +43,8 @@
                     <div class="col-2 text-center">
                         {{ $order->id }}
                     </div>
-                    <div class="col-4 text-center">
-                        {{ $order->note }}
+                    <div class="col-3 text-center">
+                        {{ $order->recipient_name }}
                     </div>
                     <div class="col-2 text-center fw-bold">
                         ${{ $order->total }}
@@ -57,7 +57,7 @@
                             <option value="1" {{ $order->status == 1 ? 'selected' : '' }}>Đã xác nhận</option>
                         </select>
                     </div>
-                    <div class="col-1 text-center">
+                    <div class="col-2 text-center">
                         <a class="text text-decoration-none text-secondary fs-5"
                             href="{{ route('admin.order-m.detail', $order->id) }}">Chi tiết</a>
                     </div>
@@ -91,5 +91,8 @@
                     }).catch(error => console.error("Lỗi cập nhật đơn hàng:", error));
             }
         </script>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        {{ $orders->links('pagination::bootstrap-4') }}
     </div>
 </div>

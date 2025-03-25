@@ -90,16 +90,31 @@
     <hr>
     <div class="w-50">
         <div class="mb-3">
-            <label class="form-label" for="name">Họ và tên</label>
-            <input class="form-control" type="text" value="{{ $order_information->user->name }}" readonly>
+            <label class="form-label" for="recipient_name">Họ và tên</label>
+            <input class="form-control" type="text" value="{{ $order_information->recipient_name }}" readonly>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="address">Địa chỉ nhận hàng</label>
-            <input class="form-control" type="text" value="{{ $order_information->user->address }}" readonly>
+            <label class="form-label" for="shipping_address">Địa chỉ nhận hàng</label>
+            <input class="form-control" type="text" name="shipping_address" id="shipping_address"
+                value="{{ $order_information->shipping_address }}">
+            @error('address')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
         <div class="mb-3">
-            <label class="form-label" for="phone-number">Số điện thoại</label>
-            <input class="form-control" type="tel" value="{{ $order_information->user->phone_number }}" readonly>
+            <label class="form-label" for="phone_number">Số điện thoại</label>
+            <input class="form-control" type="tel" name="phone_number" id="phone_number"
+                value="{{ $order_information->phone_number }}">
+            @error('phone-number')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="note">Ghi chú</label>
+            <textarea class="form-control" name="note" id="note" cols="10" rows="7">{{ $order_information->note }}</textarea>
+            @error('note')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
         <div class="mb-3">
             <label class="form-label" for="shipping">Phương thức vận chuyển</label>

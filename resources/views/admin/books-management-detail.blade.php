@@ -28,30 +28,48 @@
                     <label class="form-label" for="image_url">Đường dẫn ảnh</label>
                     <input class="form-control" id="image_url" name="image_url" type="text"
                         value="{{ $book->image_url }}" onblur="updateImage();">
+                    @error('image_url')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="title">Tiêu đề</label>
                     <input class="form-control" id="title" name="title" type="text"
                         value="{{ $book->title }}">
+                    @error('title')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="author">Tác giả</label>
                     <input class="form-control" id="author" name="author" type="text"
                         value="{{ $book->author }}">
+                    @error('author')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="category">Thể loại</label>
                     <input class="form-control" id="category" name="category" type="text"
                         value="{{ $book->category }}">
+                    @error('category')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="price">Giá bán</label>
                     <input class="form-control" id="price" name="price" type="number" step="0.01"
                         min="1" value="{{ $book->price }}">
+                    @error('price')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="description">Mô tả sách</label>
                     <textarea class="form-control" name="description" id="description" cols="30" rows="5">{{ $book->description }}</textarea>
+                    @error('description')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-dark form-control">Xác nhận</button>
             </form>

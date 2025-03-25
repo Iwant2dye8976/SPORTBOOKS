@@ -20,7 +20,8 @@
             <div class="row row-cols-auto" style="min-height:max-content;">
                 <div class="col-12 border border-dark rounded"
                     style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
-                    <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
+                    <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top"
+                        style="background-color: #fffaf0; z-index: 999;">
                         <div class="col">
                             <h2 class="text-start sticky-top">Giỏ hàng</h2>
                         </div>
@@ -69,77 +70,97 @@
         @endif
 
         @if ($cart_count != 0)
-            <div class="d-fex justify-content-center mt-3 row border border-dark border-1 rounded px-3 py-3">
+            <div class="row mt-3 border border-dark border-1 rounded px-3 py-3">
                 <h2>Thông tin đặt hàng</h2>
                 <hr>
-                <form class="w-50" method="POST" action="{{ route('admin.checkout') }}">
-                    @csrf
-                    <div class="mb-3">
-                        <label class="form-label" for="name">Họ và tên</label>
-                        <input class="form-control" type="text" name="name" id="name"
-                            value="{{ $user->name }}">
-                        @error('name')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="address">Địa chỉ nhận hàng</label>
-                        <input class="form-control" type="text" name="address" id="address" value="{{ $user->address }}">
-                        @error('address')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="phone-number">Số điện thoại</label>
-                        <input class="form-control" type="tel" name="phone-number" id="phone-number" value="{{ $user->phone_number }}">
-                        @error('phone-number')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="shipping">Phương thức vận chuyển</label>
-                        <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice()">
-                            <option value="0.6" data-fee="0.6">Tiết kiệm (+$0.60)</option>
-                            <option value="1.2" data-fee="1.2">Tiêu chuẩn (+$1.20)</option>
-                            <option value="2" data-fee="2">Nhanh (+$2.00)</option>
-                            <option value="4" data-fee="4">Hỏa tốc (+$4.00)</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <hr>
-                        <h4 class="fw-bold">Chi tiết thanh toán</h4>
-                        <div>
-                            <div class="d-flex justify-content-between">
-                                <p>Tiền sách:</p>
-                                <p id="book-price-detail"><span
-                                        class="text-dark"><span>+</span>${{ number_format($total_price, 2) }}
-                                </p>
-                                <input name="books-price" id="book-price-detail-i" type="number" step="0.01"
-                                    value="{{ number_format($total_price, 2) }}" hidden>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p>Phí vận chuyển:</p>
-                                <p><span>+</span><span id="shipping-fee" class="text-dark">$</p>
+                <div class="d-flex justify-content-center">
+                    <form class="w-50" method="POST" action="{{ route('admin.checkout') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label" for="recipient_name">Họ và tên</label>
+                            <input class="form-control" type="text" name="recipient_name" id="recipient_name"
+                                value="{{ $user->name }}">
+                            @error('recipient_name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="shipping_address">Địa chỉ nhận hàng</label>
+                            <input class="form-control" type="text" name="shipping_address" id="shipping_address"
+                                value="{{ $user->address }}">
+                            @error('address')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="phone_number">Số điện thoại</label>
+                            <input class="form-control" type="tel" name="phone_number" id="phone_number"
+                                value="{{ $user->phone_number }}">
+                            @error('phone-number')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="note">Ghi chú</label>
+                            <textarea class="form-control" name="note" id="note" cols="10" rows="7"></textarea>
+                            @error('note')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="shipping">Phương thức vận chuyển</label>
+                            <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice()">
+                                <option value="0.6" data-fee="0.6">Tiết kiệm (+$0.60)</option>
+                                <option value="1.2" data-fee="1.2">Tiêu chuẩn (+$1.20)</option>
+                                <option value="2" data-fee="2">Nhanh (+$2.00)</option>
+                                <option value="4" data-fee="4">Hỏa tốc (+$4.00)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <hr>
+                            <h4 class="fw-bold">Chi tiết thanh toán</h4>
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <p>Tiền sách:</p>
+                                    <p id="book-price-detail"><span
+                                            class="text-dark"><span>+</span>${{ number_format($total_price, 2) }}
+                                    </p>
+                                    <input name="books-price" id="book-price-detail-i" type="number" step="0.01"
+                                        value="{{ number_format($total_price, 2) }}" hidden>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p>Phí vận chuyển:</p>
+                                    <p><span>+</span><span id="shipping-fee" class="text-dark">$</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="d-flex-row align-items-end mb-3">
-                        <hr>
-                        <div class="d-flex justify-content-between">
-                            <h4 class="fw-bold">Tổng chi phí:</h4>
-                            <div class="d-flex justify-content-end">
-                                <h4 class="total-price"></h4>
-                                <input name="total-price" id="total-price"
-                                    class="p-0 form-control w-50 text-end fs-4 fw-bold border-0 total-price"
-                                    type="number" step="0.01" value="{{ $total_price }}" readonly hidden>
+                        <div class="d-flex-row align-items-end mb-3">
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <h4 class="fw-bold">Tổng chi phí:</h4>
+                                <div class="d-flex justify-content-end">
+                                    <h4 class="total-price"></h4>
+                                    <input name="total-price" id="total-price"
+                                        class="p-0 form-control w-50 text-end fs-4 fw-bold border-0 total-price"
+                                        type="number" step="0.01" value="{{ $total_price }}" readonly hidden>
+                                </div>
+                                {{-- <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4> --}}
                             </div>
-                            {{-- <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4> --}}
                         </div>
-                    </div>
-                    <button class="btn btn-dark form-control" type="submit">
-                        Đặt hàng
-                    </button>
-                </form>
+                        <button class="btn btn-dark form-control" type="submit">
+                            Đặt hàng
+                        </button>
+                    </form>
+                </div>
+                {{-- <div class="d-flex justify-content-center">
+                    <form class="w-50" action="{{ route('checkout.vnpay') }}" method="POST">
+                        @csrf
+                        <input name="total_price" id="total-price" class="total-prices" type="number" value="500000"
+                            readonly hidden>
+                        <button name="redirect" class="btn btn-primary form-control" type="submit">Thanh toán
+                            VNPAY</button>
+                    </form>
+                </div> --}}
             </div>
         @endif
     </div>

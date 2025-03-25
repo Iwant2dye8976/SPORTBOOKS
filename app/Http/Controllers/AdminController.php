@@ -38,8 +38,9 @@ class AdminController extends Controller
 
     public function order_m()
     {
-        $orders = Order::paginate(10);
-        return view('admin.index', compact('orders'));
+        $orders = Order::with('user')->paginate(10);
+        $order_count = Order::all()->count();
+        return view('admin.index', compact('orders', 'order_count'));
     }
 
     public function order_m_show(Request $request)
@@ -58,6 +59,36 @@ class AdminController extends Controller
 
     public function book_m_update(Request $request, $id)
     {
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'author' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'min:1', 'numeric'],
+            'image_url' => ['required', 'string'],
+        ], [
+            'title.required' => 'Vui lòng nhập tiêu đề sách.',
+            'title.string' => 'Tiêu đề sách phải là chuỗi ký tự.',
+            'title.max' => 'Tiêu đề sách không được vượt quá 255 ký tự.',
+
+            'author.required' => 'Vui lòng nhập tên tác giả.',
+            'author.string' => 'Tên tác giả phải là chuỗi ký tự.',
+            'author.max' => 'Tên tác giả không được vượt quá 255 ký tự.',
+
+            'category.required' => 'Vui lòng chọn danh mục sách.',
+            'category.string' => 'Danh mục sách phải là chuỗi ký tự.',
+
+            'description.required' => 'Vui lòng nhập mô tả sách.',
+            'description.string' => 'Mô tả sách phải là chuỗi ký tự.',
+
+            'price.required' => 'Vui lòng nhập giá sách.',
+            'price.numeric' => 'Giá sách phải là một số.',
+            'price.min' => 'Giá sách phải lớn hơn hoặc bằng 1.',
+
+            'image_url.required' => 'Vui lòng nhập đường dẫn ảnh.',
+            'image_url.string' => 'Đường dẫn ảnh phải là chuỗi ký tự.',
+        ]);
+
         $book = Book::where('id', $id)->first();
         $book->title = $request->title;
         $book->author = $request->author;
@@ -102,7 +133,7 @@ class AdminController extends Controller
         $book->delete();
         return redirect()->back()->with('success', 'Sách đã bị xóa.');
     }
-    
+
     public function destroyUser(Request $request, $id)
     {
         $user = User::where('id', $id)->first();

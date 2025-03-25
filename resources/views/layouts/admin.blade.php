@@ -85,7 +85,7 @@
         <div class="container-fluid ps-4">
             <!-- Logo -->
             <a class="navbar-brand fw-bold text-primary fs-2"
-                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/home')) : url('home') }}">SPORTBOOKS
+                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/index')) : url('home') }}">SPORTBOOKS
                 ADMIN</a>
 
             <!-- Toggle button cho mobile -->

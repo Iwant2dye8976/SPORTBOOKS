@@ -139,7 +139,7 @@
                             <i class="fa fa-search"></i>
                         </button>
                         <input class="form-control" type="search" name="keyword" placeholder="Tìm kiếm..."
-                            value={{ request('keyword') }}>
+                            value="{{ rawurldecode(request('keyword')) }}">
                     </div>
                 </form>
 

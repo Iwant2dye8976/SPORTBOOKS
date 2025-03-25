@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->text('note');
+            $table->string('recipient_name', 255);
+            $table->string('shipping_address', 255);
+            $table->string('phone_number', 10);
+            $table->text('note')->nullable();
             $table->double('shipping_fee')->default(0.6);
             $table->double('books_price');
             $table->double('total')->storedAs('ROUND(books_price + shipping_fee, 2)');

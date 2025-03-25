@@ -3,9 +3,9 @@
 @section('title', 'Đơn hàng')
 
 @section('content')
-    <div class="mt-5 border border-dark border-1 rounded p-3 mb-5"
+    <div class="mt-5 row border border-dark border-1 rounded mb-5"
         style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
-        <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
+        <div class="row row-cols-2 mb-4 pb-4 pt-1 px-3 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">
                 <h2 class="text-start sticky-top">Đơn hàng</h2>
             </div>
@@ -15,13 +15,16 @@
             <div class="col-12 mt-3">
                 <hr>
             </div>
-            <div class="col-4 text-center">
-                Nội dung
+            <div class="col-3 text-center">
+                Họ tên
             </div>
             <div class="col-3 text-center">
+                Số điện thoại
+            </div>
+            <div class="col-2 text-center">
                 Tổng tiền
             </div>
-            <div class="col-3 text-center">
+            <div class="col-2 text-center">
                 Trạng thái
             </div>
             <div class="col-12">
@@ -30,13 +33,16 @@
         </div>
         <div class="row row-cols-auto px-3 fs-5 d-flex">
             @foreach ($orders as $order)
-                <div class="col-4 text-center align-items-center">
-                    {{ $order->note }}
+                <div class="col-3 text-center align-items-center">
+                    {{ $order->recipient_name }}
                 </div>
-                <div class="col-3 text-center fw-bold">
+                <div class="col-3 text-center align-items-center">
+                    {{ $order->phone_number }}
+                </div>
+                <div class="col-2 text-center fw-bold">
                     ${{ $order->total }}
                 </div>
-                <div class="col-3 text-center">
+                <div class="col-2 text-center">
                     @switch($order->status)
                         @case(-1)
                             <span class="text text-warning fw-bold">Chờ xử lý</span>

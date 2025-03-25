@@ -13,7 +13,8 @@
                 <div class="col d-flex align-items-center">
                     <h4 class="text-decoration-underline"><i class="fa-solid fa-filter"></i>Bộ lọc</h4>
                 </div>
-                <form action="{{ route('filter') }}" method="GET" class="col-12 row row-cols-auto">
+                <form action="{{ route('filter')}}" method="GET" class="col-12 row row-cols-auto">
+                    <input type="hidden" name="keyword" value="{{ rawurldecode(request('keyword'))}}">
                     <div class="col-12 col-md text-center">
                         <button class="text-uppercase btn w-100" type="submit" name="category" value="all"
                             style="{{ request()->query('category', 'all') == 'all' ? 'background-color: #BC7C7C; color: white;' : '' }}">

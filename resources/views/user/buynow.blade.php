@@ -18,17 +18,17 @@
     </style>
 
     @if (session('success'))
-        <div class="alert alert-success text-center" id="success-alert">
-            {{ session('success') }}
+        <div class="row alert alert-success text-center" id="success-alert">
+            <p class="m-0 p-0">{{ session('success') }}</p>
         </div>
     @endif
 
-    @if (session('error-alert'))
-        <div class="alert alert-danger text-center" id="error-alert">
-            {{ session('error-alert') }}
+    @if (session('error'))
+        <div class="alert error-danger text-center" id="error-alert">
+            <p class="m-0 p-0">{{ session('error') }}</p>
         </div>
     @endif
-    
+
     {{-- <div>
         <a class="text text-decoration-none text-dark fs-4" href="{{ url()->previous() }}">
             <i class="fas fa-arrow-left"></i> Quay lại
@@ -61,23 +61,33 @@
             @csrf
             @method('post')
             <div class="mb-3">
-                <label class="form-label" for="name">Họ và tên</label>
-                <input class="form-control" type="text" name="name" id="name" value="{{ $user->name }}">
-                @error('name')
+                <label class="form-label" for="recipient_name">Họ và tên</label>
+                <input class="form-control" type="text" name="recipient_name" id="recipient_name"
+                    value="{{ $user->name }}">
+                @error('recipient_name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
-                <label class="form-label" for="address">Địa chỉ nhận hàng</label>
-                <input class="form-control" type="text" name="address" id="address" value="{{ $user->address }}">
+                <label class="form-label" for="shipping_address">Địa chỉ nhận hàng</label>
+                <input class="form-control" type="text" name="shipping_address" id="shipping_address"
+                    value="{{ $user->address }}">
                 @error('address')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
                 <label class="form-label" for="phone_number">Số điện thoại</label>
-                <input class="form-control" type="tel" name="phone_number" id="phone_number" value="{{ $user->phone_number }}">
-                @error('phone_number')
+                <input class="form-control" type="tel" name="phone_number" id="phone_number"
+                    value="{{ $user->phone_number }}">
+                @error('phone-number')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="note">Ghi chú</label>
+                <textarea class="form-control" name="note" id="note" cols="10" rows="7"></textarea>
+                @error('note')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

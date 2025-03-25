@@ -3,9 +3,17 @@
 @section('title', 'Đơn hàng')
 
 @section('content')
-    <div class="mt-5 border border-dark border-1 rounded p-3"
+        <div class="row alert alert-success text-center" id="success-alert" style="display: none;">
+            Thanh toán thành công.
+        </div>
+
+        <div class="row alert alert-danger text-center" id="error-alert" style="display: none;">
+            Thanh toán thất bại.
+        </div>
+
+    <div class="mt-2 row border border-dark border-1 rounded"
         style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
-        <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
+        <div class="row row-cols-2 mb-4 pb-4 pt-1 px-3 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">
                 <h2 class="text-start sticky-top">Đơn hàng</h2>
             </div>
@@ -15,13 +23,16 @@
             <div class="col-12 mt-3">
                 <hr>
             </div>
-            <div class="col-4 text-center">
-                Nội dung
+            <div class="col-3 text-center">
+                Họ tên
             </div>
             <div class="col-3 text-center">
+                Số điện thoại
+            </div>
+            <div class="col-2 text-center">
                 Tổng tiền
             </div>
-            <div class="col-3 text-center">
+            <div class="col-2 text-center">
                 Trạng thái
             </div>
             <div class="col-12">
@@ -30,13 +41,16 @@
         </div>
         <div class="row row-cols-auto px-3 fs-5 d-flex">
             @foreach ($orders as $order)
-                <div class="col-4 text-center align-items-center">
-                    {{ $order->note }}
+                <div class="col-3 text-center align-items-center">
+                    {{ $order->recipient_name }}
                 </div>
-                <div class="col-3 text-center fw-bold">
+                <div class="col-3 text-center align-items-center">
+                    {{ $order->phone_number }}
+                </div>
+                <div class="col-2 text-center fw-bold">
                     ${{ $order->total }}
                 </div>
-                <div class="col-3 text-center">
+                <div class="col-2 text-center">
                     @switch($order->status)
                         @case(-1)
                             <span class="text text-warning fw-bold">Chờ xử lý</span>
@@ -54,8 +68,9 @@
                             <span class="text text-dark fw-bold">Trạng thái không xác định</span>
                     @endswitch
                 </div>
-                <div class="col-2 text-center">
-                    <a class="text text-decoration-none text-secondary" href="{{ route('admin.order-detail', $order->id) }}">Chi
+                <div class="col-1 text-center">
+                    <a class="text text-decoration-none text-secondary"
+                        href="{{ route('admin.order-detail', $order->id) }}">Chi
                         tiết</a>
                 </div>
                 <div class="col-12 my-2">
@@ -64,4 +79,27 @@
             @endforeach
         </div>
     </div>
+    <div class="d-flex justify-content-center mt-4">
+        {{ $orders->links('pagination::bootstrap-4') }}
+    </div>
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        window.onload = function() {
+            let success_alert = document.getElementById('success-alert');
+            let fail_alert = document.getElementById('error-alert');
+            let vnpay_status = getQueryParam('vnp_TransactionStatus');
+
+            if (vnpay_status === '00' && success_alert) {
+                success_alert.style.display = "block";
+            }
+
+            if (vnpay_status === '02' && fail_alert) {
+                fail_alert.style.display = "block";
+            }
+        };
+    </script>
 @endsection

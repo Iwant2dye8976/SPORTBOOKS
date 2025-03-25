@@ -3,7 +3,7 @@
 @section('title', 'Chi tiết đơn hàng')
 
 @section('content')
-    <div class="mb-2">
+    <div class="my-4">
         <a class="text text-decoration-none text-dark fs-4" href="{{ url('/admin/orders') }}">
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
@@ -96,16 +96,20 @@
         <hr>
         <div class="w-50">
             <div class="mb-3">
-                <label class="form-label" for="name">Họ và tên</label>
-                <input class="form-control" type="text" value="{{ $order_information->user->name }}" readonly>
+                <label class="form-label" for="recipient_name">Họ và tên</label>
+                <input class="form-control" type="text" value="{{ $order_information->user->recipient_name }}" readonly>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="address">Địa chỉ nhận hàng</label>
-                <input class="form-control" type="text" value="{{ $order_information->user->address }}" readonly>
+                <input class="form-control" type="text" value="{{ $order_information->shipping_address }}" readonly>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="phone-number">Số điện thoại</label>
-                <input class="form-control" type="tel" value="{{ $order_information->user->phone_number }}" readonly>
+                <input class="form-control" type="tel" value="{{ $order_information->phone_number }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="note">Ghi chú</label>
+                <textarea class="form-control" name="note" id="note" cols="10" rows="7" readonly>{{ $order_information->note }}</textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="shipping">Phương thức vận chuyển</label>
