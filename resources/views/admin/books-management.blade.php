@@ -8,6 +8,11 @@
         <p class="p-0 m-0">{{ session('success') }}</p>
     </div>
 @endif
+<div class="text-end">
+    <a class="mt-5 mb-3 text text-decoration-none text-dark fs-4" href="{{ route('admin.book-m.add') }}"><i
+            class="fa-solid fa-circle-plus me-1 text-secondary"></i>Thêm sách mới</a>
+</div>
+
 <div class="mt-4">
     <div class="row row-cols-auto" style="min-height:max-content;">
         <div class="col-12 border border-dark rounded"
@@ -59,7 +64,8 @@
                     </div>
                     <div class="col-1 text-center">
                         <h5>
-                            <a href="{{ route('admin.book-m.detail', $book->id) }}" class="text text-decoration-none text-secondary">Sửa</a>
+                            <a href="{{ route('admin.book-m.detail', $book->id) }}"
+                                class="text text-decoration-none text-secondary">Sửa</a>
                         </h5>
                     </div>
                     <div class="col-1 text-center fw-bold">
@@ -96,8 +102,8 @@
                 <hr>
             @endforeach
         </div>
-</div>
-<div class="d-flex justify-content-center mt-4">
-    {{ $books->links('pagination::bootstrap-4') }}
-</div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        {{ $books->links('pagination::bootstrap-4') }}
+    </div>
 </div>

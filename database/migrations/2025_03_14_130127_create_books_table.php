@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("title", 255);
             $table->string("author", 255);
             $table->enum("category", ['Tình cảm', 'Tâm lý', 'Tài chính', 'Thể thao']);
-            $table->text("description");
+            $table->text("description")->nullable();
             $table->double("price");
             $table->string('image_url')->nullable();
             $table->timestamps();

@@ -12,6 +12,11 @@
     @if (Route::currentRouteName() === 'admin.book-m')
         @include('admin.books-management')
     @endif
+
+    @if (Route::currentRouteName() === 'admin.book-m.add')
+        @include('admin.books-managetment-add')
+    @endif
+
     @if (Route::currentRouteName() === 'admin.book-m.detail')
         @include('admin.books-management-detail')
     @endif

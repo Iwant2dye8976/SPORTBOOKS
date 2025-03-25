@@ -9,7 +9,7 @@
     </div>
 @endif
 <div class="mt-4">
-    <<div class="row row-cols-auto" style="min-height:max-content;">
+    <div class="row row-cols-auto" style="min-height:max-content;">
         <div class="col-12 border border-dark rounded"
             style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
             <div class="row row-cols-2 mb-1 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">

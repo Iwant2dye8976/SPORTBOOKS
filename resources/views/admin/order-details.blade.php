@@ -97,7 +97,7 @@
         <div class="w-50">
             <div class="mb-3">
                 <label class="form-label" for="recipient_name">Họ và tên</label>
-                <input class="form-control" type="text" value="{{ $order_information->user->recipient_name }}" readonly>
+                <input class="form-control" type="text" value="{{ $order_information->recipient_name }}" readonly>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="address">Địa chỉ nhận hàng</label>

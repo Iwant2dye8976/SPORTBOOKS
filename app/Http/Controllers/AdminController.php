@@ -57,13 +57,18 @@ class AdminController extends Controller
         return view('admin.index', compact('book'));
     }
 
-    public function book_m_update(Request $request, $id)
+    public function book_m_add_v()
+    {
+        return view('admin.index');
+    }
+
+    public function book_m_add(Request $request)
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'author' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string'],
-            'description' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
             'price' => ['required', 'min:1', 'numeric'],
             'image_url' => ['required', 'string'],
         ], [
@@ -78,7 +83,47 @@ class AdminController extends Controller
             'category.required' => 'Vui lòng chọn danh mục sách.',
             'category.string' => 'Danh mục sách phải là chuỗi ký tự.',
 
-            'description.required' => 'Vui lòng nhập mô tả sách.',
+            'description.string' => 'Mô tả sách phải là chuỗi ký tự.',
+
+            'price.required' => 'Vui lòng nhập giá sách.',
+            'price.numeric' => 'Giá sách phải là một số.',
+            'price.min' => 'Giá sách phải lớn hơn hoặc bằng 1.',
+
+            'image_url.required' => 'Vui lòng nhập đường dẫn ảnh.',
+            'image_url.string' => 'Đường dẫn ảnh phải là chuỗi ký tự.',
+        ]);
+        Book::create([
+            'title' => $request->title,
+            'author' => $request->author,
+            'category' => $request->category,
+            'description' => $request->description,
+            'price' => $request->price,
+            'image_url' => $request->image_url
+        ]);
+        return redirect()->route('admin.book-m')->with('success', 'Thêm thành công.');
+    }
+
+    public function book_m_update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'author' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
+            'price' => ['required', 'min:1', 'numeric'],
+            'image_url' => ['required', 'string'],
+        ], [
+            'title.required' => 'Vui lòng nhập tiêu đề sách.',
+            'title.string' => 'Tiêu đề sách phải là chuỗi ký tự.',
+            'title.max' => 'Tiêu đề sách không được vượt quá 255 ký tự.',
+
+            'author.required' => 'Vui lòng nhập tên tác giả.',
+            'author.string' => 'Tên tác giả phải là chuỗi ký tự.',
+            'author.max' => 'Tên tác giả không được vượt quá 255 ký tự.',
+
+            'category.required' => 'Vui lòng chọn danh mục sách.',
+            'category.string' => 'Danh mục sách phải là chuỗi ký tự.',
+
             'description.string' => 'Mô tả sách phải là chuỗi ký tự.',
 
             'price.required' => 'Vui lòng nhập giá sách.',
