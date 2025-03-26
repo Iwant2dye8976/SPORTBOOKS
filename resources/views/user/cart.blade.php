@@ -114,7 +114,7 @@
             <div class="d-fex justify-content-center mt-3 row border border-dark border-1 rounded px-3 py-3">
                 <h2>Thông tin đặt hàng</h2>
                 <hr>
-                <form class="w-50" method="POST" action="{{ route('checkout') }}">
+                <form class="w-50" method="POST" action="{{ route('checkout') }}" onsubmit="disableButton()">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label" for="recipient_name">Họ và tên</label>
