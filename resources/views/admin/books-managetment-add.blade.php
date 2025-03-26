@@ -48,16 +48,23 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="category">Thể loại</label>
-                    <input class="form-control" id="category" name="category" type="text"
-                        value="{{ old('category') }}">
+                    <select class="form-select" name="category" id="category">
+                        <option value="Tình cảm" {{ old('category') === 'Tình cảm' ? 'selected' : '' }}>Tình cảm
+                        </option>
+                        <option value="Tâm lý" {{ old('category') === 'Tâm lý' ? 'selected' : '' }}>Tâm lý</option>
+                        <option value="Tài chính" {{ old('category') === 'Tài chính' ? 'selected' : '' }}>Tài chính
+                        </option>
+                        <option value="Thể thao" {{ old('category') === 'Thể thao' ? 'selected' : '' }}>Thể thao
+                        </option>
+                    </select>
                     @error('category')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="price">Giá bán</label>
-                    <input class="form-control" id="price" name="price" type="number" step="0.01"
-                        min="1" value="{{ old('price') }}">
+                    <input class="form-control" id="price" name="price" type="number" step="0.1"
+                        min="1" max="9999" value="{{ old('price', 1) }}">
                     @error('price')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -81,7 +88,7 @@
         preview_image.setAttribute('src', image_url);
     }
 
-    window.onnload = function() {
+    window.onload = function() {
         updateImage();
     }
 </script>
