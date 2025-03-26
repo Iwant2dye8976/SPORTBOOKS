@@ -187,7 +187,7 @@
                             {{-- <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4> --}}
                         </div>
                     </div>
-                    <button class="btn btn-dark form-control" type="submit">
+                    <button id="submit-button" class="btn btn-dark form-control" type="submit">
                         Đặt hàng
                     </button>
                 </form>
@@ -257,14 +257,12 @@
         window.onload = function() {
             updateTotalPrice();
         };
-        setTimeout(function() {
-            let alert = document.getElementById('success-alert');
-            if (alert) {
-                alert.style.transition = "opacity 0.5s ease";
-                alert.style.opacity = "0";
-                setTimeout(() => alert.remove(), 500);
-            }
-        }, 3000);
+
+        function disableButton() {
+            let button = document.getElementById('submit-button');
+            button.disabled = true;
+            button.innerText = 'Đang xử lý...';
+        }
     </script>
 
 @endsection

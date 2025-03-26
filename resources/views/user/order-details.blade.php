@@ -164,11 +164,11 @@
                 </div>
             </div>
             @if ($order_information->status == -1)
-                <form class="text-center" action="{{ route('orders.cancel', $order_information->id) }}" method="POST">
+                <form class="text-center" action="{{ route('orders.cancel', $order_information->id) }}" method="POST" onsubmit="disableButton()">
                     @csrf
                     @method('PATCH')
                     <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
-                    <button type="submit" class="form-control btn btn-danger">HỦY ĐƠN HÀNG</button>
+                    <button id="submit-button" type="submit" class="form-control btn btn-danger">HỦY ĐƠN HÀNG</button>
                 </form>
             @endif
         </div>

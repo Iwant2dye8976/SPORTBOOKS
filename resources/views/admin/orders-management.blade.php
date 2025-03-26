@@ -14,7 +14,8 @@
             style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
             <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
                 <div class="col">
-                    <h2 class="text-start sticky-top">Quản lý đơn hàng</h2>
+                    <a href="{{ route('admin.order-m') }}"
+                        class="text-start sticky-top fs-2 text-decoration-none text-dark">Quản đơn hàng</a>
                 </div>
                 <div class="col mb-4">
                     <h4 class="text-end text-secondary">{{ $order_count }} đơn hàng</h4>

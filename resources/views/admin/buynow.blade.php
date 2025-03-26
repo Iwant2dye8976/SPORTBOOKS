@@ -57,7 +57,7 @@
     <div class="d-fex justify-content-center mt-3 row border border-dark border-1 rounded px-3 py-3 mb-5">
         <h2>Thông tin đặt hàng</h2>
         <hr>
-        <form class="w-50" method="POST" action="{{ route('admin.buynow', $book->id) }}">
+        <form class="w-50" method="POST" action="{{ route('admin.buynow', $book->id) }}" onsubmit="disableButton()">
             @csrf
             @method('post')
             <div class="mb-3">
@@ -131,7 +131,7 @@
                 </div>
             </div>
             <input id="quantity-i" type="number" name="quantity" value="1" required hidden>
-            <button class="btn btn-dark form-control" type="submit">
+            <button id="submit-button" class="btn btn-dark form-control" type="submit">
                 Đặt hàng
             </button>
         </form>

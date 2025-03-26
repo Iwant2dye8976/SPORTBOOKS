@@ -33,7 +33,8 @@ class AdminController extends Controller
     public function user_m()
     {
         $users = User::whereNotIn('id', [Auth::user()->id])->paginate(10);
-        return view('admin.index', compact('users'));
+        $user_count = User::whereNotIn('id', [Auth::user()->id])->count();
+        return view('admin.index', compact('users', 'user_count'));
     }
 
     public function order_m()
@@ -143,6 +144,38 @@ class AdminController extends Controller
         $book->image_url = $request->image_url;
         $book->save();
         return redirect()->back()->with('success', 'Cập nhật thông tin sách thành công.');
+    }
+
+    public function book_m_search(Request $request)
+    {
+        $keyword = trim($request->input('keyword', ''));
+
+        $query = Book::query();
+
+        if (!empty($keyword)) {
+            $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%']);
+        }
+
+        $books = $query->paginate(10);
+        $book_count = $query->count();
+
+        return view('admin.index', compact('books', 'book_count'));
+    }
+
+    public function user_m_search(Request $request)
+    {
+        $keyword = trim($request->input('keyword', ''));
+
+        $query = User::query();
+
+        if (!empty($keyword)) {
+            $query->whereRaw('LOWER(email) LIKE ?', ['%' . strtolower($keyword) . '%']);
+        }
+
+        $users = $query->paginate(10);
+        $user_count = $query->count();
+
+        return view('admin.index', compact('users', 'user_count'));
     }
 
     /**

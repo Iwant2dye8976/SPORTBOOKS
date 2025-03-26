@@ -40,7 +40,7 @@ class ContactController extends Controller
 
         Mail::to('danho9735@gmail.com')->send(new ContactMail($data));
 
-        return redirect()->back()->with('success', 'Email của bạn đã được gửi thành công!');
+        return redirect()->back()->with('success', 'Liên hệ thành công.');
     }
 
     /**

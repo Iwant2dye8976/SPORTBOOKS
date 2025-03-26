@@ -40,7 +40,7 @@
                         </ul>
                         <hr>
                         <h5 class="text-center fw-bold">Gửi tin nhắn</h5>
-                        <form action="{{ route('contact.send') }}" method="POST">
+                        <form action="{{ route('contact.send') }}" method="POST" onsubmit="disableButton()">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Họ và tên</label>
@@ -57,7 +57,7 @@
                                 <textarea id="message" name="message" class="form-control" rows="4" placeholder="Nhập nội dung" required></textarea>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary form-control w-25">Gửi</button>
+                                <button id="submit-button" type="submit" class="btn btn-primary form-control w-25">Gửi</button>
                             </div>
                         </form>
                     </div>

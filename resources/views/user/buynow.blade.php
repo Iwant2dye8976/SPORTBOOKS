@@ -57,7 +57,7 @@
     <div class="d-fex justify-content-center mt-3 row border border-dark border-1 rounded px-3 py-3 mb-5">
         <h2>Thông tin đặt hàng</h2>
         <hr>
-        <form class="w-50" method="POST" action="{{ route('buynow', $book->id) }}">
+        <form class="w-50" method="POST" action="{{ route('buynow', $book->id) }}" onsubmit="disableButton()">
             @csrf
             @method('post')
             <div class="mb-3">
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <input id="quantity-i" type="number" name="quantity" value="1" required hidden>
-            <button class="btn btn-dark form-control" type="submit">
+            <button id="submit-button" class="btn btn-dark form-control" type="submit">
                 Đặt hàng
             </button>
         </form>
@@ -170,19 +170,15 @@
             updateTotalPrice();
         };
 
-        setTimeout(function() {
-            let success_alert = document.getElementById('success-alert');
-            let error_alert = document.getElementById('error-alert');
-            if (success_alert) {
-                success_alert.style.transition = "opacity 0.5s ease";
-                success_alert.style.opacity = "0";
-                setTimeout(() => success_alert.remove(), 500);
+        function updateQuantity() {
+            let quantityInput = document.getElementById("quantity");
+            let quantity = parseInt(quantityInput.value);
+
+            if (!quantity || quantity < 1 || quantity > 999) {
+                quantityInput.value = 1;
             }
-            if (error_alert) {
-                error_alert.style.transition = "opacity 0.5s ease";
-                error_alert.style.opacity = "0";
-                setTimeout(() => error_alert.remove(), 500);
-            }
-        }, 3000);
+
+            updateTotalPrice();
+        }
     </script>
 @endsection

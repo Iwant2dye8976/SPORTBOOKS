@@ -53,12 +53,14 @@ Route::middleware(['admin'])->group(function () {
     //Trang quản lý
     Route::get('/admin/index', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/index/bookmanagement', [AdminController::class, 'book_m'])->name('admin.book-m');
+    Route::get('/admin/index/bookmanagement/search', [AdminController::class, 'book_m_search'])->name('admin.book-m.search');
     Route::get('/admin/index/bookmanagement/edit/{id}', [AdminController::class, 'book_m_show'])->name('admin.book-m.detail');
     Route::get('/admin/index/bookmanagement/add', [AdminController::class, 'book_m_add_v'])->name('admin.book-m.add');
     Route::post('/admin/index/bookmanagement/add', [AdminController::class, 'book_m_add'])->name('admin.book-m.store');
     Route::patch('/admin/index/bookmanagement/update/{id}', [AdminController::class, 'book_m_update'])->name('admin.book-m.update');
     Route::delete('/admin/index/bookmanagement/delete/{id}', [AdminController::class, 'destroyBook'])->name('admin.book-m.delete');
     Route::get('/admin/index/usermanagement', [AdminController::class, 'user_m'])->name('admin.user-m');
+    Route::get('/admin/index/usermanagement/search', [AdminController::class, 'user_m_search'])->name('admin.user-m.search');
     Route::delete('/admin/index/usermanagement/delete/{id}', [AdminController::class, 'destroyUser'])->name('admin.delete_user');
     Route::get('/admin/index/odrermanagement', [AdminController::class, 'order_m'])->name('admin.order-m');
     Route::get('/admin/index/odrermanagement/detail/{id}', [AdminController::class, 'order_m_show'])->name('admin.order-m.detail');

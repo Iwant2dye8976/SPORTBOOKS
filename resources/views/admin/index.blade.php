@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    @if (Route::currentRouteName() === 'admin.book-m')
+    @if (Route::currentRouteName() === 'admin.book-m' || Route::currentRouteName() === 'admin.book-m.search')
         @include('admin.books-management')
     @endif
 
@@ -21,7 +21,7 @@
         @include('admin.books-management-detail')
     @endif
 
-    @if (Route::currentRouteName() === 'admin.user-m')
+    @if (Route::currentRouteName() === 'admin.user-m' || Route::currentRouteName() === 'admin.user-m.search')
         @include('admin.users-management')
     @endif
 

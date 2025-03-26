@@ -29,7 +29,7 @@
         </div>
     @endif
     <div class="container-fluid row border border-dark border-1 rounded py-2">
-        <div class="col-12 col-md-5 text-center book-img">
+        <div class="d-flex justify-content-center align-items-center col-12 col-md-5 text-center book-img">
             <img src="{{ $book->image_url }}" alt="">
         </div>
         <div class="col-7 position-relative">
@@ -37,10 +37,11 @@
                 <h4 class="fw-bolder"> {{ $book->title }} </h4>
                 <p class="fs-6 fw-medium">Giá bán: <span class="text text-danger"> ${{ $book->price }} </span></p>
                 <p class="fs-6 fw-medium mb-1">Mô tả:</p>
-                <p class="fs-6"> {{ $book->description }} </p>
+                <p class="fs-6" style="max-height: 300px; overflow-y: auto;"> {{ $book->description }} </p>
             </div>
-            <div class="">
-                <form class="row justify-content-start" method="POST" action="{{ route('cart.add', $book->id) }}">
+            <div>
+                <form class="row justify-content-start" method="POST" action="{{ route('cart.add', $book->id) }}"
+                    onsubmit="disableButton()">
                     @csrf
                     <label class="form-label fw-medium" for="amount">Số lượng</label>
 
@@ -55,11 +56,10 @@
                     </div>
 
                     <div class="col-auto col-md-4">
-                        <button type="submit" class="btn btn-success">Thêm vào giỏ
+                        <button id="submit-button" type="submit" class="btn btn-success">Thêm vào giỏ
                             hàng</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

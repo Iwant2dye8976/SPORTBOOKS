@@ -74,7 +74,7 @@
                 <h2>Thông tin đặt hàng</h2>
                 <hr>
                 <div class="d-flex justify-content-center">
-                    <form class="w-50" method="POST" action="{{ route('admin.checkout') }}">
+                    <form class="w-50" method="POST" action="{{ route('admin.checkout') }}" onsubmit="disableButton()">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="recipient_name">Họ và tên</label>
@@ -147,7 +147,7 @@
                                 {{-- <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4> --}}
                             </div>
                         </div>
-                        <button class="btn btn-dark form-control" type="submit">
+                        <button id="submit-button" class="btn btn-dark form-control" type="submit">
                             Đặt hàng
                         </button>
                     </form>

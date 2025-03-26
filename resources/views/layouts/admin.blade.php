@@ -70,7 +70,7 @@
         .search-box input {
             padding-left: 30px;
             height: 40px;
-            width: 250px;
+            width: 500px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -103,7 +103,7 @@
                         <a class="nav-link l" href="{{ route('admin.book-m') }}">Quản lý sách</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý khách hàng</a>
+                        <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý tài khoản</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link l" href="{{ route('admin.order-m') }}">Quản lý đơn hàng</a>
@@ -170,6 +170,7 @@
 
     @stack('scripts')
     <script src="{{ asset('js/alert.js') }}"></script>
+    <script src="{{ asset('js/disablebutton.js') }}"></script>
 </body>
 
 </html>

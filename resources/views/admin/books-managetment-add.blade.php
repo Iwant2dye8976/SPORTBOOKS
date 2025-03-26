@@ -20,32 +20,36 @@
             <img id="preview" class="img_fluid" height="500" width="500" src="" alt="Xem trước">
         </div>
         <div class="col">
-            <form action="{{ route('admin.book-m.store') }}" method="POST">
+            <form action="{{ route('admin.book-m.store') }}" method="POST" onsubmit="disableButton()">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="image_url">Đường dẫn ảnh</label>
-                    <input class="form-control" id="image_url" name="image_url" type="text" onblur="updateImage();" value="{{ old('image_url') }}">
+                    <input class="form-control" id="image_url" name="image_url" type="text" onblur="updateImage();"
+                        value="{{ old('image_url') }}">
                     @error('image_url')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="title">Tiêu đề</label>
-                    <input class="form-control" id="title" name="title" type="text" value="{{ old('title') }}">
+                    <input class="form-control" id="title" name="title" type="text"
+                        value="{{ old('title') }}">
                     @error('title')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="author">Tác giả</label>
-                    <input class="form-control" id="author" name="author" type="text" value="{{ old('author') }}">
+                    <input class="form-control" id="author" name="author" type="text"
+                        value="{{ old('author') }}">
                     @error('author')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="category">Thể loại</label>
-                    <input class="form-control" id="category" name="category" type="text" value="{{ old('category') }}">
+                    <input class="form-control" id="category" name="category" type="text"
+                        value="{{ old('category') }}">
                     @error('category')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -65,7 +69,7 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <button type="submit" class="btn btn-dark form-control">Xác nhận</button>
+                <button id="submit-button" type="submit" class="btn btn-dark form-control">Xác nhận</button>
             </form>
         </div>
     </div>
@@ -75,5 +79,9 @@
         let preview_image = document.getElementById('preview');
         let image_url = document.getElementById('image_url').value;
         preview_image.setAttribute('src', image_url);
+    }
+
+    window.onnload = function() {
+        updateImage();
     }
 </script>
