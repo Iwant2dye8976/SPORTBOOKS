@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('title', 'Trang Chủ')
 
@@ -67,4 +67,4 @@
             {{ $books->appends(request()->query())->links('pagination::bootstrap-4') }}
         </div>
     @endif
-@endsection
+@endsection --}}

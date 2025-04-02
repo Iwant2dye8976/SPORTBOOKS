@@ -1,10 +1,10 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('title', 'Chi tiết sách')
 
-{{-- @section('banner')
+@section('banner')
     <img class="img-fluid" src="{{ asset('imgs/tc-banner-t5.png') }}" alt="Banner">
-@endsection --}}
+@endsection
 
 @section('content')
     <style>
@@ -28,12 +28,6 @@
             <p class="m-0 p-0">{{ session('error') }}</p>
         </div>
     @endif
-
-    {{-- <div>
-        <a class="text text-decoration-none text-dark fs-4" href="{{ url()->previous() }}">
-            <i class="fas fa-arrow-left"></i> Quay lại
-        </a>
-    </div> --}}
 
     <div class="row border border-dark border-1 rounded py-3">
         <div class="col-5 text-center book-img">
@@ -127,7 +121,6 @@
                             class="p-0 form-control w-50 text-end fs-4 fw-bold border-0 total-price" type="number"
                             step="0.01" value="{{ $book->price }}" readonly hidden>
                     </div>
-                    {{-- <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4> --}}
                 </div>
             </div>
             <input id="quantity-i" type="number" name="quantity" value="1" required hidden>
@@ -180,4 +173,4 @@
             updateTotalPrice();
         }
     </script>
-@endsection
+@endsection --}}

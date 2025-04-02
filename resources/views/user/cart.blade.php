@@ -44,7 +44,7 @@
                             </div>
                             <div class="col d-flex justify-content-center align-items-center fw-bold">
                                 <input class="form-control w-50 border border-dark book-quantity" name="book_quantity"
-                                    type="number" min="1" max="999" value="{{ $item->book_quantity }}"
+                                    type="number" min="1" max="50" value="{{ $item->book_quantity }}"
                                     id="quantity-{{ $item->book->id }}" onblur="updateCart({{ $item->book->id }});"
                                     required>
                             </div>
@@ -229,7 +229,7 @@
             let quantityInput = document.getElementById("quantity-" + bookId);
             let quantity = parseInt(quantityInput.value);
 
-            if (!quantity || quantity < 1 || quantity > 999) {
+            if (!quantity || quantity < 1 || quantity > 50) {
                 quantityInput.value = 1;
             }
 

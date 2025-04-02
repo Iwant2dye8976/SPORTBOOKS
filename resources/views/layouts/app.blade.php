@@ -84,8 +84,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
         <div class="container-fluid ps-4">
             <!-- Logo -->
-            <a class="navbar-brand fw-bold text-primary fs-2"
-                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/home')) : url('home') }}">SPORTBOOKS</a>
+            <a class="navbar-brand fw-bold text-primary fs-2" href="{{ url('home') }}">SPORTBOOKS</a>
 
             <!-- Toggle button cho mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -94,13 +93,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav menu">
                     <li class="nav-item">
-                        <a class="nav-link l" aria-current="page"
-                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/home')) : url('home') }}">Trang
+                        <a class="nav-link l" aria-current="page" href="{{ url('/home') }}">Trang
                             chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l"
-                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('cart') : route('admin.cart')) : route('cart') }}">Giỏ
+                        <a class="nav-link l" href="{{ route('cart') }}">Giỏ
                             hàng
                             @if ($cart_count > 0)
                                 <span
@@ -112,8 +109,7 @@
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l"
-                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('orders') : route('admin.orders')) : route('orders') }}">Đơn
+                        <a class="nav-link l" href="{{ route('orders') }}">Đơn
                             hàng
                             @if ($order_count > 0)
                                 <span
@@ -131,9 +127,7 @@
 
             <div class="d-flex justify-content-end collapse navbar-collapse menu" id="navbarNav">
                 <!-- Thanh tìm kiếm -->
-                <form class="me-2"
-                    action=" {{ Auth::check() ? (Auth::user()->type === 'user' ? route('search') : route('admin.search')) : route('search') }} "
-                    method="GET">
+                <form class="me-2" action=" {{ route('search') }} " method="GET">
                     <div class="search-box">
                         <button type="submit" class="nav-link">
                             <i class="fa fa-search"></i>
@@ -150,8 +144,7 @@
                             {{ Auth::user()->name }}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item"
-                                    href="{{ Auth::check() && Auth::user()->type === 'admin' ? route('admin.profile.edit') : route('profile.edit') }}">Tài
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Tài
                                     khoản</a></li>
                             @if (Auth::check() && Auth::user()->type === 'admin')
                                 <li>

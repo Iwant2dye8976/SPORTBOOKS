@@ -25,9 +25,9 @@ class BookController extends Controller
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
             $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
-            if (Auth::user()->type === 'admin') {
-                return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
-            }
+            // if (Auth::user()->type === 'admin') {
+            //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
+            // }
         }
 
         return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
@@ -53,9 +53,9 @@ class BookController extends Controller
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
             $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
-            if (Auth::user()->type === 'admin') {
-                return view('admin.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count'));
-            }
+            // if (Auth::user()->type === 'admin') {
+            //     return view('admin.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count'));
+            // }
         }
 
         return view('user.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count'));
@@ -82,9 +82,9 @@ class BookController extends Controller
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
             $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
-            if (Auth::user()->type === 'admin') {
-                return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
-            }
+            // if (Auth::user()->type === 'admin') {
+            //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
+            // }
         }
 
         return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
@@ -115,19 +115,13 @@ class BookController extends Controller
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
             $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
-            if (Auth::user()->type === 'admin') {
-                return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
-            }
+            // if (Auth::user()->type === 'admin') {
+            //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
+            // }
         }
 
         return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
     }
-
-
-
-
-
-
     /**
      * Show the form for editing the specified resource.
      */

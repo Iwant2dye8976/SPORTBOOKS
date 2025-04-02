@@ -42,9 +42,9 @@ class CartProcessController extends Controller
         if (Auth::check()) {
             $cart_count = $cartItems->count();
             $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
-            if (Auth::user()->type === 'admin') {
-                return view('admin.cart', compact('cartItems', 'cart_count', 'total_price', 'user', 'order_count'));
-            }
+            // if (Auth::user()->type === 'admin') {
+            //     return view('admin.cart', compact('cartItems', 'cart_count', 'total_price', 'user', 'order_count'));
+            // }
         }
         return view('user.cart', compact('cartItems', 'cart_count', 'total_price', 'user', 'order_count'));
     }
@@ -79,19 +79,19 @@ class CartProcessController extends Controller
         $item = Auth::user()->cart()->find($request->id);
 
         if (!$item) {
-            if (Auth::check() && Auth::user()->type === 'admin') {
-                return redirect()->route('admin.cart')->with('error', 'Sản phẩm không tồn tại trong giỏ hàng.');
-            }
+            // if (Auth::check() && Auth::user()->type === 'admin') {
+            //     return redirect()->route('admin.cart')->with('error', 'Sản phẩm không tồn tại trong giỏ hàng.');
+            // }
             return redirect()->route('cart')->with('error', 'Sản phẩm không tồn tại trong giỏ hàng.');
         }
 
         $item->delete();
         if (Auth::check()) {
-            if (Auth::user()->type === 'admin') {
-                return redirect()->route('admin.cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
-            } else {
+            // if (Auth::user()->type === 'admin') {
+            //     return redirect()->route('admin.cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
+            // } else {
                 return redirect()->route('cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
-            }
+            // }
         }
     }
 }

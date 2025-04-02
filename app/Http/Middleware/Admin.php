@@ -24,6 +24,6 @@ class Admin
             return $next($request);
         }
 
-        return redirect()->route('home')->with('error', 'Bạn không có quyền truy cập!');
+        return redirect()->route('admin.index')->with('error', 'Bạn không có quyền truy cập!');
     }
 }

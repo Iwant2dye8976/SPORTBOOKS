@@ -24,7 +24,7 @@ class User
             return $next($request);
         }
         else{
-            return redirect()->back();
+            return redirect()->route('admin.index')->with('error', 'Bạn không có quyền truy cập!');
         }
         // return $next($request);
     }

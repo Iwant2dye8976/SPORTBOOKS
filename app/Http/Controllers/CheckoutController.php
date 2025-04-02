@@ -16,7 +16,7 @@ class CheckoutController extends Controller
         $vnp_TmnCode = "VT4KRJ8P"; //Mã website tại VNPAY 
         $vnp_HashSecret = "9YU4F06PKH3F9A5VX0DBU0M2QLTHEUAH"; //Chuỗi bí mật
 
-        $vnp_TxnRef = '1012'; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = '1014'; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = 'Thanh toan';
         $vnp_OrderType = 'Sportbook';
         $vnp_Amount = $request['total_price'] * 100;
@@ -30,7 +30,7 @@ class CheckoutController extends Controller
             "vnp_Amount" => $vnp_Amount,
             "vnp_Command" => "pay",
             "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VN",
+            "vnp_CurrCode" => "VND",
             "vnp_IpAddr" => $vnp_IpAddr,
             "vnp_Locale" => $vnp_Locale,
             "vnp_OrderInfo" => $vnp_OrderInfo,

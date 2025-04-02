@@ -72,7 +72,7 @@
             @foreach ($order_details as $item)
                 <div class="row book">
                     <div class="col">
-                        <a href="{{ route('admin.detail', $item->book->id) }}">
+                        <a href="{{ route('detail', $item->book->id) }}">
                             <img class="img-fluid" src="{{ $item->book->image_url }}" alt="Ảnh sách" width="200">
                         </a>
                     </div>
@@ -102,7 +102,7 @@
             <div class="mb-3">
                 <label class="form-label" for="shipping_address">Địa chỉ nhận hàng</label>
                 <input class="form-control" type="text" name="shipping_address" id="shipping_address"
-                    value="{{ $order_information->shipping_address }}">
+                    value="{{ $order_information->shipping_address }}" readonly>
                 @error('address')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -110,14 +110,14 @@
             <div class="mb-3">
                 <label class="form-label" for="phone_number">Số điện thoại</label>
                 <input class="form-control" type="tel" name="phone_number" id="phone_number"
-                    value="{{ $order_information->phone_number }}">
+                    value="{{ $order_information->phone_number }}" readonly>
                 @error('phone-number')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
                 <label class="form-label" for="note">Ghi chú</label>
-                <textarea class="form-control" name="note" id="note" cols="10" rows="7">{{ $order_information->note }}</textarea>
+                <textarea class="form-control" name="note" id="note" cols="10" rows="7" readonly>{{ $order_information->note }}</textarea>
                 @error('note')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

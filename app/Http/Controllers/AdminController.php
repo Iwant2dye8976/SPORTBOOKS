@@ -25,21 +25,21 @@ class AdminController extends Controller
      */
     public function book_m()
     {
-        $books = Book::paginate(10);
+        $books = Book::orderBy('updated_at', 'desc')->paginate(10);
         $book_count = Book::get()->count();
         return view('admin.index', compact('books', 'book_count'));
     }
 
     public function user_m()
     {
-        $users = User::whereNotIn('id', [Auth::user()->id])->paginate(10);
+        $users = User::whereNotIn('id', [Auth::user()->id])->orderBy('updated_at', 'desc')->paginate(10);
         $user_count = User::whereNotIn('id', [Auth::user()->id])->count();
         return view('admin.index', compact('users', 'user_count'));
     }
 
     public function order_m()
     {
-        $orders = Order::with('user')->paginate(10);
+        $orders = Order::with('user')->orderBy('updated_at', 'desc')->paginate(10);
         $order_count = Order::all()->count();
         return view('admin.index', compact('orders', 'order_count'));
     }
@@ -156,8 +156,8 @@ class AdminController extends Controller
             $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%']);
         }
 
-        $books = $query->paginate(10);
-        $book_count = $query->count();
+        $books = $query->orderBy('updated_at', 'desc')->paginate(10);
+        $book_count = $books->total();
 
         return view('admin.index', compact('books', 'book_count'));
     }
@@ -172,8 +172,8 @@ class AdminController extends Controller
             $query->whereRaw('LOWER(email) LIKE ?', ['%' . strtolower($keyword) . '%']);
         }
 
-        $users = $query->paginate(10);
-        $user_count = $query->count();
+        $users = $query->orderBy('updated_at', 'desc')->paginate(10);
+        $user_count = $users->total();
 
         return view('admin.index', compact('users', 'user_count'));
     }

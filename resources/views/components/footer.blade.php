@@ -69,17 +69,56 @@
                     <h6 class="text-uppercase fw-bold">Đường dẫn</h6>
                     <hr class="mb-4 mt-0 d-inline-block mx-auto"
                         style="width: 60px; background-color: #7c4dff; height: 2px" />
-                    <p>
-                        <a href="{{ route('profile.edit') }}" class="text-white">Tài khoản</a>
-                    </p>
-                    <p>
-                        <a href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('cart') : route('admin.cart')) : route('cart') }}"
-                            class="text-white">Giỏ hàng</a>
-                    </p>
-                    <p>
-                        <a href="{{ Auth::check() ? (Auth::user()->type === 'user' ? route('orders') : route('admin.orders')) : route('orders') }}"
-                            class="text-white">Đơn hàng</a>
-                    </p>
+                    @guest
+                        <p>
+                            <a class="text-white" href="{{ route('home') }}">Trang chủ</a>
+                        </p>
+                        @if (!Route::is('login'))
+                            <p>
+                                <a class="text-white" href="{{ route('login') }}">Đăng nhập</a>
+                            </p>
+                        @endif
+                        @if (!Route::is('register'))
+                            <p>
+                                <a class="text-white" href="{{ route('register') }}">Đăng kí</a>
+                            </p>
+                        @endif
+                    @endguest
+                    @auth
+                        @if (Auth::user()->type === 'user')
+                            <p>
+                                <a class="text-white" href="{{ route('home') }}">Trang chủ</a>
+                            </p>
+                            <p>
+                                <a href="{{ route('profile.edit') }}" class="text-white">Tài khoản</a>
+                            </p>
+
+                            <p>
+                                <a href="{{ route('cart') }}" class="text-white">Giỏ hàng</a>
+                            </p>
+                            <p>
+                                <a href="{{ route('orders') }}" class="text-white">Đơn hàng</a>
+                            </p>
+                        @endif
+                        @if (Auth::user()->type === 'admin')
+                        <p>
+                            <a class="text-white" href="{{ route('admin.index') }}">Trang quản lý</a>
+                        </p>
+                        <p>
+                            <a class="text-white" href="{{ route('admin.book-m') }}">Quản lý sách</a>
+                        </p>
+                        <p>
+                            <a class="text-white" href="{{ route('admin.user-m') }}">Quản lý tài khoản</a>
+                        </p>
+                        <p>
+                            <a class="text-white" href="{{ route('admin.order-m') }}">Quản lý đơn hàng</a>
+                        </p>
+                            <p>
+                                <a href="{{ route('admin.profile.edit') }}" class="text-white">Tài khoản</a>
+                            </p>
+                        @endif
+                    @endauth
+
                     {{-- <p>
                         <a href="#!" class="text-white">Shipping Rates</a>
                     </p>

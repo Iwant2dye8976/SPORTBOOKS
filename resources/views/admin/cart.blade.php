@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('title', 'Giỏ hàng')
 
@@ -144,7 +144,6 @@
                                         class="p-0 form-control w-50 text-end fs-4 fw-bold border-0 total-price"
                                         type="number" step="0.01" value="{{ $total_price }}" readonly hidden>
                                 </div>
-                                {{-- <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4> --}}
                             </div>
                         </div>
                         <button id="submit-button" class="btn btn-dark form-control" type="submit">
@@ -152,7 +151,7 @@
                         </button>
                     </form>
                 </div>
-                {{-- <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center">
                     <form class="w-50" action="{{ route('checkout.vnpay') }}" method="POST">
                         @csrf
                         <input name="total_price" id="total-price" class="total-prices" type="number" value="500000"
@@ -160,7 +159,7 @@
                         <button name="redirect" class="btn btn-primary form-control" type="submit">Thanh toán
                             VNPAY</button>
                     </form>
-                </div> --}}
+                </div>
             </div>
         @endif
     </div>
@@ -228,4 +227,4 @@
             updateTotalPrice();
         };
     </script>
-@endsection
+@endsection --}}

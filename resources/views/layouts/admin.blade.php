@@ -85,7 +85,7 @@
         <div class="container-fluid ps-4">
             <!-- Logo -->
             <a class="navbar-brand fw-bold text-primary fs-2"
-                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/index')) : url('home') }}">SPORTBOOKS
+                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : route('admin.index')) : url('home') }}">SPORTBOOKS
                 ADMIN</a>
 
             <!-- Toggle button cho mobile -->
@@ -96,7 +96,7 @@
                 <ul class="navbar-nav menu">
                     <li class="nav-item">
                         <a class="nav-link l" aria-current="page"
-                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : url('/admin/home')) : url('home') }}">Trang
+                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : route('admin.index')) : url('home') }}">Trang
                             chủ</a>
                     </li>
                     <li class="nav-item">
@@ -119,12 +119,7 @@
                             {{ Auth::user()->name }}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Tài khoản</a></li>
-                            @if (Auth::check() && Auth::user()->type === 'admin')
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('admin.index') }}">Quản lý</a>
-                                </li>
-                            @endif
+                            <li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}">Tài khoản</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf

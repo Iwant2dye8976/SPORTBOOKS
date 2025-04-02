@@ -20,7 +20,7 @@ class OrderController extends Controller
         $orders = Order::with('user')->where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
         $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-        return view(Auth::user()->type === 'admin' ? 'admin.orders' : 'user.orders', compact('orders', 'order_count', 'cart_count'));
+        return view('user.orders', compact('orders', 'order_count', 'cart_count'));
     }
 
     /**
@@ -32,7 +32,7 @@ class OrderController extends Controller
         $user = User::where('id', Auth::user()->id)->first();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
         $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
-        return view(Auth::user()->type === 'admin' ? 'admin.buynow' : 'user.buynow', compact('book', 'user', 'cart_count', 'cart_count', 'order_count'));
+        return view('user.buynow', compact('book', 'user', 'cart_count', 'cart_count', 'order_count'));
     }
 
     public function buynow(Request $request)
@@ -120,7 +120,7 @@ class OrderController extends Controller
 
         Cart::where('user_id', Auth::user()->id)->delete();
 
-        return redirect()->route(Auth::user()->type === 'admin' ? 'admin.cart' : 'cart')->with('success', 'Đặt thành công, vui lòng chờ xử lý.');
+        return redirect()->route('cart')->with('success', 'Đặt thành công, vui lòng chờ xử lý.');
     }
 
 
@@ -134,7 +134,7 @@ class OrderController extends Controller
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
         $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
         $order_information = Order::with('user')->where('id', $request->id)->first();
-        return view(Auth::user()->type === 'user' ? 'user.order-details' : 'admin.order-details', compact('order_details', 'product_count', 'cart_count', 'order_count', 'order_information'));
+        return view('user.order-details', compact('order_details', 'product_count', 'cart_count', 'order_count', 'order_information'));
     }
 
     /**

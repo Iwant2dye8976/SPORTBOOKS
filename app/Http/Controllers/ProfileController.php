@@ -24,7 +24,7 @@ class ProfileController extends Controller
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
             $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
         }
-
+        if(Auth::user()->type === 'admin') return view('profile.admin-edit');
         return view('profile.edit', compact('cart_count', 'order_count'))->with('user', $request->user());
     }
 

@@ -36,6 +36,7 @@
             <div>
                 <h4 class="fw-bolder"> {{ $book->title }} </h4>
                 <p class="fs-6 fw-medium">Giá bán: <span class="text text-danger"> ${{ $book->price }} </span></p>
+                <p class="fs-6 fw-medium">Tác giả: <span class="text text-dark text-decoration-underline"> {{ $book->author }} </span></p>
                 <p class="fs-6 fw-medium mb-1">Mô tả:</p>
                 <p class="fs-6" style="max-height: 300px; overflow-y: auto;"> {{ $book->description }} </p>
             </div>

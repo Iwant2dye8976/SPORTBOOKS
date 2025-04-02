@@ -128,6 +128,6 @@
         </div>
     </div>
     <div class="d-flex justify-content-center mt-4">
-        {{ $books->links('pagination::bootstrap-4') }}
+        {{ $books->appends(request()->query())->links('pagination::bootstrap-4') }}
     </div>
 </div>

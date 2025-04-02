@@ -1,10 +1,10 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('title', 'Chi tiết sách')
 
-{{-- @section('banner')
+@section('banner')
     <img class="img-fluid" src="{{ asset('imgs/tc-banner-t5.png') }}" alt="Banner">
-@endsection --}}
+@endsection
 
 
 
@@ -84,4 +84,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection --}}

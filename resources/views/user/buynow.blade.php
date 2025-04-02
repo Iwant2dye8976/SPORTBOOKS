@@ -45,7 +45,7 @@
                 </span></p>
             <div class="d-flex align-items-end">
                 <label class="form-label fs-5 fw-medium m-0 pb-1" for="quantity">Số lượng</label>
-                <input id="quantity" type="number" min="1" max="999" class="ms-3 form-control w-25"
+                <input id="quantity" type="number" min="1" max="50" class="ms-3 form-control w-25"
                     value="1" onblur="updateTotalPrice();">
             </div>
             </p>
@@ -174,7 +174,7 @@
             let quantityInput = document.getElementById("quantity");
             let quantity = parseInt(quantityInput.value);
 
-            if (!quantity || quantity < 1 || quantity > 999) {
+            if (!quantity || quantity < 1 || quantity > 50) {
                 quantityInput.value = 1;
             }
 
