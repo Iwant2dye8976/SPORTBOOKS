@@ -23,7 +23,7 @@
     </div>
     <div class="col-6 text-end">
         <a class="mt-5 mb-3 text text-decoration-none text-dark fs-4" href="{{ route('admin.book-m.add') }}"><i
-                class="fa-solid fa-circle-plus me-1 text-secondary"></i>Thêm sách mới</a>
+                class="fa-solid fa-circle-plus me-1 text-primary"></i>Thêm sách mới</a>
     </div>
 </div>
 
@@ -96,21 +96,21 @@
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Xác nhận xóa</h5>
+                                            <h5 class="modal-title">XÓA SÁCH</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body text-break">
                                             Bạn có chắc muốn xóa sách <strong>{{ $book->title }}</strong> không?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Hủy</button>
+                                                data-bs-dismiss="modal">HỦY</button>
                                             <form action="{{ route('admin.book-m.delete', $book->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Xóa</button>
+                                                <button type="submit" class="btn btn-danger">XÓA</button>
                                             </form>
                                         </div>
                                     </div>

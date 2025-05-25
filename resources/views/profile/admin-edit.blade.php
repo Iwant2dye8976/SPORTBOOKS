@@ -117,12 +117,14 @@
                 <hr>
             </div>
             <div class="col-12 ps-2 py-3">
-                <h4 class="fw-bold text-danger">XÓA TÀI KHOẢN</h4>
-                {{-- <h3 class="text text-center text-secondary">Đổi mật khẩu</h3> --}}
-                <h5 class="text text-dark">Bạn có chắc chắn muốn xóa tài khoản của mình không?</h5>
-                <h6 class="text text-secondary">Khi tài khoản của bạn bị xóa, tất cả tài nguyên và dữ liệu của nó sẽ bị xóa
-                    vĩnh viễn. Vui lòng nhập mật khẩu của bạn để xác nhận rằng bạn muốn xóa tài khoản của mình vĩnh viễn.
-                </h6>
+                <div class="w-25">
+                    <h4 class="fw-bold text-danger">XÓA TÀI KHOẢN</h4>
+                    {{-- <h3 class="text text-center text-secondary">Đổi mật khẩu</h3> --}}
+                    <h5 class="text text-dark">Bạn có chắc chắn muốn xóa tài khoản của mình không?</h5>
+                    <h6 class="text text-dark">Khi tài khoản của bạn bị xóa, <strong class="text text-danger">tất cả tài nguyên và dữ liệu của nó sẽ bị xóa
+                        vĩnh viễn.</strong> Vui lòng nhập mật khẩu của bạn để xác nhận rằng bạn muốn <strong class="text text-danger">xóa tài khoản của mình vĩnh viễn.</strong>
+                    </h6>
+                </div>
                 <form class="w-25" method="POST"
                     action="{{ Auth::user()->type === 'admin' ? route('admin.profile.destroy') : route('profile.destroy') }}">
                     @csrf
@@ -139,9 +141,29 @@
                             @endif
                         </div>
                     </div>
-                    <button class="btn btn-danger form-control">
-                        XÓA
-                    </button>
+                    <a class="btn btn-danger form-control" data-bs-toggle="modal" data-bs-target="#modal">
+                        XÁC NHẬN
+                    </a>
+                    <div class="modal fade" id="modal" tabindex="-1"
+                    aria-labelledby="deleteModal" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-danger">CẢNH BÁO</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-break">
+                                Bạn có chắc chắn muốn <strong class="text text-danger">xóa tài khoản</strong>. Hành động này <strong class="text text-danger">không thể hoàn tác!</strong>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">HỦY</button>
+                                <button type="submit" class="btn btn-danger">XÓA</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </form>
             </div>
         </div>

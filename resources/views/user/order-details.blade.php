@@ -168,7 +168,27 @@
                     @csrf
                     @method('PATCH')
                     <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
-                    <button id="submit-button" type="submit" class="form-control btn btn-danger">HỦY ĐƠN HÀNG</button>
+                    <a class="form-control btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal">HỦY ĐƠN HÀNG</a>
+                    <div class="modal fade" id="modal" tabindex="-1"
+                        aria-labelledby="deleteModal" aria-hidden="true" data-bs-backdrop="static">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">HỦY ĐƠN HÀNG</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-break">
+                                    Bạn có chắc muốn <strong class="text text-danger">hủy đơn hàng này?</strong>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">HỦY</button>
+                                    <button type="submit" class="btn btn-danger">XÁC NHẬN</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             @endif
         </div>
