@@ -53,19 +53,6 @@ background: linear-gradient(103deg, rgba(174,209,239,1) 0%, rgba(185,211,231,1) 
                                             <button class="btn btn-dark btn-lg btn-block" type="submit">Xác
                                                 nhận</button>
                                         </div>
-
-                                        <p class="pb-lg-2" style="color: #393f81;">
-                                            Đã nhớ ra mật khẩu? <a href="{{ route('login') }}"
-                                                style="color: #393f81;">Đăng nhập
-                                                ngay.</a>
-                                        </p>
-
-                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">
-                                            Chưa có tài khoản? <a href="{{ route('register') }}"
-                                                style="color: #393f81;">Đăng kí tài khoản tại đây</a>
-                                        </p>
-                                        <a href="#" class="small text-muted">Terms of use.</a>
-                                        <a href="#" class="small text-muted">Privacy policy</a>
                                     </form>
                                 </div>
                             </div>

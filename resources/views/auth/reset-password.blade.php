@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body style="background-color: #9A616D;">
+<body style="background: rgb(174,209,239);
+background: linear-gradient(103deg, rgba(174,209,239,1) 0%, rgba(185,211,231,1) 16%, rgba(197,214,224,1) 32%, rgba(219,218,208,1) 48%, rgba(219,218,208,1) 63%, rgba(231,221,201,1) 79%);">
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -66,19 +67,6 @@
                                             <button class="btn btn-dark btn-lg btn-block" type="submit">Xác
                                                 nhận</button>
                                         </div>
-
-                                        <p class="pb-lg-2" style="color: #393f81;">
-                                            Đã nhớ ra mật khẩu? <a href="{{ route('login') }}"
-                                                style="color: #393f81;">Đăng nhập
-                                                ngay.</a>
-                                        </p>
-
-                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">
-                                            Chưa có tài khoản? <a href="{{ route('register') }}"
-                                                style="color: #393f81;">Đăng kí tài khoản tại đây</a>
-                                        </p>
-                                        <a href="#" class="small text-muted">Terms of use.</a>
-                                        <a href="#" class="small text-muted">Privacy policy</a>
                                     </form>
                                 </div>
                             </div>
