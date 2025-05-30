@@ -1,5 +1,6 @@
 <div class="mt-5 mb-5">
-    @if (session('success'))
+    <div id="alert-container" class="row"></div>
+    {{-- @if (session('success'))
         <div class="alert alert-success text-center" id="success-alert">
             {{ session('success') }}
         </div>
@@ -8,7 +9,7 @@
         <div class="alert alert-danger text-center" id="error-alert">
             {{ session('error') }}
         </div>
-    @endif
+    @endif --}}
     <div class="row row-cols-auto" style="min-height:max-content;">
         <div class="col-12 border border-dark border-1 rounded"
             style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
@@ -86,10 +87,17 @@
                         })
                     }).then(response => response.json())
                     .then(data => {
-                        if (data.success) {
-                            console.log("Cập nhật đơn hàng thành công");
-                        }
-                    }).catch(error => console.error("Lỗi cập nhật đơn hàng:", error));
+    if (data.success) {
+        showBootstrapAlert(data.message, 'success');
+        console.log("Cập nhật thành công:", data.order);
+    } else {
+        showBootstrapAlert(data.message, 'danger');
+    }
+})
+.catch(error => {
+    showBootstrapAlert("Có lỗi xảy ra khi cập nhật đơn hàng.", 'danger');
+    console.error(error);
+});
             }
         </script>
     </div>

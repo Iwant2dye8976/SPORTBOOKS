@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class Deliverer
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,11 @@ class Admin
             return redirect()->route('home');
         }
 
-        if (Auth::user()->type === 'admin') {
+        if (Auth::user()->type === 'deliverer') {
             return $next($request);
         }
 
-        return redirect()->route('admin.book-m')->with('error', 'Bạn không có quyền truy cập!');
+        return redirect()->route('delivery.index')->with('error', 'Bạn không có quyền truy cập!');
+        // return $next($request);
     }
 }

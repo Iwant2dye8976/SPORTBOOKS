@@ -3,6 +3,11 @@
 @section('title', 'Thông tin tài khoản')
 
 @section('content')
+    @if(!Auth::user()->hasVerifiedEmail())
+        <div class="alert alert-warning text-center">
+            Tài khoản của bạn chưa được xác minh. Xác nhận tài khoản của bạn <span><a href="{{ route('verification.notice') }}" class="text-decoration-underline">tại đây!</a></span>
+        </div>
+    @endif
     {{-- <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item fs-4"><a href="{{ route('home') }}">Trang chủ</a></li>

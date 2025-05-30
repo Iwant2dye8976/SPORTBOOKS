@@ -85,7 +85,7 @@
         <div class="container-fluid ps-4">
             <!-- Logo -->
             <a class="navbar-brand fw-bold text-primary fs-2"
-                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : route('admin.index')) : url('home') }}">SPORTBOOKS
+                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : route('admin.book-m')) : url('home') }}">SPORTBOOKS
                 ADMIN</a>
 
             <!-- Toggle button cho mobile -->
@@ -94,11 +94,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav menu">
-                    <li class="nav-item">
-                        <a class="nav-link l" aria-current="page"
-                            href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : route('admin.index')) : url('home') }}">Trang
-                            chủ</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link l" href="{{ route('admin.book-m') }}">Quản lý sách</a>
                     </li>
@@ -166,6 +161,8 @@
     @stack('scripts')
     <script src="{{ asset('js/alert.js') }}"></script>
     <script src="{{ asset('js/disablebutton.js') }}"></script>
+    <script src="{{ asset('js/showAlert.js') }}"></script>
+
 </body>
 
 </html>

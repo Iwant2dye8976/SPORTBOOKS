@@ -18,5 +18,5 @@ document.addEventListener("DOMContentLoaded", function() {
             status_alert.style.opacity = "0";
             setTimeout(() => status_alert.remove(), 500);
         }
-    }, 3000);
+    }, 5000);
 });

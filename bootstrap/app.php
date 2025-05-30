@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\Deliverer;
 use App\Http\Middleware\User;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => Admin::class,
             'user' => User::class,
+            'deliverer' => Deliverer::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

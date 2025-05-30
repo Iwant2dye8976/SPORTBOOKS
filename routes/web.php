@@ -9,13 +9,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DeliveryController;
 
 require __DIR__ . '/auth.php'; // Import routes từ Breeze
 
-Route::get('/home', [BookController::class, 'getall'])->name('home');
-Route::get('/home/filter', [BookController::class, 'filter'])->name('filter');
-Route::get('home/detail/{id}', [BookController::class, 'getdetail'])->name('detail');
-Route::get('/home/search', [BookController::class, 'search'])->name('search');
+Route::get('/', [BookController::class, 'getall'])->name('home');
+Route::get('/filter', [BookController::class, 'filter'])->name('filter');
+Route::get('/detail/{id}', [BookController::class, 'getdetail'])->name('detail');
+Route::get('/search', [BookController::class, 'search'])->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 //Liên hệ
 Route::post('/contact', [ContactController::class, 'sendEmail'])->name('contact.send');
@@ -53,26 +54,26 @@ Route::middleware(['admin', 'auth'])->group(function () {
     // Route::get('/admin/home/search', [BookController::class, 'search'])->name('admin.search');
     // Route::get('/admin/home/filter', [BookController::class, 'filter'])->name('admin.filter');
     //Trang quản lý
-    Route::get('/admin/index', [AdminController::class, 'index'])->name('admin.index');
+    // Route::get('/admin/index', [AdminController::class, 'index'])->name('admin.index');
 
     //Quản lý sách
-    Route::get('/admin/index/bookmanagement', [AdminController::class, 'book_m'])->name('admin.book-m');
-    Route::get('/admin/index/bookmanagement/search', [AdminController::class, 'book_m_search'])->name('admin.book-m.search');
-    Route::get('/admin/index/bookmanagement/edit/{id}', [AdminController::class, 'book_m_show'])->name('admin.book-m.detail');
-    Route::get('/admin/index/bookmanagement/add', [AdminController::class, 'book_m_add_v'])->name('admin.book-m.add');
-    Route::post('/admin/index/bookmanagement/add', [AdminController::class, 'book_m_add'])->name('admin.book-m.store');
-    Route::patch('/admin/index/bookmanagement/update/{id}', [AdminController::class, 'book_m_update'])->name('admin.book-m.update');
-    Route::delete('/admin/index/bookmanagement/delete/{id}', [AdminController::class, 'destroyBook'])->name('admin.book-m.delete');
+    Route::get('/admin/bookmanagement', [AdminController::class, 'book_m'])->name('admin.book-m');
+    Route::get('/admin/bookmanagement/search', [AdminController::class, 'book_m_search'])->name('admin.book-m.search');
+    Route::get('/admin/bookmanagement/edit/{id}', [AdminController::class, 'book_m_show'])->name('admin.book-m.detail');
+    Route::get('/admin/bookmanagement/add', [AdminController::class, 'book_m_add_v'])->name('admin.book-m.add');
+    Route::post('/admin/bookmanagement/add', [AdminController::class, 'book_m_add'])->name('admin.book-m.store');
+    Route::patch('/admin/bookmanagement/update/{id}', [AdminController::class, 'book_m_update'])->name('admin.book-m.update');
+    Route::delete('/admin/bookmanagement/delete/{id}', [AdminController::class, 'destroyBook'])->name('admin.book-m.delete');
 
     //Quản lý tài khoản
-    Route::get('/admin/index/usermanagement', [AdminController::class, 'user_m'])->name('admin.user-m');
-    Route::get('/admin/index/usermanagement/search', [AdminController::class, 'user_m_search'])->name('admin.user-m.search');
-    Route::delete('/admin/index/usermanagement/delete/{id}', [AdminController::class, 'destroyUser'])->name('admin.delete_user');
+    Route::get('/admin/usermanagement', [AdminController::class, 'user_m'])->name('admin.user-m');
+    Route::get('/admin/usermanagement/search', [AdminController::class, 'user_m_search'])->name('admin.user-m.search');
+    Route::delete('/admin/usermanagement/delete/{id}', [AdminController::class, 'destroyUser'])->name('admin.delete_user');
 
     //Quản lý hóa đơn
-    Route::get('/admin/index/odrermanagement', [AdminController::class, 'order_m'])->name('admin.order-m');
+    Route::get('/admin/odrermanagement', [AdminController::class, 'order_m'])->name('admin.order-m');
     Route::post('/admin/order/update', [OrderController::class, 'edit'])->name('admin.order-update');
-    Route::get('/admin/index/odrermanagement/detail/{id}', [AdminController::class, 'order_m_show'])->name('admin.order-m.detail');
+    Route::get('/admin/odrermanagement/detail/{id}', [AdminController::class, 'order_m_show'])->name('admin.order-m.detail');
 
     //Giỏ hàng admin
     // Route::get('/admin/buynow/{id}', [OrderController::class, 'buynow_view'])->name('admin.buynow-v');
@@ -90,4 +91,8 @@ Route::middleware(['admin', 'auth'])->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
     Route::patch('/admin/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
     Route::delete('/admin/profile', [ProfileController::class, 'destroy'])->name('admin.profile.destroy');
+});
+
+Route::middleware(['deliverer', 'auth'])->group(function (){
+    Route::get('delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
 });

@@ -141,22 +141,27 @@ class OrderController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:orders,id',
-            'status' => 'required|integer',
-        ]);
+{
+    $request->validate([
+        'id' => 'required|exists:orders,id',
+        'status' => 'required|integer',
+    ]);
 
-        $order = Order::where('id', $request->id)->first();
+    $order = Order::where('id', $request->id)->first();
 
-
-        $order->update(['status' => $request->status]);
-        if (!$order) {
-            return response()->json(['success' => false, 'message' => 'Không tìm thấy đơn hàng'], 404);
-        }
-
-        return response()->json(['success' => true, 'message' => 'Cập nhật thành công']);
+    if (!$order) {
+        return response()->json(['success' => false, 'message' => 'Không tìm thấy đơn hàng'], 404);
     }
+
+    $order->update(['status' => $request->status]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Cập nhật thành công',
+        'order' => $order
+    ]);
+}
+
 
     public function cancel(Request $request)
     {

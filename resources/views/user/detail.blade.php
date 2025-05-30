@@ -71,7 +71,9 @@
                 @foreach ($relatedBooks as $rBook)
                     <div class="col my-2">
                         <div class="card h-100">
-                            <img src="{{ $rBook->image_url }}" class="card-img-top" alt="Image">
+                            <a href="{{ route('detail', $rBook->id) }}">
+                                <img src="{{ $rBook->image_url }}" class="card-img-top" alt="Image">
+                            </a>
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <p class="card-text fw-bold fs-5 text-center"> <a class="text-decoration-none text-dark"
                                         href="{{ route('detail', $rBook->id) }}"> {{ $rBook->title }} </a> </p>
@@ -85,7 +87,7 @@
             </div>
         </div>
     </div>
-    <script>
+    {{-- <script>
         setTimeout(function() {
             let success_alert = document.getElementById('success-alert');
             let error_alert = document.getElementById('error-alert');
@@ -100,5 +102,5 @@
                 setTimeout(() => error_alert.remove(), 500);
             }
         }, 3000);
-    </script>
+    </script> --}}
 @endsection

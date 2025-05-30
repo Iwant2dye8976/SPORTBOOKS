@@ -17,7 +17,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $books = Book::orderBy('updated_at', 'desc')->paginate(10);
+        $book_count = Book::get()->count();
+        return view('admin.index', compact('books', 'book_count'));
     }
 
     /**

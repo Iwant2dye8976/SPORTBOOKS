@@ -36,7 +36,7 @@
             background: #fff;
             transition: 0.5s transform ease;
             transform: scale3d(0, 1, 1);
-            transform-origin: 100% 50%;
+            transform-origin: 0 50%;
         }
 
         .menu .l:hover::before {
@@ -70,13 +70,13 @@
         .search-box input {
             padding-left: 30px;
             height: 40px;
-            width: 250px;
+            width: 500px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
     </style>
 
-    @stack('styles')
+    @stack('styles') <!-- Cho phép trang con thêm CSS riêng -->
 </head>
 
 <body>
@@ -84,7 +84,9 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
         <div class="container-fluid ps-4">
             <!-- Logo -->
-            <a class="navbar-brand fw-bold text-primary fs-2" href="{{ url('/') }}">SPORTBOOKS</a>
+            <a class="navbar-brand fw-bold text-primary fs-2"
+                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : route('delivery.index')) : url('home') }}">SPORTBOOKS
+                DELIVERY</a>
 
             <!-- Toggle button cho mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -93,50 +95,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav menu">
                     <li class="nav-item">
-                        <a class="nav-link l" aria-current="page" href="{{ url('/') }}">Trang
-                            chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('cart') }}">Giỏ
-                            hàng
-                            @if ($cart_count > 0)
-                                <span
-                                    class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ $cart_count > 99 ? '99+' : $cart_count }}
-                                </span>
-                            @endif
-                        </a>
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('orders') }}">Đơn
-                            hàng
-                            @if ($order_count > 0)
-                                <span
-                                    class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ $order_count > 99 ? '99+' : $order_count }}
-                                </span>
-                            @endif
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('contact') }}">Liên hệ</a>
+                        <a class="nav-link l" href="{{ route('admin.order-m') }}">Quản lý đơn hàng</a>
                     </li>
                 </ul>
             </div>
 
             <div class="d-flex justify-content-end collapse navbar-collapse menu" id="navbarNav">
-                <!-- Thanh tìm kiếm -->
-                <form class="me-2" action=" {{ route('search') }} " method="GET">
-                    <div class="search-box">
-                        <button type="submit" class="nav-link">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <input class="form-control" type="search" name="keyword" placeholder="Tìm kiếm..."
-                            value="{{ rawurldecode(request('keyword')) }}">
-                    </div>
-                </form>
-
                 @auth
                     <div class="dropdown pe-4">
                         <button class="btn btn-outline-secondary position-relative dropdown-toggle" type="button"
@@ -144,13 +108,7 @@
                             {{ Auth::user()->name }}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Tài
-                                    khoản</a></li>
-                            @if (Auth::check() && Auth::user()->type === 'admin')
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('admin.book-m') }}">Quản lý</a>
-                                </li>
-                            @endif
+                            <li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}">Tài khoản</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
@@ -161,6 +119,7 @@
                                 </form>
                             </li>
                         </ul>
+
                     </div>
                 @endauth
 
@@ -182,7 +141,7 @@
     </div>
 
     <!-- Nội dung của từng trang -->
-    <div class="container-md-fluid container-xxl mt-4 min-vh-100" style="z-index: 999;">
+    <div class="container-md-fluid container-xxl mt-4 min-vh-100">
         @yield('content')
     </div>
 
@@ -197,7 +156,6 @@
     <script src="{{ asset('js/alert.js') }}"></script>
     <script src="{{ asset('js/disablebutton.js') }}"></script>
     <script src="{{ asset('js/showAlert.js') }}"></script>
-
 
 </body>
 

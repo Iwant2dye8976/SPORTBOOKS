@@ -7,6 +7,11 @@
 @endsection
 
 @section('content')
+    @if(request()->query('verified') == 1)
+    <div  id="success-alert" class="alert alert-success text-center">
+        Email của bạn đã được xác minh thành công!
+    </div>
+    @endif
     <div class="border border-2 my-4" style="background-color: #E4C087;">
         <div class="ms-3 py-2 d-flex align-items-center">
             <div class="row row-cols-auto">
@@ -44,8 +49,10 @@
             @foreach ($books as $book)
                 <div class="col">
                     <div class="card h-100" style="background-color: #f2f3f4">{{--https://static.kinhtedothi.vn/w960/images/upload/2021/12/24/sach-huan-1.jpg--}}
-                        <img src="{{ $book->image_url}}"
+                        <a href="{{ route('detail', $book->id) }}">
+                            <img src="{{ $book->image_url}}"
                             class="card-img-top" alt="Image">
+                        </a>
                         <div class="card-body  d-flex justify-content-center align-items-center">
                             <p class="card-text fw-bold fs-5 text-center">
                                 <a class="text-decoration-none text-dark" href="{{ route('detail', $book->id) }}">

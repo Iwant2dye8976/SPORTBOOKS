@@ -23,9 +23,10 @@ class User
         if(Auth::user()->type==='user'){
             return $next($request);
         }
-        else{
-            return redirect()->route('admin.index')->with('error', 'Bạn không có quyền truy cập!');
-        }
+        // else{
+        //     return redirect()->route('admin.index')->with('error', 'Bạn không có quyền truy cập!');
+        // }
         // return $next($request);
+        return redirect()->route('home')->with('error', 'Bạn không có quyền truy cập!');
     }
 }

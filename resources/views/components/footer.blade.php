@@ -102,9 +102,6 @@
                         @endif
                         @if (Auth::user()->type === 'admin')
                         <p>
-                            <a class="text-white" href="{{ route('admin.index') }}">Trang quản lý</a>
-                        </p>
-                        <p>
                             <a class="text-white" href="{{ route('admin.book-m') }}">Quản lý sách</a>
                         </p>
                         <p>
@@ -149,7 +146,7 @@
 
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        © 2025 Copyright:
+        © <?php echo date('Y'); ?> Bản quyền thuộc về:
         <a class="text-white" href="#">SPORTBOOKS</a>
     </div>
     <!-- Copyright -->

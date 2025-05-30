@@ -28,7 +28,12 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if (Auth::user()->type === 'admin') {
-            return redirect()->route('admin.index'); // Chuyển hướng admin đến trang admin
+            return redirect()->route('admin.book-m'); // Chuyển hướng admin đến trang admin
+        }
+        else{
+            if (Auth::user()->type === 'deliverer') {
+                return redirect()->route('delivery.index');
+            }
         }
 
         return redirect()->route('home'); // Chuyển hướng user thường đến trang home
