@@ -1,5 +1,5 @@
 <div class="mb-5">
-    <a class="text text-decoration-none text-dark fs-4" href="{{ url('admin/index/bookmanagement') }}">
+    <a class="text text-decoration-none text-dark fs-4" href="{{ url('admin/bookmanagement') }}">
         <i class="fas fa-arrow-left"></i> Quay lại
     </a>
 
@@ -67,8 +67,8 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="price">Giá bán</label>
-                    <input class="form-control" id="price" name="price" type="number" step="0.1"
+                    <label class="form-label" for="price">Giá bán($)</label>
+                    <input class="form-control" id="price" name="price" type="number" step="0.01"
                         min="1" max="9999" value="{{ old('price', $book->price) }}">
                     @error('price')
                         <div class="text-danger">{{ $message }}</div>

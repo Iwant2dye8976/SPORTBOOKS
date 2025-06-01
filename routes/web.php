@@ -35,14 +35,17 @@ Route::middleware(['user', 'auth'])->group(function () {
     //Đơn hàng
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
     Route::get('/orders/detail/{id}', [OrderController::class, 'show'])->name('orders.details');
-    Route::patch('/orders/detail/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::post('/orders/detail/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
     //Tài khoản khách hàng
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/password-change', [ProfileController::class, 'edit'])->name('profile.password-change');
+    Route::get('/profile/delete-account', [ProfileController::class, 'edit'])->name('profile.delete-account');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //VN PAY
+    // Route::get('/')
     Route::post('/vnpay/payment', [CheckoutController::class, 'vnpay_payment'])->name('checkout.vnpay');
 });
 
@@ -72,8 +75,10 @@ Route::middleware(['admin', 'auth'])->group(function () {
 
     //Quản lý hóa đơn
     Route::get('/admin/odrermanagement', [AdminController::class, 'order_m'])->name('admin.order-m');
-    Route::post('/admin/order/update', [OrderController::class, 'edit'])->name('admin.order-update');
     Route::get('/admin/odrermanagement/detail/{id}', [AdminController::class, 'order_m_show'])->name('admin.order-m.detail');
+    Route::post('/admin/odrermanagement/detail/confrim/{id}', [OrderController::class, 'confirm'])->name('admin.order-confirm');
+    Route::post('/admin/odrermanagement/detail/cancel/{id}', [OrderController::class, 'cancel'])->name('admin.order-cancel');
+
 
     //Giỏ hàng admin
     // Route::get('/admin/buynow/{id}', [OrderController::class, 'buynow_view'])->name('admin.buynow-v');
@@ -90,9 +95,19 @@ Route::middleware(['admin', 'auth'])->group(function () {
     //Tài khoản admin
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
     Route::patch('/admin/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
+    Route::get('/admin/profile/password-change', [ProfileController::class, 'edit'])->name('admin.profile.password-change');
+    Route::get('/admin/profile/delete-account', [ProfileController::class, 'edit'])->name('admin.profile.delete-account');
     Route::delete('/admin/profile', [ProfileController::class, 'destroy'])->name('admin.profile.destroy');
 });
 
-Route::middleware(['deliverer', 'auth'])->group(function (){
-    Route::get('delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
+Route::middleware(['deliverer', 'auth'])->group(function () {
+    // Route::get('/delivery', [DeliveryController::class, 'index'])->name('delivery.index');
+    Route::get('/delivery/orders-management', [DeliveryController::class, 'ordersManagement'])->name('delivery.orders-m');
+
+    //Tài khoản người giao hàng
+    Route::get('/delivery/profile', [ProfileController::class, 'edit'])->name('delivery.profile.edit');
+    Route::patch('/delivery/profile', [ProfileController::class, 'update'])->name('delivery.profile.update');
+    Route::get('/delivery/profile/password-change', [ProfileController::class, 'edit'])->name('delivery.profile.password-change');
+    Route::get('/delivery/profile/delete-account', [ProfileController::class, 'edit'])->name('delivery.profile.delete-account');
+    Route::delete('/delivery/profile', [ProfileController::class, 'destroy'])->name('delivery.profile.destroy');
 });

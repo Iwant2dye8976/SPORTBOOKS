@@ -9,6 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -125,7 +126,6 @@
                                 </form>
                             </li>
                         </ul>
-
                     </div>
                 @endauth
 
@@ -147,7 +147,7 @@
     </div>
 
     <!-- Nội dung của từng trang -->
-    <div class="container-md-fluid container-xxl mt-4 min-vh-100">
+    <div class="container-md-fluid container-xxl mt-4 px-4 min-vh-100" style="z-index: 999;">
         @yield('content')
     </div>
 

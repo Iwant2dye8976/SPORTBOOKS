@@ -15,7 +15,7 @@
             style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
             <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
                 <div class="col">
-                    <a href="{{ route('admin.order-m') }}"
+                    <a href="{{ route('delivery.orders-m') }}"
                         class="text-start sticky-top fs-2 text-decoration-none text-dark">Quản lý đơn hàng</a>
                 </div>
                 <div class="col mb-4">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-2 text-center">
                         <a class="text text-decoration-none text-secondary fs-5"
-                            href="{{ route('admin.order-m.detail', $order->id) }}">Chi tiết</a>
+                            href="">Chi tiết</a>
                     </div>
                     <div class="col-12 my-2">
                         <hr>
@@ -105,17 +105,17 @@
                         })
                     }).then(response => response.json())
                     .then(data => {
-                        if (data.success) {
-                            showBootstrapAlert(data.message, 'success');
-                            console.log("Cập nhật thành công:", data.order);
-                        } else {
-                            showBootstrapAlert(data.message, 'danger');
-                        }
-                    })
-                    .catch(error => {
-                        showBootstrapAlert("Có lỗi xảy ra khi cập nhật đơn hàng.", 'danger');
-                        console.error(error);
-                    });
+    if (data.success) {
+        showBootstrapAlert(data.message, 'success');
+        console.log("Cập nhật thành công:", data.order);
+    } else {
+        showBootstrapAlert(data.message, 'danger');
+    }
+})
+.catch(error => {
+    showBootstrapAlert("Có lỗi xảy ra khi cập nhật đơn hàng.", 'danger');
+    console.error(error);
+});
             }
         </script>
     </div>

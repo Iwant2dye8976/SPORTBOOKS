@@ -32,7 +32,7 @@
             <div class="row row-cols-2 mb-1 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
                 <div class="col">
                     <a href="{{ route('admin.user-m') }}"
-                        class="text-start sticky-top fs-2 text-decoration-none text-dark">Quản tài khoản</a>
+                        class="text-start sticky-top fs-2 text-decoration-none text-dark">Quản lý tài khoản</a>
                 </div>
                 <div class="col mb-4">
                     <h4 class="text-end text-secondary">{{ $user_count }} tài khoản</h4>
@@ -88,13 +88,13 @@
                                             Bạn có chắc muốn xóa người dùng <strong>{{ $user->name }}</strong> không?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Hủy</button>
                                             <form action="{{ route('admin.delete_user', $user->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Xóa</button>
+                                                <button type="submit" class="btn btn-danger">XÁC NHẬN</button>
                                             </form>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">HỦY</button>
                                         </div>
                                     </div>
                                 </div>

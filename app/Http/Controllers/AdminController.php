@@ -211,13 +211,13 @@ class AdminController extends Controller
     {
         $book = Book::where('id', $id)->first();
         $book->delete();
-        return redirect()->back()->with('success', 'Sách đã bị xóa.');
+        return redirect()->back()->with('success', 'Sách đã bị xóa');
     }
 
     public function destroyUser(Request $request, $id)
     {
         $user = User::where('id', $id)->first();
         $user->delete();
-        return redirect()->back()->with('success', 'Tài khoản đã bị xóa.');
+        return redirect()->back()->with('success', 'Tài khoản đã bị xóa');
     }
 }

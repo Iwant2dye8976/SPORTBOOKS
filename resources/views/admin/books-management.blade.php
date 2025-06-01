@@ -104,14 +104,14 @@
                                             Bạn có chắc muốn xóa sách <strong>{{ $book->title }}</strong> không?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">HỦY</button>
                                             <form action="{{ route('admin.book-m.delete', $book->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">XÓA</button>
+                                                <button type="submit" class="btn btn-danger">XÁC NHẬN</button>
                                             </form>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">HỦY</button>
                                         </div>
                                     </div>
                                 </div>

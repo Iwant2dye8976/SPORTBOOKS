@@ -24,7 +24,8 @@ class ProfileController extends Controller
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
             $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
         }
-        if(Auth::user()->type === 'admin') return view('profile.admin-edit');
+        // if(Auth::user()->type === 'admin') return view('profile.admin-edit');
+        // else if(Auth::user()->type === 'deliverer') return view('profile.deliverer-edit');
         return view('profile.edit', compact('cart_count', 'order_count'))->with('user', $request->user());
     }
 
@@ -41,7 +42,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return redirect()->route(Auth::user()->type === 'admin' ? 'admin.profile.edit' : 'profile.edit')->with('status', 'Cập nhật thông tin thành công');
+        return redirect()->back()->with('status', 'Cập nhật thông tin thành công');
     }
 
     /**
@@ -69,6 +70,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/home');
+        return Redirect::to('/');
     }
 }

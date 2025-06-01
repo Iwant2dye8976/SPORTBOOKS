@@ -10,11 +10,11 @@
 @endif
 
 <div>
-    <a class="text text-decoration-none text-dark fs-4" href="{{ url('admin/index/odrermanagement') }}">
+    <a class="text text-decoration-none text-dark fs-4" href="{{ url('admin/odrermanagement') }}">
         <i class="fas fa-arrow-left"></i> Quay lại
     </a>
 </div>
-<div class="row mt-5 border border-dark border-1 rounded px-3 pb-3 mb-2 pt-2"
+<div class="row mt-5 border border-dark border-1 rounded px-3 pb-3 mb-2"
     style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
     <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
         <div class="col">
@@ -35,7 +35,7 @@
                     @break
 
                     @case(1)
-                        <span class="text text-success fw-bold">Đã xác nhận</span>
+                        <span class="text text-primary fw-bold">Chờ thanh toán</span>
                     @break
 
                     @default
@@ -66,7 +66,7 @@
         @foreach ($order_details as $item)
             <div class="row book">
                 <div class="col">
-                    <a href="{{ route('admin.detail', $item->book->id) }}">
+                    <a href="{{ route('admin.order-m.detail', $item->book->id) }}">
                         <img class="img-fluid" src="{{ $item->book->image_url }}" alt="Ảnh sách" width="200">
                     </a>
                 </div>
@@ -157,13 +157,71 @@
                 </div>
             </div>
         </div>
-        @if ($order_information->status == -1)
+        {{-- @if ($order_information->status == -1)
             <form class="text-center" action="{{ route('orders.cancel', $order_information->id) }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
                 <button type="submit" class="form-control btn btn-danger">HỦY ĐƠN HÀNG</button>
             </form>
-        @endif
+        @endif --}}
+        @switch($order_information->status)
+            @case(-1)
+            <hr>
+            <div class="row">
+                <form class="text-center col-5" action="{{ route('admin.order-cancel', $order_information->id) }}" method="POST"
+                    onsubmit="disableButton()">
+                    @csrf
+                    <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
+                    <a class="form-control btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancel-modal">HỦY ĐƠN HÀNG</a>
+                    <div class="modal fade" id="cancel-modal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true"
+                        data-bs-backdrop="static">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">HỦY ĐƠN HÀNG</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-break">
+                                    Bạn có chắc muốn <strong class="text text-danger">hủy đơn hàng này?</strong>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger">XÁC NHẬN</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">HỦY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-2"></div>
+                <form class="text-center col-5" action="{{ route('admin.order-confirm', $order_information->id) }}" method="POST" onsubmit="disableButton();">
+                    @csrf
+                    <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
+                    <a class="form-control btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirm-modal">XÁC NHẬN ĐƠN HÀNG</a>
+                    <div class="modal fade" id="confirm-modal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true"
+                        data-bs-backdrop="static">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">XÁC NHẬN ĐƠN HÀNG</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-break">
+                                    Bạn có chắc muốn <strong class="text text-danger">xác nhận đơn hàng này?</strong>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">XÁC NHẬN</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">HỦY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            @break
+            @default
+        @endswitch
     </div>
 </div>

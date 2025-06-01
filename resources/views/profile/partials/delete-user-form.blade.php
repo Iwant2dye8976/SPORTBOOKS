@@ -1,55 +1,74 @@
-<section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Delete Account') }}
-        </h2>
+@php
+    switch (Auth::user()->type) {
+        case 'admin':
+            $actionRoute = route('admin.profile.destroy');
+            break;
+        case 'deliverer':
+            $actionRoute = route('delivery.profile.destroy');
+            break;
+        default:
+            $actionRoute = route('profile.destroy');
+            break;
+    }
+@endphp
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+<div class="col-12 ps-2">
+    <div class="border border-danger rounded p-4">
+        <h4 class="fw-bold text-danger mb-3">XÓA TÀI KHOẢN</h4>
+
+        <p class="text-dark mb-1">Bạn có chắc chắn muốn xóa tài khoản của mình không?</p>
+        <p class="text-dark mb-1">
+            Khi tài khoản bị xóa, <strong class="text-danger">tất cả tài nguyên và dữ liệu sẽ bị xóa vĩnh viễn</strong>.
         </p>
-    </header>
-
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
-
-    <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+        <p class="text-dark mb-3">
+            Vui lòng nhập mật khẩu để xác nhận bạn muốn <strong class="text-danger">xóa tài khoản vĩnh viễn</strong>.
+        </p>
+        <hr>
+        <form method="POST" action="{{ $actionRoute }}">
             @csrf
-            @method('delete')
+            @method('DELETE')
 
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                {{ __('Are you sure you want to delete your account?') }}
-            </h2>
+            <div class="mb-3 row">
+                <label for="password" class="align-self-center col-3 text-end me-3">Mật khẩu:</label>
+                <div class="col" style="max-width: 300px;">
+                    <input id="password" name="password" type="password" class="form-control"
+                        placeholder="Nhập mật khẩu xác nhận" autocomplete="current-password">
 
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-            </p>
-
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-                <x-text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
-
-                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                    @if ($errors->userDeletion->has('password'))
+                        <div class="mt-2 text-danger">
+                            {{ $errors->userDeletion->first('password') }}
+                        </div>
+                    @endif
+                </div>
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
+            <div class="text text-center">
+                <button type="button" class="btn btn-danger form-control" data-bs-toggle="modal"
+                    data-bs-target="#confirmDeleteModal" style="max-width: 500px;">
+                    XÁC NHẬN
+                </button>
+            </div>
 
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
-                </x-danger-button>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+                aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-danger fw-bold" id="confirmDeleteModalLabel">CẢNH BÁO</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Bạn có chắc chắn muốn <strong class="text-danger">xóa tài khoản</strong>?<br>
+                            Hành động này <strong class="text-danger">không thể hoàn tác!</strong>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">HỦY</button>
+                            <button type="submit" class="btn btn-danger">XÓA</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
-    </x-modal>
-</section>
+    </div>
+</div>

@@ -24,7 +24,7 @@ class Deliverer
             return $next($request);
         }
 
-        return redirect()->route('delivery.index')->with('error', 'Bạn không có quyền truy cập!');
+        return redirect()->route('delivery.orders-m')->with('error', 'Bạn không có quyền truy cập!');
         // return $next($request);
     }
 }

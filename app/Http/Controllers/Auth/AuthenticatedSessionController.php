@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
         }
         else{
             if (Auth::user()->type === 'deliverer') {
-                return redirect()->route('delivery.index');
+                return redirect()->route('delivery.orders-m');
             }
         }
 

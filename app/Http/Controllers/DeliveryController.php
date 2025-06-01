@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class DeliveryController extends Controller
 {
@@ -12,6 +13,14 @@ class DeliveryController extends Controller
     public function index()
     {
         return view('deliverer.index');
+    }
+
+
+    public function ordersManagement()
+    {
+        $orders = Order::with('user')->orderBy('updated_at', 'desc')->whereIn('status', [1])->paginate(10);
+        $order_count = Order::whereIn('status', [1])->count();
+        return view('deliverer.index', compact('orders', 'order_count'));
     }
 
     /**

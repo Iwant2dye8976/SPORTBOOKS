@@ -1,35 +1,9 @@
 @extends('layouts.deliverer')
 
-@section('title', 'Quản trị viên')
+@section('title', 'Giao hàng')
 
 @section('content')
-    @if (Route::currentRouteName() === 'admin.index')
-        <div class="row row-cols-1">
-            <h2 class="text text-secondary text-center">Hãy chọn một thao tác quản lý</h2>
-        </div>
+    @if (Route::currentRouteName() === 'delivery.orders-m')
+        @include('deliverer.orders-management')
     @endif
-
-    @if (Route::currentRouteName() === 'admin.book-m' || Route::currentRouteName() === 'admin.book-m.search')
-        @include('admin.books-management')
-    @endif
-
-    @if (Route::currentRouteName() === 'admin.book-m.add')
-        @include('admin.books-managetment-add')
-    @endif
-
-    @if (Route::currentRouteName() === 'admin.book-m.detail')
-        @include('admin.books-management-detail')
-    @endif
-
-    @if (Route::currentRouteName() === 'admin.user-m' || Route::currentRouteName() === 'admin.user-m.search')
-        @include('admin.users-management')
-    @endif
-
-    @if (Route::currentRouteName() === 'admin.order-m')
-        @include('admin.orders-management')
-    @endif
-    @if (Route::currentRouteName() === 'admin.order-m.detail')
-        @include('admin.order-management-detail')
-    @endif
-    
 @endsection

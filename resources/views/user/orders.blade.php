@@ -53,7 +53,7 @@
                         @break
 
                         @case(1)
-                            <span class="text text-success fw-bold">Đã xác nhận</span>
+                            <span class="text text-primary fw-bold">Chờ thanh toán</span>
                         @break
 
                         @default

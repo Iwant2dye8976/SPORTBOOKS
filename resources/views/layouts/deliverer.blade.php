@@ -9,6 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -85,7 +86,7 @@
         <div class="container-fluid ps-4">
             <!-- Logo -->
             <a class="navbar-brand fw-bold text-primary fs-2"
-                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('/home') : route('delivery.index')) : url('home') }}">SPORTBOOKS
+                href="{{ Auth::check() ? (Auth::user()->type === 'user' ? url('') : route('delivery.orders-m')) : url('home') }}">SPORTBOOKS
                 DELIVERY</a>
 
             <!-- Toggle button cho mobile -->
@@ -95,7 +96,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav menu">
                     <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('admin.order-m') }}">Quản lý đơn hàng</a>
+                        <a class="nav-link l" href="{{ route('delivery.orders-m') }}">Quản lý đơn hàng</a>
                     </li>
                 </ul>
             </div>
@@ -108,7 +109,7 @@
                             {{ Auth::user()->name }}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}">Tài khoản</a></li>
+                            <li><a class="dropdown-item" href="{{ route('delivery.profile.edit') }}">Tài khoản</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
@@ -141,7 +142,7 @@
     </div>
 
     <!-- Nội dung của từng trang -->
-    <div class="container-md-fluid container-xxl mt-4 min-vh-100">
+    <div class="container-md-fluid container-xxl mt-4 px-4 min-vh-100">
         @yield('content')
     </div>
 

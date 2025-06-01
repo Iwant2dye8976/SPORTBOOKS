@@ -1,86 +1,15 @@
-@php
-    switch (Auth::user()->type) {
-        case 'admin':
-            $role = 'admin.';
-            $layout = 'admin';
-            break;
-        case 'deliverer':
-            $role = 'delivery.';
-            $layout = 'deliverer';
-            break;
-        default:
-            $role = '';
-            $layout = 'app';
-            break;
-    }
-@endphp
-
-@extends('layouts.'.$layout)
+@extends('layouts.deliverer')
 
 @section('title', 'Thông tin tài khoản')
 
 @section('content')
-    @if (session('status'))
-        <div class="alert alert-success text-center" id="status">
-            {{ session('status') }}
-        </div>
-    @endif
-    @if (!Auth::user()->hasVerifiedEmail() && Auth::user()->type === 'user')
-        <div class="alert alert-warning text-center">
-            Tài khoản của bạn chưa được xác minh. Xác nhận tài khoản của bạn <span><a
-                    href="{{ route('verification.notice') }}" class="text-decoration-underline">tại đây!</a></span>
-        </div>
-    @endif
-
-    <div class="row">
-        <div class="col-3">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white fw-bold">
-                    Tài khoản của tôi
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li
-                        class="list-group-item {{ routeContains('.edit') ? 'active bg-light fw-bold border-start border-1 border-primary' : '' }}">
-                        <a href="{{ route($role.'profile.edit') }}" class="text-decoration-none text-dark d-block">
-                            <i class="bi bi-person-fill me-2"></i>Thông tin tài khoản
-                        </a>
-                    </li>
-                    <li
-                        class="list-group-item {{ routeContains('.password-change') ? 'active bg-light fw-bold border-start border-1 border-primary' : '' }}">
-                        <a href="{{ route($role.'profile.password-change') }}" class="text-decoration-none text-dark d-block">
-                            <i class="bi bi-lock-fill me-2"></i>Đổi mật khẩu
-                        </a>
-                    </li>
-                    <li
-                        class="list-group-item {{ routeContains('.delete-account') ? 'active bg-light fw-bold border-start border-1 border-danger' : '' }}">
-                        <a href="{{ route($role.'profile.delete-account') }}" class="text-decoration-none text-danger d-block"><i
-                                class="bi bi-gear-fill me-2"></i>Xóa tài khoản</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="col-9">
-            @if (routeContains('.edit'))
-                @include('profile.partials.update-profile-information-form')
-            @endif
-            @if (routeContains('.password-change'))
-                @include('profile.partials.update-password-form')
-            @endif
-            @if (routeContains('.delete-account'))
-                @include('profile.partials.delete-user-form')
-            @endif
-        </div>
-    </div>
-
     {{-- <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item fs-4"><a href="{{ route('home') }}">Trang chủ</a></li>
             <li class="breadcrumb-item fs-4 active" aria-current="page">Giỏ hàng</li>
         </ol>
     </nav> --}}
-    {{-- <div class="mt-5">
+    <div class="mt-5">
         @if (session('status'))
             <div class="alert alert-success text-center" id="status">
                 {{ session('status') }}
@@ -95,7 +24,7 @@
             <div class="col-12 ps-2 py-3">
                 <h4 class="fw-bold text-secondary">Thông tin cơ bản</h4>
                 <form class="w-25"
-                    action="{{ Auth::user()->type === 'admin' ? route('admin.profile.update') : route('profile.update') }}"
+                    action="{{ Auth::user()->type === 'deliverer' ? route('delivery.profile.update') : route('profile.update') }}"
                     method="POST">
                     @method('patch')
                     @csrf
@@ -190,6 +119,7 @@
             <div class="col-12 ps-2 py-3">
                 <div class="w-25">
                     <h4 class="fw-bold text-danger">XÓA TÀI KHOẢN</h4>
+                    {{-- <h3 class="text text-center text-secondary">Đổi mật khẩu</h3> --}}
                     <h5 class="text text-dark">Bạn có chắc chắn muốn xóa tài khoản của mình không?</h5>
                     <h6 class="text text-dark">Khi tài khoản của bạn bị xóa, <strong class="text text-danger">tất cả tài
                             nguyên và dữ liệu của nó sẽ bị xóa
@@ -198,7 +128,7 @@
                     </h6>
                 </div>
                 <form class="w-25" method="POST"
-                    action="{{ Auth::user()->type === 'admin' ? route('admin.profile.destroy') : route('profile.destroy') }}">
+                    action="{{ Auth::user()->type === 'deliverer' ? route('delivery.profile.destroy') : route('profile.destroy') }}">
                     @csrf
                     @method('DELETE')
                     <div class="mb-3">
@@ -239,5 +169,5 @@
                 </form>
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection

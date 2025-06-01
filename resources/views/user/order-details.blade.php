@@ -20,7 +20,7 @@
         </div>
     @endif
 
-    <div class="row mt-2 border border-dark border-1 rounded px-3 pb-3 mb-2"
+    <div class="row mt-5 border border-dark border-1 rounded px-3 pb-3 mb-2"
         style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
         <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">
@@ -41,7 +41,7 @@
                         @break
 
                         @case(1)
-                            <span class="text text-success fw-bold">Đã xác nhận</span>
+                            <span class="text text-primary fw-bold">Chờ thanh toán</span>
                         @break
 
                         @default
@@ -164,33 +164,51 @@
                 </div>
             </div>
             @if ($order_information->status == -1)
-                <form class="text-center" action="{{ route('orders.cancel', $order_information->id) }}" method="POST" onsubmit="disableButton()">
-                    @csrf
-                    @method('PATCH')
-                    <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
-                    <a class="form-control btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal">HỦY ĐƠN HÀNG</a>
-                    <div class="modal fade" id="modal" tabindex="-1"
-                        aria-labelledby="deleteModal" aria-hidden="true" data-bs-backdrop="static">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">HỦY ĐƠN HÀNG</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-break">
-                                    Bạn có chắc muốn <strong class="text text-danger">hủy đơn hàng này?</strong>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">HỦY</button>
-                                    <button type="submit" class="btn btn-danger">XÁC NHẬN</button>
+            @endif
+            @switch($order_information->status)
+                @case(-1)
+                    <form class="text-center" action="{{ route('orders.cancel', $order_information->id) }}" method="POST"
+                        onsubmit="disableButton()">
+                        @csrf
+                        <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
+                        <a class="form-control btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal">HỦY ĐƠN HÀNG</a>
+                        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true"
+                            data-bs-backdrop="static">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">HỦY ĐƠN HÀNG</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-break">
+                                        Bạn có chắc muốn <strong class="text text-danger">hủy đơn hàng này?</strong>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger">XÁC NHẬN</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">HỦY</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            @endif
+                    </form>
+                @break
+
+                @case(1)
+                    <hr>
+                    <form action="{{ }}">
+                        <label class="form-label fs-4 fw-bold" for="payment_method">Phương thức thanh toán</label>
+                        <select name="payment_method" id="payment_method" class="form-select mb-3">
+                            <option value="cod">Thanh toán khi nhận hàng</option>
+                            <option value="qr">Chuyển khoản</option>
+                        </select>
+                        <button class="form-control btn btn-primary">THANH TOÁN</button>
+                    </form>
+                @break
+
+                @default
+                    <span class="text text-dark fw-bold">Trạng thái không xác định</span>
+            @endswitch
         </div>
     </div>
 @endsection

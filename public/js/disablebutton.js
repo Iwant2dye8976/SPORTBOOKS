@@ -1,6 +1,13 @@
+// function disableButton() {
+//     let submitButton = document.getElementById('submit-button');
+//     submitButton.disabled = true;
+//     submitButton.innerText = 'Đang xử lý...';
+// }
 function disableButton() {
-    let button = document.getElementById('submit-button');
-    // button.submit;
-    button.disabled = true;
-    button.innerText = 'Đang xử lý...';
+    const submitButtons = document.querySelectorAll('button[type="submit"]');
+
+    submitButtons.forEach(button => {
+        button.disabled = true;
+        button.innerText = 'Đang xử lý...';
+    });
 }
