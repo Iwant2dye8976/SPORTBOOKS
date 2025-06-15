@@ -190,7 +190,7 @@
                 @switch($order_information->status)
                     @case(-1)
                         <form class="text-center" action="{{ route('orders.cancel', $order_information->id) }}" method="POST"
-                            onsubmit="disableButton()">
+                            onsubmit="disableButton();">
                             @csrf
                             <input type="number" value="{{ $order_information->id }}" name="order_id" hidden>
                             <a class="form-control btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal">HỦY ĐƠN

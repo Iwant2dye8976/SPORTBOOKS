@@ -111,7 +111,14 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l" href="">Đơn nhận</a>
+                        <a class="nav-link l" href=" {{route('delivery.my-orders')}} ">Đơn đã nhận
+                            @if ($my_orders > 0)
+                                <span
+                                    class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $my_orders > 99 ? '99+' : $my_orders }}
+                                </span>
+                            @endif
+                        </a>
                     </li>
                 </ul>
             </div>

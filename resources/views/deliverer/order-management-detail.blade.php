@@ -9,11 +9,26 @@
     </div>
 @endif
 
+@php
+    switch (Route::currentRouteName()) {
+        case 'delivery.orders-d':
+            $url = '/delivery/orders-management';
+            break;
+        case 'delivery.my-orders-detail':
+        default:
+            $url = 'delivery/my-orders';
+            break;
+    }
+@endphp
+
 <div>
-    <a class="text text-decoration-none text-dark fs-4" href="{{ url('/delivery/orders-management') }}">
+    <a class="text text-decoration-none text-dark fs-4" href="{{ url($url) }}">
         <i class="fas fa-arrow-left"></i> Quay lại
     </a>
 </div>
+
+@include('components.process-bar')
+
 <div class="row mt-5 border border-dark border-1 rounded px-3 pb-3 mb-2"
     style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
     <div class="row row-cols-2 pb-4 pt-1 px-1 sticky-top" style="background-color: #fffaf0; z-index: 999;">
@@ -27,7 +42,15 @@
             <h5 class="text text-secondary">Trạng thái đơn hàng:
                 @switch($order_information->status)
                     @case(2)
-                        <span class="text text-warning fw-bold">Chờ lấy hàng</span>
+                        <span class="text text-warning fw-bold">Chờ giao hàng</span>
+                    @break
+
+                    @case(3)
+                        <span class="text text-warning fw-bold">Đang giao hàng</span>
+                    @break
+
+                    @case(4)
+                        <span class="text text-success fw-bold">Đã nhận hàng</span>
                     @break
 
                     @default
@@ -70,7 +93,7 @@
                 </div>
                 <div class="col d-flex justify-content-center align-items-center fw-bold book-price"
                     id="{{ $item->book->id }}price">
-                    ${{ number_format($item->book->price, 2) }}
+                    {{ number_format(ceil($item->book->price * 25000), 0, ',', '.') }}đ
                 </div>
             </div>
             <hr>
@@ -112,13 +135,14 @@
             <label class="form-label" for="shipping">Phương thức vận chuyển</label>
             <select name="shipping" id="shipping" class="form-select" disabled>
                 <option value="0.6" {{ $order_information->shipping_fee == 0.6 ? 'selected' : '' }}>Tiết kiệm
-                    (+$0.60)</option>
+                    (+15.000đ)</option>
                 <option value="1.2" {{ $order_information->shipping_fee == 1.2 ? 'selected' : '' }}>Tiêu chuẩn
-                    (+$1.20)</option>
-                <option value="2" {{ $order_information->shipping_fee == 2 ? 'selected' : '' }}>Nhanh (+$2.00)
+                    (+30.000đ)</option>
+                <option value="2" {{ $order_information->shipping_fee == 2 ? 'selected' : '' }}>Nhanh
+                    (+50.000đ)
                 </option>
                 <option value="4" {{ $order_information->shipping_fee == 4 ? 'selected' : '' }}>Hỏa tốc
-                    (+$4.00)
+                    (+100.000đ)
                 </option>
             </select>
         </div>
@@ -129,12 +153,13 @@
                 <div class="d-flex justify-content-between">
                     <p>Tiền sách:</p>
                     <p id="book-price-detail"><span
-                            class="text-dark"><span>+</span>${{ number_format($order_information->books_price, 2) }}
+                            class="text-dark"><span>+</span>{{ number_format(ceil($order_information->books_price * 25000), 0, ',', '.') }}đ
                     </p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p>Phí vận chuyển:</p>
-                    <p><span>+</span><span id="shipping-fee" class="text-dark">${{ $order_information->shipping_fee }}
+                    <p><span>+</span><span id="shipping-fee"
+                            class="text-dark">{{ number_format(ceil($order_information->shipping_fee * 25000), 0, ',', '.') }}đ
                     </p>
                 </div>
             </div>
@@ -145,9 +170,40 @@
                 <h4 class="fw-bold">Tổng chi phí:</h4>
                 <div class="d-flex justify-content-end">
                     <h4 class="total-price"></h4>
-                    <h4>${{ $order_information->total }}</h4>
+                    <h4>{{ number_format(ceil($order_information->total * 25000), 0, ',', '.') }}đ</h4>
                 </div>
             </div>
         </div>
+        @switch($order_information->status)
+            @case(2)
+                <div class="d-flex-row align-items-end mb-3">
+                    <form action="{{ route('delivery.orders-cl', $order_information->id) }}" method="POST"
+                        onsubmit="disableButton();">
+                        @csrf
+                        <a class="btn btn-primary form-control" data-bs-toggle="modal" data-bs-target="#modal">Nhận giao
+                            hàng</a>
+                        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true"
+                            data-bs-backdrop="static">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">NHẬN ĐƠN HÀNG</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-break text-center">
+                                        Bạn có chắc muốn <strong class="fw-bold">nhận đơn hàng này?</strong>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">XÁC NHẬN</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">HỦY</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            @break
+        @endswitch
     </div>
 </div>

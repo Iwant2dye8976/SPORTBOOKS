@@ -31,7 +31,7 @@
         <div class="row row-cols-2 mb-2 pb-4 pt-1 px-3 sticky-top" style="background-color: #fffaf0; z-index: 999;">
             <div class="col">
                 <a href="{{ route('delivery.orders-m') }}"
-                    class="text-start sticky-top fs-2 text-decoration-none text-dark">Danh sách đơn hàng</a>
+                    class="text-start sticky-top fs-2 text-decoration-none text-dark">Đơn hàng đã nhận giao</a>
             </div>
             <div class="col mb-4">
                 <h4 class="text-end text-secondary">{{ $order_count }} đơn hàng</h4>
@@ -72,13 +72,21 @@
                             <span class="text text-warning fw-bold">Chờ giao hàng</span>
                         @break
 
+                        @case(3)
+                            <span class="text text-warning fw-bold">Đang giao hàng</span>
+                        @break
+
+                        @case(4)
+                            <span class="text text-success fw-bold">Đã nhận hàng</span>
+                        @break
+
                         @default
                             <span class="text text-dark fw-bold">Trạng thái không xác định</span>
                     @endswitch
                 </div>
                 <div class="col-2 text-center align-self-center">
                     <a class="text text-decoration-none text-secondary fs-5"
-                        href="{{ route('delivery.orders-d', $order->id) }}">Chi tiết</a>
+                        href="{{ route('delivery.my-orders-detail', $order->id) }}">Chi tiết</a>
                 </div>
                 <div class="col-12 my-2">
                     <hr>

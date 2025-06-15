@@ -110,6 +110,8 @@ Route::middleware(['deliverer', 'auth'])->group(function () {
     Route::post('/delivery/orders-management/{id}', [DeliveryController::class, 'ordersClaim'])->name('delivery.orders-cl');
     // Route::get('/delivery/orders-management/search', [DeliveryController::class, 'ordersSearch'])->name('delivery.orders-m.search');
     Route::get('/delivery/orders_management/search', [DeliveryController::class, 'ordersSearch'])->name('delivery.orders-m.search');
+    Route::get('/delivery/my-orders', [DeliveryController::class, 'myOrders'])->name('delivery.my-orders');
+    Route::get('/delivery/my-orders/detail/{id}', [DeliveryController::class, 'myOrdersDetail'])->name('delivery.my-orders-detail');
 
 
 

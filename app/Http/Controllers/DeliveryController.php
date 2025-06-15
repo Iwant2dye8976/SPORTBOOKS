@@ -22,7 +22,17 @@ class DeliveryController extends Controller
     {
         $orders = Order::with('user')->orderBy('updated_at', 'desc')->whereIn('status', [2])->paginate(10);
         $order_count = Order::whereIn('status', [2])->count();
-        return view('deliverer.index', compact('orders', 'order_count'));
+        $my_orders = Order::where('status', 3)->where('deliverer_id', Auth::user()->id)->count();
+        return view('deliverer.index', compact('orders', 'order_count', 'my_orders'));
+    }
+
+    public function myOrders()
+    {
+        $orders = Order::with('user')->orderBy('updated_at', 'desc')->where('status', 3)->where('deliverer_id', Auth::user()->id)->paginate(10);
+        $order_count = Order::where('status', 3)->where('deliverer_id', Auth::user()->id)->count();
+        $my_orders = Order::where('status', 3)->where('deliverer_id', Auth::user()->id)->count();
+
+        return view('deliverer.index', compact('orders', 'order_count', 'my_orders'));
     }
 
     public function ordersDetail(Request $request)
@@ -30,7 +40,17 @@ class DeliveryController extends Controller
         $order_details = OrderDetail::with('book')->where('order_id', $request->id)->get();
         $product_count = OrderDetail::where('order_id', $request->id)->count();
         $order_information = Order::with('user')->where('id', $request->id)->first();
-        return view('deliverer.index', compact('order_details', 'product_count', 'order_information'));
+        $my_orders = Order::where('status', 3)->where('deliverer_id', Auth::user()->id)->count();
+        return view('deliverer.index', compact('order_details', 'product_count', 'order_information', 'my_orders'));
+    }
+
+    public function myOrdersDetail(Request $request)
+    {
+        $order_details = OrderDetail::with('book')->where('order_id', $request->id)->get();
+        $product_count = OrderDetail::where('order_id', $request->id)->count();
+        $order_information = Order::with('user')->where('id', $request->id)->first();
+        $my_orders = Order::where('status', 3)->where('deliverer_id', Auth::user()->id)->count();
+        return view('deliverer.index', compact('order_details', 'product_count', 'order_information', 'my_orders'));
     }
 
     public function ordersClaim(Request $request)
@@ -41,6 +61,7 @@ class DeliveryController extends Controller
         $order->save();
         $orders = Order::with('user')->orderBy('updated_at', 'desc')->whereIn('status', [2])->paginate(10);
         $order_count = Order::whereIn('status', [2])->count();
+        $my_orders = Order::where('status', 3)->where('deliverer_id', Auth::user()->id)->count();
         return redirect()->back()->with('success', 'Bạn đã nhận giao đơn hàng(Mã đơn: ' . $request->id . ")");
     }
 
@@ -68,7 +89,7 @@ class DeliveryController extends Controller
 
         $orders = $query->orderBy('updated_at', 'desc')->paginate(10);
         $order_count = $orders->total();
-
-        return view('deliverer.index', compact('orders', 'order_count'));
+        $my_orders = Order::where('status', 3)->where('deliverer_id', Auth::user()->id)->count();
+        return view('deliverer.index', compact('orders', 'order_count', 'my_orders'));
     }
 }

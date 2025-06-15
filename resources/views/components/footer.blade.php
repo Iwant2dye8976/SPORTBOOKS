@@ -11,11 +11,11 @@
         <div>
             <a href="https://www.facebook.com/dat.dang.756859" class="text-white me-4" target="_blank"><i
                     class="fab fa-facebook-f"></i></a>
-            <a href="" class="text-white me-4"><i class="fab fa-twitter"></i></a>
-            <a href="" class="text-white me-4"><i class="fab fa-google"></i></a>
+            {{-- <a href="" class="text-white me-4"><i class="fab fa-twitter"></i></a>
+            <a href="" class="text-white me-4"><i class="fab fa-google"></i></a> --}}
             <a href="https://www.instagram.com/_qoocdat/" class="text-white me-4" target="_blank"><i
                     class="fab fa-instagram"></i></a>
-            <a href="" class="text-white me-4"><i class="fab fa-linkedin"></i></a>
+            {{-- <a href="" class="text-white me-4"><i class="fab fa-linkedin"></i></a> --}}
             <a href="https://github.com/Iwant2dye8976" class="text-white me-4" target="_blank"><i
                     class="fab fa-github"></i></a>
         </div>
