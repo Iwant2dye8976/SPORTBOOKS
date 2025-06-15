@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="col-auto col-md-4">
-                        <button id="submit-button" type="submit" class="btn btn-success border rounded-pill">Thêm vào giỏ
+                        <button id="submit-button" type="submit" class="btn btn-success">Thêm vào giỏ
                             hàng</button>
                     </div>
                 </form>

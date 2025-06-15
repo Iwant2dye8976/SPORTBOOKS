@@ -41,7 +41,8 @@
         </div>
         <div class="col-7 position-relative">
             <h4 class="fw-bolder"> {{ $book->title }} </h4>
-            <p class="fs-5 fw-medium">Giá bán: <span id="price" class="text text-danger fw-bold"> ${{ $book->price }}
+            <input type="number" value="{{$book->price}}" id="price" hidden>
+            <p class="fs-5 fw-medium">Giá bán: <span class="text text-danger fw-bold"> {{ number_format(ceil($book->price * 25000), 0, ',', '.') }}đ
                 </span></p>
             <div class="d-flex align-items-end">
                 <label class="form-label fs-5 fw-medium m-0 pb-1" for="quantity">Số lượng</label>
@@ -49,7 +50,7 @@
                     value="1" onblur="updateQuantity();">
             </div>
             </p>
-            <p class="fs-5 fw-medium" id="book-price">Tổng: <span class="text text-danger fw-bold"> ${{ $book->price }}
+            <p class="fs-5 fw-medium">Tổng: <span class="text text-danger fw-bold" id="book-price"> {{ number_format(ceil($book->price * 25000), 0, ',', '.') }}đ
                 </span>
             </p>
         </div>
@@ -93,11 +94,11 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="shipping">Phương thức vận chuyển</label>
-                <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice()">
-                    <option value="0.6" data-fee="0.6">Tiết kiệm (+$0.60)</option>
-                    <option value="1.2" data-fee="1.2">Tiêu chuẩn (+$1.20)</option>
-                    <option value="2" data-fee="2">Nhanh (+$2.00)</option>
-                    <option value="4" data-fee="4">Hỏa tốc (+$4.00)</option>
+                <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice();">
+                    <option value="0.6" data-fee="0.6">Tiết kiệm (+15.000đ)</option>
+                    <option value="1.2" data-fee="1.2">Tiêu chuẩn (+30.000đ)</option>
+                    <option value="2" data-fee="2">Nhanh (+50.000đ)</option>
+                    <option value="4" data-fee="4">Hỏa tốc (+100.000đ)</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -107,14 +108,14 @@
                     <div class="d-flex justify-content-between">
                         <p>Tiền sách:</p>
                         <p id="book-price-detail"><span
-                                class="text-dark"><span>+</span>${{ number_format($book->price, 2) }}
+                                class="text-dark"><span>+</span>{{ number_format(ceil($book->price * 25000), 0, ',', '.') }}đ
                         </p>
                         <input name="books-price" id="book-price-detail-i" type="number" step="0.01"
                             value="{{ number_format($book->price, 2) }}" hidden>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p>Phí vận chuyển:</p>
-                        <p><span>+</span><span id="shipping-fee" class="text-dark">$</p>
+                        <p><span>+</span><span id="shipping-fee" class="text-dark"></p>
                     </div>
                 </div>
             </div>
@@ -142,16 +143,17 @@
             let shippingSelect = document.getElementById("shipping");
             let selectedOption = shippingSelect.options[shippingSelect.selectedIndex];
             let fee = parseFloat(selectedOption.getAttribute("data-fee"));
+            
 
-            document.getElementById('shipping-fee').textContent = "$" + fee;
+            document.getElementById('shipping-fee').textContent = Math.ceil(fee * 25000).toLocaleString('vi-VN') + "đ";
 
             let totalBookPrice = 0;
             let quantity = parseInt(document.getElementById('quantity').value);
-            let price = parseFloat(document.getElementById('price').textContent.replace("$", ""));
+            let price = parseFloat(document.getElementById('price').value);
             totalBookPrice += quantity * price;
 
-            document.getElementById('book-price').textContent = "Tổng: $" + totalBookPrice.toFixed(2);
-            document.getElementById('book-price-detail').textContent = "$" + totalBookPrice.toFixed(2);
+            document.getElementById('book-price').textContent = Math.ceil(totalBookPrice * 25000).toLocaleString('vi-VN') + "đ";
+            document.getElementById('book-price-detail').textContent = "+" + Math.ceil(totalBookPrice * 25000).toLocaleString('vi-VN') + "đ";
             document.getElementById('book-price-detail-i').value = totalBookPrice.toFixed(2);
             document.getElementById('quantity-i').value = quantity;
 
@@ -161,7 +163,7 @@
                 if (element.tagName === "INPUT") {
                     element.value = totalPrice;
                 } else {
-                    element.textContent = "$" + totalPrice;
+                    element.textContent = Math.ceil(totalPrice * 25000).toLocaleString('vi-VN') + "đ";;
                 }
             });
         }

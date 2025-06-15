@@ -19,14 +19,14 @@
                 Email của bạn: {{ Auth::user()->email }}
             </p>
 
-            <form method="POST" action="{{ route('verification.send') }}" onsubmit="disableButton();">
+            <form method="POST" action="{{ route('verification.send') }}" onsubmit="disableSubmitButton2(event);">
                 @csrf
                 <button id="submit-button" type="submit" class="btn btn-primary w-100">
                     Gửi email xác minh
                 </button>
             </form>
 
-            <form method="POST" action="{{ route('logout') }}" class="mt-3">
+            <form method="POST" action="{{ route('logout') }}" class="mt-3" onsubmit="disableSubmitButton2(event);">
                 @csrf
                 <button type="submit" class="btn btn-outline-secondary w-100">
                     Đăng xuất
