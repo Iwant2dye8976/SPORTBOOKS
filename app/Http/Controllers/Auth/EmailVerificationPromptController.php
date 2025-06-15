@@ -22,7 +22,7 @@ class EmailVerificationPromptController extends Controller
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-            $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->count();
         }
 
         return $request->user()->hasVerifiedEmail()

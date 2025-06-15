@@ -98,6 +98,21 @@
                     <li class="nav-item">
                         <a class="nav-link l" href="{{ route('delivery.orders-m') }}">Quản lý đơn hàng</a>
                     </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="nav-link l dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                Phân loại
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="">Đơn chờ giao</a></li>
+                                <li><a class="dropdown-item" href="">Đơn đã giao</a></li>
+                                <li><a class="dropdown-item" href="">Đơn bị hủy</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link l" href="">Đơn nhận</a>
+                    </li>
                 </ul>
             </div>
 

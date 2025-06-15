@@ -62,8 +62,26 @@
                             <h5 class="text-center text-break">{{ $user->email }}</h5>
                         </div>
                         <div class="col-3 fw-bold">
-                            <h5 class="text-center">{{ $user->type }}</h5>
+                            <h5 class="text-center">
+                                @switch($user->type)
+                                    @case('admin')
+                                        Quản trị viên
+                                        @break
+                        
+                                    @case('deliverer')
+                                        Người giao hàng
+                                        @break
+                        
+                                    @case('user')
+                                        Khách hàng
+                                        @break
+                        
+                                    @default
+                                        Không xác định
+                                @endswitch
+                            </h5>
                         </div>
+                        
                         <div class="col fw-bold">
                             {{-- <a class="text-decoration-none fs-4" href=""
                             onclick="event.preventDefault();

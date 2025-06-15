@@ -49,7 +49,7 @@
                         {{ $order->recipient_name }}
                     </div>
                     <div class="col-2 text-center fw-bold">
-                        ${{ $order->total }}
+                        {{ number_format(ceil($order->total * 25000), 0, ',', '.') }}đ
                     </div>
                     {{-- <div class="col-3 d-flex justify-content-center h-50">
                         <select name="status" id="order-status-{{ $order->id }}" class="form-select w-50"
@@ -70,11 +70,23 @@
                             @break
 
                             @case(1)
-                                <span class="text text-primary fw-bold">Chờ thanh toán</span>
+                                <span class="text text-warning fw-bold">Chờ thanh toán</span>
+                            @break
+
+                            @case(2)
+                                <span class="text text-warning fw-bold">Chờ giao hàng</span>
+                            @break
+
+                            @case(3)
+                                <span class="text text-warning fw-bold">Đang giao hàng</span>
+                            @break
+
+                            @case(4)
+                                <span class="text text-success fw-bold">Đã nhận hàng</span>
                             @break
 
                             @default
-                                <span class="text text-dark fw-bold">Trạng thái không xác định</span>
+                                <span class="text text-primary fw-bold">Trạng thái không xác định</span>
                         @endswitch
                     </div>
                     <div class="col-2 text-center">

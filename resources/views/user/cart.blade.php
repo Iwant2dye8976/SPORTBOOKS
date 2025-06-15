@@ -48,10 +48,10 @@
                                     id="quantity-{{ $item->book->id }}" onblur="updateCart({{ $item->book->id }});"
                                     required>
                             </div>
-                            <div class="col d-flex justify-content-center align-items-center fw-bold book-price"
-                                id="{{ $item->book->id }}price">
-                                ${{ number_format($item->book->price, 2) }}
+                            <div class="col d-flex justify-content-center align-items-center fw-bold">
+                                {{ number_format(ceil($item->book->price * 25000), 0, ',', '.') }}đ
                             </div>
+                            <input class="book-price" step="0.01" type="number" value="{{$item->book->price, 2}}" id="{{ $item->book->id }}price" hidden>
                             <div class="col d-flex justify-content-center align-items-center fw-bold">
                                 <form action="{{ route('cart.remove', $item->id) }}" method="POST">
                                     @csrf
@@ -150,10 +150,10 @@
                     <div class="mb-3">
                         <label class="form-label" for="shipping">Phương thức vận chuyển</label>
                         <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice()">
-                            <option value="0.6" data-fee="0.6">Tiết kiệm (+$0.60)</option>
-                            <option value="1.2" data-fee="1.2">Tiêu chuẩn (+$1.20)</option>
-                            <option value="2" data-fee="2">Nhanh (+$2.00)</option>
-                            <option value="4" data-fee="4">Hỏa tốc (+$4.00)</option>
+                            <option value="0.6" data-fee="0.6">Tiết kiệm (+15.000đ)</option>
+                            <option value="1.2" data-fee="1.2">Tiêu chuẩn (+30.000đ)</option>
+                            <option value="2" data-fee="2">Nhanh (+50.000đ)</option>
+                            <option value="4" data-fee="4">Hỏa tốc (+100.000đ)</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -163,7 +163,7 @@
                             <div class="d-flex justify-content-between">
                                 <p>Tiền sách:</p>
                                 <p id="book-price-detail"><span
-                                        class="text-dark"><span>+</span>${{ number_format($total_price, 2) }}
+                                        class="text-dark"><span>+</span>{{ number_format(ceil($total_price * 25000), 0, ',', '.') }}đ
                                 </p>
                                 <input name="books-price" id="book-price-detail-i" type="number" step="0.01"
                                     value="{{ number_format($total_price, 2) }}" hidden>
@@ -200,26 +200,28 @@
             let selectedOption = shippingSelect.options[shippingSelect.selectedIndex];
             let fee = parseFloat(selectedOption.getAttribute("data-fee"));
 
-            document.getElementById('shipping-fee').textContent = "$" + fee;
+            document.getElementById('shipping-fee').textContent = Math.ceil(fee * 25000).toLocaleString('vi-VN') + "đ";
 
             let totalBookPrice = 0;
 
             document.querySelectorAll('.book').forEach(element => {
                 let quantity = parseInt(element.querySelector('.book-quantity').value);
-                let price = parseFloat(element.querySelector('.book-price').textContent.replace("$", ""));
+                let price = parseFloat(element.querySelector('.book-price').value);
                 totalBookPrice += quantity * price;
             });
 
-            document.getElementById('book-price-detail').textContent = "$" + totalBookPrice.toFixed(2);
+            document.getElementById('book-price-detail').textContent = "+" + Math.ceil(totalBookPrice * 25000).toLocaleString('vi-VN') + "đ";
+
             document.getElementById('book-price-detail-i').value = totalBookPrice.toFixed(2);
 
             let totalPrice = (totalBookPrice + fee).toFixed(2);
+            console.log(totalPrice);
 
             document.querySelectorAll('.total-price').forEach(element => {
                 if (element.tagName === "INPUT") {
                     element.value = totalPrice;
                 } else {
-                    element.textContent = "$" + totalPrice;
+                    element.textContent = Math.ceil(totalPrice * 25000).toLocaleString('vi-VN') + "đ";
                 }
             });
         }

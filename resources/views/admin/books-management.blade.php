@@ -75,7 +75,7 @@
                             <h5>{{ $book->category }}</h5>
                         </div>
                         <div class="col-1 text-center">
-                            <h5>${{ $book->price }}</h5>
+                            <h5>{{ number_format(ceil($book->price * 25000), 0, ',', '.')}}đ</h5>
                         </div>
                         <div class="col-4 text-center">
                             <h5 style="max-height: 217px; overflow-y: auto;">{{ $book->description }}</h5>

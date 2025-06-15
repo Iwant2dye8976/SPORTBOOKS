@@ -24,7 +24,7 @@ class BookController extends Controller
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-            $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->count();
             // if (Auth::user()->type === 'admin') {
             //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
             // }
@@ -52,7 +52,7 @@ class BookController extends Controller
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
-            $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->count();
             // if (Auth::user()->type === 'admin') {
             //     return view('admin.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count'));
             // }
@@ -81,7 +81,7 @@ class BookController extends Controller
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
-            $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->count();
             // if (Auth::user()->type === 'admin') {
             //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
             // }
@@ -99,7 +99,7 @@ class BookController extends Controller
     {
         $query = Book::query();
 
-        if($request->has('keyword')){
+        if ($request->has('keyword')) {
             $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($request->keyword) . '%']);
         }
 
@@ -114,7 +114,7 @@ class BookController extends Controller
         $order_count = 0;
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
-            $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->count();
             // if (Auth::user()->type === 'admin') {
             //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
             // }

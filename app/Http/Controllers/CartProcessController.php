@@ -41,7 +41,7 @@ class CartProcessController extends Controller
         $user = Auth::user();
         if (Auth::check()) {
             $cart_count = $cartItems->count();
-            $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+            $order_count = Order::where('user_id', Auth::user()->id)->count();
             // if (Auth::user()->type === 'admin') {
             //     return view('admin.cart', compact('cartItems', 'cart_count', 'total_price', 'user', 'order_count'));
             // }

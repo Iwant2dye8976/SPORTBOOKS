@@ -67,7 +67,7 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="price">Giá bán($)</label>
+                    <label class="form-label" for="price">Giá bán</label>
                     <input class="form-control" id="price" name="price" type="number" step="0.01"
                         min="1" max="9999" value="{{ old('price', $book->price) }}">
                     @error('price')

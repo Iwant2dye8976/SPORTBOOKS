@@ -10,6 +10,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\PaymentController;
 
 require __DIR__ . '/auth.php'; // Import routes từ Breeze
 
@@ -36,6 +37,7 @@ Route::middleware(['user', 'auth'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
     Route::get('/orders/detail/{id}', [OrderController::class, 'show'])->name('orders.details');
     Route::post('/orders/detail/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::get('/orders/{id}/payment', [OrderController::class, 'cancel'])->name('orders.payment');
 
     //Tài khoản khách hàng
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -45,8 +47,8 @@ Route::middleware(['user', 'auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //VN PAY
-    // Route::get('/')
-    Route::post('/vnpay/payment', [CheckoutController::class, 'vnpay_payment'])->name('checkout.vnpay');
+    Route::post('/vnpay/payment/{id}', [CheckoutController::class, 'vnpay_payment'])->name('checkout.vnpay');
+    Route::get('/vnpay/payment/{id}/return', [PaymentController::class, 'handleVnpayReturn'])->name('vnpay.return');
 });
 
 
@@ -101,8 +103,15 @@ Route::middleware(['admin', 'auth'])->group(function () {
 });
 
 Route::middleware(['deliverer', 'auth'])->group(function () {
+    //Các thao tác của người gioa hàng
     // Route::get('/delivery', [DeliveryController::class, 'index'])->name('delivery.index');
     Route::get('/delivery/orders-management', [DeliveryController::class, 'ordersManagement'])->name('delivery.orders-m');
+    Route::get('/delivery/orders-management/{id}', [DeliveryController::class, 'ordersDetail'])->name('delivery.orders-d');
+    Route::post('/delivery/orders-management/{id}', [DeliveryController::class, 'ordersClaim'])->name('delivery.orders-cl');
+    // Route::get('/delivery/orders-management/search', [DeliveryController::class, 'ordersSearch'])->name('delivery.orders-m.search');
+    Route::get('/delivery/orders_management/search', [DeliveryController::class, 'ordersSearch'])->name('delivery.orders-m.search');
+
+
 
     //Tài khoản người giao hàng
     Route::get('/delivery/profile', [ProfileController::class, 'edit'])->name('delivery.profile.edit');

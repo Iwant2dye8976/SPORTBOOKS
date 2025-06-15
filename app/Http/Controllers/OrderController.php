@@ -18,7 +18,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with('user')->where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
-        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+        $order_count = Order::where('user_id', Auth::user()->id)->count();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
         return view('user.orders', compact('orders', 'order_count', 'cart_count'));
     }
@@ -31,7 +31,7 @@ class OrderController extends Controller
         $book = Book::where('id', $request->id)->first();
         $user = User::where('id', Auth::user()->id)->first();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+        $order_count = Order::where('user_id', Auth::user()->id)->count();
         return view('user.buynow', compact('book', 'user', 'cart_count', 'cart_count', 'order_count'));
     }
 
@@ -132,7 +132,7 @@ class OrderController extends Controller
         $order_details = OrderDetail::with('book')->where('order_id', $request->id)->get();
         $product_count = OrderDetail::where('order_id', $request->id)->count();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-        $order_count = Order::where('user_id', Auth::user()->id)->whereIn('status', [-1, 0, 1])->count();
+        $order_count = Order::where('user_id', Auth::user()->id)->count();
         $order_information = Order::with('user')->where('id', $request->id)->first();
         return view('user.order-details', compact('order_details', 'product_count', 'cart_count', 'order_count', 'order_information'));
     }
@@ -162,6 +162,16 @@ class OrderController extends Controller
         ]);
     }
 
+
+    public function payment(Request $request){
+        $order_details = OrderDetail::with('book')->where('order_id', $request->id)->get();
+        $product_count = OrderDetail::where('order_id', $request->id)->count();
+        $cart_count = Cart::where('user_id', Auth::user()->id)->count();
+        $order_count = Order::where('user_id', Auth::user()->id)->count();
+        $order_information = Order::with('user')->where('id', $request->id)->first();
+        $payment_method = $request->payment_method;
+        return view('user.payment', compact('order_details', 'product_count', 'cart_count', 'order_count', 'order_information', 'payment_method'));
+    }
 
     public function confirm(Request $request)
     {

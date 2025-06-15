@@ -46,7 +46,7 @@
             <div class="d-flex align-items-end">
                 <label class="form-label fs-5 fw-medium m-0 pb-1" for="quantity">Số lượng</label>
                 <input id="quantity" type="number" min="1" max="50" class="ms-3 form-control w-25"
-                    value="1" onblur="updateTotalPrice();">
+                    value="1" onblur="updateQuantity();">
             </div>
             </p>
             <p class="fs-5 fw-medium" id="book-price">Tổng: <span class="text text-danger fw-bold"> ${{ $book->price }}
@@ -57,7 +57,7 @@
     <div class="d-fex justify-content-center mt-3 row border border-dark border-1 rounded px-3 py-3 mb-5">
         <h2>Thông tin đặt hàng</h2>
         <hr>
-        <form class="w-50" method="POST" action="{{ route('buynow', $book->id) }}" onsubmit="disableButton()">
+        <form class="w-50" method="POST" action="{{ route('buynow', $book->id) }}" onsubmit="updateQuantity(); disableButton();">
             @csrf
             @method('post')
             <div class="mb-3">

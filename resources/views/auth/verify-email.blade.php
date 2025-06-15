@@ -9,10 +9,10 @@
 <div class="container mt-5">
     <div class="card mx-auto" style="max-width: 500px;">
         <div class="card-body text-center">
-            <h4 class="card-title mb-3">Xác minh địa chỉ email của bạn</h4>
-            <p class="mb-4">
-                Trước khi tiếp tục, vui lòng kiểm tra email để xác minh địa chỉ. Nếu bạn không nhận được email,
-                bạn có thể yêu cầu gửi lại.
+            <h4 class="card-title mb-3">Xác minh tài khoản</h4>
+            <span><i class="fa-solid fa-shield fs-2"></i></span>
+            <p class="my-4">
+                Để tăng cường bảo mật cho tài khoản của bạn, hãy xác minh email của bạn.
             </p>
 
             <p class="mb-4 fw-bold">
