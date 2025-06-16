@@ -18,10 +18,10 @@ background: linear-gradient(103deg, rgba(174,209,239,1) 0%, rgba(185,211,231,1) 
                 <div class="col col-xl-10">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="row g-0">
-                            <div class="col-md-6 col-lg-5 d-none d-md-block border border-3 border-dark"
-                                style="border-radius: 1rem 0 0 1rem;">
-                                <img src="{{ asset('/imgs/datkoi.gif') }}" alt="reset password form"
-                                    class="h-100 img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                            <div class="col-md-6 col-lg-5 d-none d-md-block"
+                                style="border-radius: 1rem 0 0 1rem; background: #AA8282;">
+                                {{-- <img src="{{ asset('/imgs/datkoi.gif') }}" alt="reset password form"
+                                    class="h-100 img-fluid" style="border-radius: 1rem 0 0 1rem;" /> --}}
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
