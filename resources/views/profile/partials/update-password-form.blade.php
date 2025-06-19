@@ -7,7 +7,7 @@
         <h4 class="fw-bold">Đổi mật khẩu</h4>
         <p class="text text-secondary">Thay đổi mật khẩu để bảo mật tài khoản của bạn</p>
         <hr>
-        <form class="mt-4" action="{{ route('password.update') }}" method="POST" onsubmit="disableButton();">
+        <form class="mt-4" action="{{ route('password.update') }}" method="POST" onsubmit="disableSubmitButton2(event);">
             @method('PUT')
             @csrf
             <div class="mb-3 row">

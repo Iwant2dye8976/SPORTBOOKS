@@ -15,7 +15,7 @@
     <h4 class="fw-bold">Thông tin cơ bản</h4>
     <p class="text text-secondary">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
     <hr>
-    <form class="mt-4" action="{{ $actionRoute }}" method="POST" onsubmit="disableButton();">
+    <form class="mt-4" action="{{ $actionRoute }}" method="POST" onsubmit="disableSubmitButton2(event);">
         @method('patch')
         @csrf
         <div class="mb-3 row">

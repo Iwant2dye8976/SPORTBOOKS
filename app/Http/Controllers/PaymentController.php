@@ -29,7 +29,7 @@ class PaymentController extends Controller
                 $hashData = $hashData . '&' . urlencode($key) . "=" . urlencode($value);
             } else {
                 $hashData = $hashData . urlencode($key) . "=" . urlencode($value);
-                $i = 2;
+                $i = 1;
             }
         }
 

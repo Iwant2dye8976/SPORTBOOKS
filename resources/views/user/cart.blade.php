@@ -15,7 +15,9 @@
             </div>
         @endif
         @if ($cart_count === 0)
-            <div class="alert alert-warning text-center">Giỏ hàng trống!</div>
+            <div class="alert alert-warning text-center row">
+                <p class="p-0 m-0">Giỏ hàng trống!</p>
+            </div>
         @else
             <div class="row row-cols-auto" style="min-height:max-content;">
                 <div class="col-12 border border-dark rounded"
@@ -29,6 +31,21 @@
                             <h4 class="text-end text-secondary">{{ $cart_count }} sản phẩm</h4>
                         </div>
                         <div class="col-12 mt-3">
+                            <hr>
+                        </div>
+                        <div class="col-3 text-center">
+                            Ảnh sản phẩm
+                        </div>
+                        <div class="col-3 text-center">
+                            Tên sản phẩm
+                        </div>
+                        <div class="col-3 text-center">
+                            Số lượng
+                        </div>
+                        <div class="col-3 text-center">
+                            Giá sản phẩm
+                        </div>
+                        <div class="col-12">
                             <hr>
                         </div>
                     </div>
@@ -51,7 +68,8 @@
                             <div class="col d-flex justify-content-center align-items-center fw-bold">
                                 {{ number_format(ceil($item->book->price * 25000), 0, ',', '.') }}đ
                             </div>
-                            <input class="book-price" step="0.01" type="number" value="{{$item->book->price, 2}}" id="{{ $item->book->id }}price" hidden>
+                            <input class="book-price" step="0.01" type="number" value="{{ $item->book->price, 2 }}"
+                                id="{{ $item->book->id }}price" hidden>
                             <div class="col d-flex justify-content-center align-items-center fw-bold">
                                 <form action="{{ route('cart.remove', $item->id) }}" method="POST">
                                     @csrf
@@ -210,7 +228,8 @@
                 totalBookPrice += quantity * price;
             });
 
-            document.getElementById('book-price-detail').textContent = "+" + Math.ceil(totalBookPrice * 25000).toLocaleString('vi-VN') + "đ";
+            document.getElementById('book-price-detail').textContent = "+" + Math.ceil(totalBookPrice * 25000)
+                .toLocaleString('vi-VN') + "đ";
 
             document.getElementById('book-price-detail-i').value = totalBookPrice.toFixed(2);
 
