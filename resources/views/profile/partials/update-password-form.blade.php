@@ -1,5 +1,5 @@
 <div class="col-12 p-4 border border-dark rounded">
-    @if (!Auth::user()->hasVerifiedEmail())
+    @if (!Auth::user()->hasVerifiedEmail() && Auth::user()->type === 'user')
         <h4>Tài khoản của bạn chưa được xác minh</h4>
         <p>Để tiếp tục hành động này, vui lòng <span><a href="{{ route('verification.notice') }}"
                     class="text text-decoration-underline">xác minh tài khoản của bạn.</a></span></p>

@@ -23,6 +23,10 @@ class ProfileController extends Controller
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
             $order_count = Order::where('user_id', Auth::user()->id)->count();
+            if(Auth::user()->type == 'deliverer'){
+                $my_orders = Order::where('status', 3)->where('deliverer_id', Auth::user()->id)->count();
+                return view('profile.edit', compact('my_orders'))->with('user', $request->user());
+            }
         }
         return view('profile.edit', compact('cart_count', 'order_count'))->with('user', $request->user());
     }
