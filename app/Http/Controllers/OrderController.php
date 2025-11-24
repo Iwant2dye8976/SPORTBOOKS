@@ -181,6 +181,14 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Đơn hàng đã được xác nhận.');
     }
 
+    public function delivered(Request $request)
+    {
+        $order = Order::where('id', $request->id)->first();
+        $order->status = 4;
+        $order->save();
+        return redirect()->back()->with('success', 'Đơn hàng đã được xác nhận.');
+    }
+
     public function cancel(Request $request)
     {
         $order = Order::where('id', $request->order_id)->first();

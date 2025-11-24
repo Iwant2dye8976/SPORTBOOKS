@@ -22,7 +22,7 @@ class BooksTableSeeder extends Seeder
         $book_titles = array_keys($books); // Lấy danh sách tiêu đề sách
         $book_images = array_values($books); // Lấy danh sách link ảnh
 
-        for ($i = 0; $i < 500; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             // Random một sách từ danh sách có sẵn
             $index = array_rand($book_titles);
             $title = $book_titles[$index];

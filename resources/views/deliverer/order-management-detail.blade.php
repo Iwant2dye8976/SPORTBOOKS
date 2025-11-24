@@ -111,7 +111,7 @@
         <div class="mb-3">
             <label class="form-label" for="shipping_address">Địa chỉ nhận hàng</label>
             <input class="form-control" type="text" name="shipping_address" id="shipping_address"
-                value="{{ $order_information->shipping_address }}">
+                value="{{ $order_information->shipping_address }}" readonly>
             @error('address')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -119,14 +119,14 @@
         <div class="mb-3">
             <label class="form-label" for="phone_number">Số điện thoại</label>
             <input class="form-control" type="tel" name="phone_number" id="phone_number"
-                value="{{ $order_information->phone_number }}">
+                value="{{ $order_information->phone_number }}" readonly>
             @error('phone-number')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
             <label class="form-label" for="note">Ghi chú</label>
-            <textarea class="form-control" name="note" id="note" cols="10" rows="7">{{ $order_information->note }}</textarea>
+            <textarea readonly class="form-control" name="note" id="note" cols="10" rows="7">{{ $order_information->note }} </textarea>
             @error('note')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -202,6 +202,66 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            @break
+
+            @case(3)
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="col-4 mb-3">
+                        <form action="{{ route('delivery.orders-dcl', $order_information->id) }}" method="POST"
+                            onsubmit="disableButton();">
+                            @csrf
+                            <a class="btn btn-danger form-control" data-bs-toggle="modal" data-bs-target="#modal">Hủy giao hàng</a>
+                            <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="Modal"
+                                aria-hidden="true" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Hủy giao hàng</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-break text-center">
+                                            Bạn có chắc muốn <strong class="fw-bold">thôi giao đơn hàng này?</strong>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">XÁC NHẬN</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">HỦY</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <form action="{{ route('delivery.delivered', $order_information->id) }}" method="POST"
+                            onsubmit="disableButton();">
+                            @csrf
+                            <a class="btn btn-primary form-control" data-bs-toggle="modal" data-bs-target="#modal">Xác nhận
+                                đã giao</a>
+                            <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="Modal"
+                                aria-hidden="true" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Xác nhận đã giao</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-break text-center">
+                                            Bạn có chắc muốn <strong class="fw-bold">xác nhận đơn hàng này?</strong>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">XÁC NHẬN</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">HỦY</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             @break
         @endswitch

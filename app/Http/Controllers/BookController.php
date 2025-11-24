@@ -15,7 +15,7 @@ class BookController extends Controller
      */
     public function getall()
     {
-        $books = Book::paginate(20);
+        $books = Book::paginate(5);
         $totalBooks = Book::count();
         $categories = Book::select('category')->distinct()->get();
 

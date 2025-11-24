@@ -99,10 +99,10 @@
                         <a class="nav-link l" href="{{ route('admin.book-m') }}">Quản lý sách</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý tài khoản</a>
+                        <a class="nav-link l" href="{{ route('admin.order-m') }}">Quản lý đơn hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('admin.order-m') }}">Quản lý đơn hàng</a>
+                        <a class="nav-link l" href="{{ route('admin.user-m') }}">Quản lý tài khoản</a>
                     </li>
                 </ul>
             </div>

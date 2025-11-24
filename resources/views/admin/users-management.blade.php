@@ -55,8 +55,8 @@
             @if ($user_count != 0)
                 @foreach ($users as $user)
                     <div class="col-12 row book d-flex align-items-center justify-content-center">
-                        <div class="col-4 fw-bold">
-                            <h5 class="text-center text-break">{{ $user->name }}</h5>
+                        <div class="col-4 fw-bold text-center">
+                            <a class="text-dark text-break text-decoration-underline fs-5" href="{{ route('admin.user-m.detail', $user->id) }}">{{ $user->name }}</a>
                         </div>
                         <div class="col-4 fw-bold">
                             <h5 class="text-center text-break">{{ $user->email }}</h5>

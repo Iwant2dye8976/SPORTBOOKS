@@ -42,13 +42,16 @@ Route::middleware(['user', 'auth'])->group(function () {
     //Tài khoản khách hàng
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/password-change', [ProfileController::class, 'edit'])->name('profile.password-change');
-    Route::get('/profile/delete-account', [ProfileController::class, 'edit'])->name('profile.delete-account');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //VN PAY
     Route::post('/vnpay/payment/{id}', [CheckoutController::class, 'vnpay_payment'])->name('checkout.vnpay');
     Route::get('/vnpay/payment/{id}/return', [PaymentController::class, 'handleVnpayReturn'])->name('vnpay.return');
+});
+
+Route::middleware(['user'])->group(function () {
+    Route::get('/profile/delete-account', [ProfileController::class, 'edit'])->name('profile.delete-account');
 });
 
 
@@ -72,6 +75,7 @@ Route::middleware(['admin', 'auth'])->group(function () {
 
     //Quản lý tài khoản
     Route::get('/admin/usermanagement', [AdminController::class, 'user_m'])->name('admin.user-m');
+    Route::get('/admin/usermanagement/detail/{id}', [AdminController::class, 'user_m_detail'])->name('admin.user-m.detail');
     Route::get('/admin/usermanagement/search', [AdminController::class, 'user_m_search'])->name('admin.user-m.search');
     Route::delete('/admin/usermanagement/delete/{id}', [AdminController::class, 'destroyUser'])->name('admin.delete_user');
 
@@ -108,13 +112,13 @@ Route::middleware(['deliverer', 'auth'])->group(function () {
     Route::get('/delivery/orders-management', [DeliveryController::class, 'ordersManagement'])->name('delivery.orders-m');
     Route::get('/delivery/orders-management/{id}', [DeliveryController::class, 'ordersDetail'])->name('delivery.orders-d');
     Route::post('/delivery/orders-management/{id}', [DeliveryController::class, 'ordersClaim'])->name('delivery.orders-cl');
+    Route::post('/delivery/orders-management/{id}/disclaim', [DeliveryController::class, 'ordersDisclaim'])->name('delivery.orders-dcl');
     // Route::get('/delivery/orders-management/search', [DeliveryController::class, 'ordersSearch'])->name('delivery.orders-m.search');
     Route::get('/delivery/orders_management/search', [DeliveryController::class, 'ordersSearch'])->name('delivery.orders-m.search');
     Route::get('/delivery/my-orders', [DeliveryController::class, 'myOrders'])->name('delivery.my-orders');
     Route::get('/delivery/my-orders/detail/{id}', [DeliveryController::class, 'myOrdersDetail'])->name('delivery.my-orders-detail');
-
-
-
+    Route::post('/delivery/my-orders/detail/{id}/delivered', [OrderController::class, 'delivered'])->name('delivery.delivered');
+    Route::get('/delivery/my-delivered-orders', [DeliveryController::class, 'ordersDelivered'])->name('delivery.delivered-orders');
     //Tài khoản người giao hàng
     Route::get('/delivery/profile', [ProfileController::class, 'edit'])->name('delivery.profile.edit');
     Route::patch('/delivery/profile', [ProfileController::class, 'update'])->name('delivery.profile.update');

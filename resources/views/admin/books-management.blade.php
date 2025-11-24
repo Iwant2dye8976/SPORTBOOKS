@@ -68,19 +68,19 @@
                             <img class="img-fluid" width="200" src="{{ $book->image_url }}"
                                 alt="{{ $book->title }}">
                         </div>
-                        <div class="col-2 text-center">
-                            <h5>{{ $book->title }}</h5>
+                        <div class="col-2 text-center border border-top-0 border-bottom-0 border-dark">
+                            <h5 style="max-height: 50px; overflow-y: auto;">{{ $book->title }}</h5>
                         </div>
-                        <div class="col-1 text-center">
+                        <div style="height: 58px;" class="d-flex justify-content-center align-items-center col-1 text-center border border-start-0 border-top-0 border-bottom-0 border-dark">
                             <h5>{{ $book->category }}</h5>
                         </div>
-                        <div class="col-1 text-center">
+                        <div class="d-flex justify-content-center align-items-center col-1 text-center border border-start-0 border-end-0 border-top-0 border-bottom-0 border-dark">
                             <h5>{{ number_format(ceil($book->price * 25000), 0, ',', '.')}}đ</h5>
                         </div>
-                        <div class="col-4 text-center">
-                            <h5 style="max-height: 217px; overflow-y: auto;">{{ $book->description }}</h5>
+                        <div class="col-4 text-center border-start-0 border-top-0 border-bottom-0 border-dark">
+                            <h5 class="border border-top-0 border-bottom-0 border-dark" style="max-height: 58px; overflow-y: auto;">{{ $book->description }}</h5>
                         </div>
-                        <div class="col-1 text-center">
+                        <div class="col-1 text-center border-start-0 border-top-0 border-bottom-0 border-dark">
                             <h5>
                                 <a href="{{ route('admin.book-m.detail', $book->id) }}"
                                     class="text text-decoration-none text-secondary">Sửa</a>

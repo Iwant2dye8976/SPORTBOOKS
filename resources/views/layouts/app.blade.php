@@ -144,9 +144,22 @@
                             id="account" data-bs-toggle="dropdown">
                             {{ Auth::user()->name }}
                         </button>
-                        <ul class="dropdown-menu">
+                        @if (!Auth::user()->hasVerifiedEmail())
+                            <span
+                                class="position-absolute top-0 translate-middle px-2 bg-danger border border-light rounded-circle text-light">!
+                            </span>
+                        @endif
+                        <ul class="dropdown-menu p-0">
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Tài
-                                    khoản</a></li>
+                                    khoản
+                                    @if (!Auth::user()->hasVerifiedEmail())
+                                        <span
+                                            class="position-absolute start-100 top-10 translate-middle p-1 bg-danger border border-light rounded-circle">
+                                        </span>
+                                    @endif
+                                </a>
+                            </li>
+                            <hr class="mx-0 mt-0 mb-1">
                             @if (Auth::check() && Auth::user()->type === 'admin')
                                 <li>
                                     <a class="dropdown-item" href="{{ route('admin.book-m') }}">Quản lý</a>

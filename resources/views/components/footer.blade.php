@@ -126,14 +126,14 @@
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <div class="col-md-4 col-lg-4 col-xl-3 mx-auto mb-md-0 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold">Liên hệ</h6>
                     <hr class="mb-4 mt-0 d-inline-block mx-auto"
                         style="width: 60px; background-color: #7c4dff; height: 2px" />
                     <p><i class="fas fa-home mr-3"></i> 123, Đường Nguyễn Văn Thể Thao, Hà Đông, Hà Nội
                     </p>
-                    <p><i class="fas fa-envelope mr-3"></i> dangquocdatyahoocomvn@gmail.com</p>
+                    <p style="width: 300px;"><i class="fas fa-envelope mr-3"></i> dangquocdatyahoocomvn@gmail.com</p>
                     <p><i class="fas fa-phone mr-3"></i> + 84 977923301 </p>
                     {{-- <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p> --}}
                 </div>

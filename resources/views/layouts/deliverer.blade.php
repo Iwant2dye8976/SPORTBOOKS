@@ -96,9 +96,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav menu">
                     <li class="nav-item">
-                        <a class="nav-link l" href="{{ route('delivery.orders-m') }}">Quản lý đơn hàng</a>
+                        <a class="nav-link l" href="{{ route('delivery.orders-m') }}">Đơn hàng chờ giao
+                            @if ($order_count > 0)
+                                <span
+                                    class="position-absolute start-100 top-10 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                </span>
+                            @endif
+                        </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <div class="dropdown">
                             <a class="nav-link l dropdown-toggle" role="button" data-bs-toggle="dropdown">
                                 Phân loại
@@ -109,9 +115,9 @@
                                 <li><a class="dropdown-item" href="">Đơn bị hủy</a></li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
-                        <a class="nav-link l" href=" {{route('delivery.my-orders')}} ">Đơn đã nhận
+                        <a class="nav-link l" href=" {{ route('delivery.my-orders') }} ">Đơn hàng đã nhận
                             @if ($my_orders > 0)
                                 <span
                                     class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
@@ -119,6 +125,9 @@
                                 </span>
                             @endif
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link l" href=" {{ route('delivery.delivered-orders') }} ">Đơn hàng đã giao</a>
                     </li>
                 </ul>
             </div>

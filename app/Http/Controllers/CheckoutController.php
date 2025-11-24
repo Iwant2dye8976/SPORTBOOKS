@@ -11,17 +11,18 @@ class CheckoutController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
         $vnp_Url = config('vnpay.url');
-        $vnp_Returnurl = route('vnpay.return', $request->order_id);
+        // $vnp_Returnurl = route('vnpay.return', $request->order_id);
+        $vnp_Returnurl = "http://127.0.0.1:8000/orders";
         $vnp_TmnCode = config('vnpay.tmn_code');
         $vnp_HashSecret = config('vnpay.hash_secret');
 
         $vnp_TxnRef = uniqid(); // hoặc ID đơn hàng trong DB
         $vnp_OrderInfo = 'Thanh toan don hang';
-        $vnp_OrderType = 'sportbook';
+        $vnp_OrderType = 'Sportbook';
         $vnp_Amount = $request->input('total_price') * 100;
         $vnp_Locale = 'vn';
         $vnp_BankCode = 'NCB';
-        $vnp_IpAddr = $request->ip();
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 
         $inputData = [
             "vnp_Version" => "2.1.0",

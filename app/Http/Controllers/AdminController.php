@@ -178,6 +178,21 @@ class AdminController extends Controller
         $user_count = $users->total();
 
         return view('admin.index', compact('users', 'user_count'));
+    
+    }
+
+    public function user_m_detail(Request $request)
+    {
+        $user = User::where('id', $request->id)->first();
+        $type = $user->type;
+        if($type=='user' || $type=='admin')
+        {
+            return view('admin.index', compact('user'));
+        }
+        else{
+                $d_count = Order::where('deliverer_id', $user->id)->whereStatus(4)->count();
+                return view('admin.index', compact('user', 'd_count'));
+            }
     }
 
     /**
