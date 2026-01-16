@@ -7,6 +7,9 @@ use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\InteractionHelper;
+use App\Models\BookReviews;
+use App\Http\Controllers\BookReviewController as BookReviewControllers;
 
 class BookController extends Controller
 {
@@ -15,7 +18,7 @@ class BookController extends Controller
      */
     public function getall()
     {
-        $books = Book::paginate(5);
+        $books = Book::paginate(20);
         $totalBooks = Book::count();
         $categories = Book::select('category')->distinct()->get();
 
@@ -39,9 +42,19 @@ class BookController extends Controller
      */
     public function getDetail($id)
     {
-        $book = Book::findOrFail($id);
 
-        // Lấy 5 quyển sách cùng thể loại nhưng không trùng với sách hiện tại
+        $book = Book::findOrFail($id);
+        $reviews = BookReviews::where('book_id', $book->id)
+            ->where('verified_purchase', true)
+            ->get();
+        InteractionHelper::log(
+            'view',
+            $book->id,
+            auth()->id(),
+            [
+                'url' => request()->path(),
+            ]
+        );
         $relatedBooks = Book::where('category', $book->category)
             ->where('id', '!=', $id)
             ->inRandomOrder()
@@ -49,6 +62,21 @@ class BookController extends Controller
             ->get();
         $cart_count = 0;
         $order_count = 0;
+
+        $reviews_count = $reviews->count();
+        $ratingStats = [];
+
+        $htmlRatingStars = BookReviewControllers::drawRatingStars($book);
+        for ($star = 1; $star <= 5; $star++) {
+            $count = $reviews->where('rating', $star)->count();
+
+            $ratingStats[$star] = [
+                'count' => $count,
+                'percent' => $reviews_count > 0
+                    ? round(($count / $reviews_count) * 100)
+                    : 0
+            ];
+        }
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::id())->count();
@@ -58,7 +86,7 @@ class BookController extends Controller
             // }
         }
 
-        return view('user.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count'));
+        return view('user.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count', 'reviews', 'reviews_count', 'ratingStats', 'htmlRatingStars'));
     }
 
 

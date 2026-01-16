@@ -29,6 +29,7 @@ return new class extends Migration
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedSmallInteger('book_quantity')->default(1);
+            $table->unsignedSmallInteger('discount')->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('total_price', 12, 2)->storedAs('book_quantity * price');
             $table->timestamps();

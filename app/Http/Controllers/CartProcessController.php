@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Order;
+use App\Helpers\InteractionHelper;
 
 class CartProcessController extends Controller
 {
@@ -23,10 +24,19 @@ class CartProcessController extends Controller
             return redirect()->back()->with('error', 'Sách không tồn tại.');
         }
 
+        InteractionHelper::log(
+            'add_to_cart',
+            $book->id,
+            auth()->id(),
+            [
+                'quantity' => $amount ?? 1,
+            ]
+        );
+
         Cart::create([
             'user_id' => Auth::user()->id,
             'book_id' => $book->id,
-            'book_quantity' => $amount
+            'book_quantity' => $amount == null ? 1 : $amount,
         ]);
         return redirect()->back()->with('success', 'Đã thêm vào giỏ hàng!');
         // return redirect()->back()->with('error', 'Hành động không hợp lệ!');
@@ -73,6 +83,11 @@ class CartProcessController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function clearAll()
+    {
+        Cart::where('user_id', Auth::id())->delete();
+        return redirect()->back()->with('success', 'Đã xóa tất cả sản phẩm khỏi giỏ hàng.');
+    }
 
     public function destroy(Request $request)
     {
@@ -90,7 +105,7 @@ class CartProcessController extends Controller
             // if (Auth::user()->type === 'admin') {
             //     return redirect()->route('admin.cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
             // } else {
-                return redirect()->route('cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
+            return redirect()->route('cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
             // }
         }
     }

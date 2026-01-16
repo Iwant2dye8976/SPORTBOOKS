@@ -3,287 +3,340 @@
 @section('title', 'Giỏ hàng')
 
 @section('content')
-    <div class="my-5">
+    <div class="container my-5">
+        <!-- Alerts -->
         @if (session('success'))
-            <div class="row alert alert-success text-center" id="success-alert">
-                <p class="p-0 m-0">{{ session('success') }}</p>
+            <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert" id="success-alert">
+                <i class="fa-solid fa-circle-check me-2"></i>
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
         @if (session('error'))
-            <div class="row alert alert-danger text-center" id="error-alert">
-                <p class="p-0 m-0">{{ session('error') }}</p>
+            <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert" id="error-alert">
+                <i class="fa-solid fa-circle-exclamation me-2"></i>
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Giỏ hàng</li>
+            </ol>
+        </nav>
+
+        <!-- Tiêu đề -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">
+                <i class="fa-solid fa-cart-shopping me-2 text-primary"></i>
+                Giỏ hàng của bạn
+            </h2>
+            @if ($cart_count > 0)
+                <span class="badge bg-primary rounded-pill fs-6">{{ $cart_count }} sản phẩm</span>
+            @endif
+        </div>
+
         @if ($cart_count === 0)
-            <div class="alert alert-warning text-center row">
-                <p class="p-0 m-0">Giỏ hàng trống!</p>
+            <!-- Giỏ hàng trống -->
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="fa-solid fa-cart-shopping text-muted" style="font-size: 100px; opacity: 0.3;"></i>
+                </div>
+                <h3 class="text-muted mb-3">Giỏ hàng trống</h3>
+                <p class="text-muted mb-4">Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
+                <a href="{{ route('home') }}" class="btn btn-primary btn-lg px-5">
+                    <i class="fa-solid fa-arrow-left me-2"></i>
+                    Tiếp tục mua sắm
+                </a>
             </div>
         @else
-            <div class="row row-cols-auto" style="min-height:max-content;">
-                <div class="col-12 border border-dark rounded"
-                    style="background-color: #fffaf0; max-height: 900px; overflow-y: auto;">
-                    <div class="row row-cols-2 mb-4 pb-4 pt-1 px-1 sticky-top"
-                        style="background-color: #fffaf0; z-index: 999;">
-                        <div class="col">
-                            <h2 class="text-start sticky-top">Giỏ hàng</h2>
+            <div class="row g-4">
+                <!-- Danh sách sản phẩm -->
+                <div class="col-12 col-lg-9">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white border-bottom py-3">
+                            <h5 class="mb-0 fw-semibold">Sản phẩm trong giỏ</h5>
                         </div>
-                        <div class="col mb-4">
-                            <h4 class="text-end text-secondary">{{ $cart_count }} sản phẩm</h4>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0 align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="border-0 ps-4" style="width: 100px;">Ảnh</th>
+                                            <th class="border-0">Sản phẩm</th>
+                                            <th class="border-0 text-center" style="width: 150px;">Đơn giá</th>
+                                            <th class="border-0 text-center" style="width: 180px;">Số lượng</th>
+                                            <th class="border-0 text-center" style="width: 150px;">Thành tiền</th>
+                                            <th class="border-0 text-center" style="width: 80px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($cartItems as $item)
+                                            <tr class="book-item">
+                                                <td class="ps-4">
+                                                    <a href="{{ route('detail', $item->book->id) }}">
+                                                        <img src="{{ $item->book->image_url }}"
+                                                            alt="{{ $item->book->title }}"
+                                                            class="img-fluid rounded shadow-sm"
+                                                            style="width: 70px; height: 90px; object-fit: cover;">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('detail', $item->book->id) }}"
+                                                        class="text-decoration-none text-dark">
+                                                        <h6 class="mb-1 fw-semibold">{{ $item->book->title }}</h6>
+                                                    </a>
+                                                    @if (isset($item->book->author))
+                                                        <small class="text-muted">
+                                                            <i class="fa-solid fa-user-pen me-1"></i>
+                                                            {{ $item->book->author }}
+                                                        </small>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="text-danger fw-bold">
+                                                        @if (isset($item->book->origin_price))
+                                                            @if (isset($item->book->discount) && $item->book->discount > 0)
+                                                                <p
+                                                                    class="text-muted text-decoration-line-through small mb-0">
+                                                                    {{ number_format($item->book->origin_price * 25000, 0, ',', '.') }}đ
+                                                                </p>
+
+                                                                <p class="text-danger fw-bold small mb-0">
+                                                                    {{ number_format(ceil($item->book->final_price * 25000), 0, ',', '.') }}đ
+                                                                    <span
+                                                                        class="badge bg-danger ms-2 text-center small">-{{ $item->book->discount }}%</span>
+                                                                </p>
+                                                            @else
+                                                                <p class="text-danger fw-bold small mb-0">
+                                                                    {{ number_format($item->book->final_price * 25000, 0, ',', '.') }}đ
+                                                                </p>
+                                                            @endif
+                                                        @endif
+                                                        {{-- {{ number_format(ceil($item->book->price * 25000), 0, ',', '.') }}đ --}}
+                                                    </span>
+                                                    <input class="book-price" type="number" step="0.01"
+                                                        value="{{ $item->book->final_price }}"
+                                                        id="price-{{ $item->book->id }}" hidden>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <div class="input-group" style="max-width: 140px;">
+                                                            <button class="btn btn-outline-secondary btn-sm" type="button"
+                                                                onclick="decreaseQuantity({{ $item->book->id }})">
+                                                                <i class="fa-solid fa-minus"></i>
+                                                            </button>
+                                                            <input type="number"
+                                                                class="form-control form-control-sm text-center book-quantity"
+                                                                min="1" max="50"
+                                                                value="{{ $item->book_quantity }}"
+                                                                id="quantity-{{ $item->book->id }}"
+                                                                onblur="updateCart({{ $item->book->id }})">
+                                                            <button class="btn btn-outline-secondary btn-sm" type="button"
+                                                                onclick="increaseQuantity({{ $item->book->id }})">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span id="items-total-price-{{ $item->book->id }}"
+                                                        class="fw-bold text-primary item-total">
+                                                        {{ number_format(ceil($item->book->final_price * $item->book_quantity * 25000), 0, ',', '.') }}đ
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <form action="{{ route('cart.remove', $item->id) }}" method="POST"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                            title="Xóa sản phẩm"
+                                                            onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-12 mt-3">
-                            <hr>
-                        </div>
-                        <div class="col-3 text-center">
-                            Ảnh sản phẩm
-                        </div>
-                        <div class="col-3 text-center">
-                            Tên sản phẩm
-                        </div>
-                        <div class="col-3 text-center">
-                            Số lượng
-                        </div>
-                        <div class="col-3 text-center">
-                            Giá sản phẩm
-                        </div>
-                        <div class="col-12">
-                            <hr>
-                        </div>
-                    </div>
-                    @foreach ($cartItems as $item)
-                        <div class="row book">
-                            <div class="col">
-                                <a href="{{ route('detail', $item->book->id) }}">
-                                    <img class="img-fluid" src="{{ $item->book->image_url }}" alt="Ảnh sách" width="200">
+                        <div class="card-footer bg-white border-top py-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ route('home') }}" class="btn btn-outline-primary">
+                                    <i class="fa-solid fa-arrow-left me-2"></i>
+                                    Tiếp tục mua sắm
                                 </a>
-                            </div>
-                            <div class="col d-flex justify-content-start align-items-center fw-bold">
-                                <h5 class="text-center">{{ $item->book->title }}</h5>
-                            </div>
-                            <div class="col d-flex justify-content-center align-items-center fw-bold">
-                                <input class="form-control w-50 border border-dark book-quantity" name="book_quantity"
-                                    type="number" min="1" max="50" value="{{ $item->book_quantity }}"
-                                    id="quantity-{{ $item->book->id }}" onblur="updateCart({{ $item->book->id }});"
-                                    required>
-                            </div>
-                            <div class="col d-flex justify-content-center align-items-center fw-bold">
-                                {{ number_format(ceil($item->book->price * 25000), 0, ',', '.') }}đ
-                            </div>
-                            <input class="book-price" step="0.01" type="number" value="{{ $item->book->price, 2 }}"
-                                id="{{ $item->book->id }}price" hidden>
-                            <div class="col d-flex justify-content-center align-items-center fw-bold">
-                                <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                <form action="{{ route('cart.clear') }}" method="POST">
                                     @csrf
-                                    @method('DELETE')
-                                    <a class="text-decoration-none fs-4" href="{{ route('cart.remove', $item->id) }}"
-                                        onclick="event.preventDefault();
-                            this.closest('form').submit();"><span
-                                            class="text text-secondary">X</span></a>
+                                    @method('delete')
+                                    <button class="btn btn-outline-danger" type="submit">
+                                        <i class="fa-solid fa-trash-can me-2"></i>
+                                        Xóa tất cả
+                                    </button>
                                 </form>
                             </div>
                         </div>
-                        <hr>
-                    @endforeach
+                    </div>
                 </div>
-                {{-- <div class="col-4 border border-dark border-start-0 rounded-end pt-1 px-4" style="background-color: #c4c3d0">
-                    <div class="row row-cols-2 mb-4">
-                        <div class="col pt-4">
-                            <h2 class="text-start">Tổng kết</h2>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row rows-col">
-                        <div class="col-12">
-                            <h4 class="fw-bold">Hình thức vận chuyển</h4>
-                            <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice()">
-                                <option value="economy" data-fee="0.6">Tiết kiệm (+$0.60)</option>
-                                <option value="standard" data-fee="1.2">Tiêu chuẩn (+$1.20)</option>
-                                <option value="fast" data-fee="2">Nhanh (+$2.00)</option>
-                                <option value="express" data-fee="4">Hỏa tốc (+$4.00)</option>
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <hr>
-                            <h4 class="fw-bold">Chi tiết</h4>
-                            <div>
-                                <div class="d-flex justify-content-between">
-                                    <p>Tiền sách:</p>
-                                    <p><span id="book-price"
-                                            class="text-dark"><span>+</span>${{ number_format($total_price, 2) }}</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p>Phí vận chuyển:</p>
-                                    <p><span>+</span><span id="shipping-fee" class="text-dark">$</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex-row align-items-end mb-4">
-                        <hr>
-                        <div class="d-flex justify-content-between">
-                            <h4 class="fw-bold">Tổng chi phí:</h4>
-                            <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4>
-                        </div>
-                    </div>
-                </div> --}}
-            </div>
-        @endif
 
-        @if ($cart_count != 0)
-            <div class="d-fex justify-content-center mt-3 row border border-dark border-1 rounded px-3 py-3">
-                <h2>Thông tin đặt hàng</h2>
-                <hr>
-                <form class="w-50" method="POST" action="{{ route('checkout') }}" onsubmit="disableButton()">
-                    @csrf
-                    <div class="mb-3">
-                        <label class="form-label" for="recipient_name">Họ và tên</label>
-                        <input class="form-control" type="text" name="recipient_name" id="recipient_name"
-                            value="{{ $user->name }}">
-                        @error('recipient_name')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="shipping_address">Địa chỉ nhận hàng</label>
-                        <input class="form-control" type="text" name="shipping_address" id="shipping_address"
-                            value="{{ $user->address }}">
-                        @error('shipping_address')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="phone_number">Số điện thoại</label>
-                        <input class="form-control" type="tel" name="phone_number" id="phone_number"
-                            value="{{ $user->phone_number }}">
-                        @error('phone_number')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="note">Ghi chú</label>
-                        <textarea class="form-control" name="note" id="note" cols="10" rows="7"></textarea>
-                        @error('note')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="shipping">Phương thức vận chuyển</label>
-                        <select name="shipping" id="shipping" class="form-select" onchange="updateTotalPrice()">
-                            <option value="0.6" data-fee="0.6">Tiết kiệm (+15.000đ)</option>
-                            <option value="1.2" data-fee="1.2">Tiêu chuẩn (+30.000đ)</option>
-                            <option value="2" data-fee="2">Nhanh (+50.000đ)</option>
-                            <option value="4" data-fee="4">Hỏa tốc (+100.000đ)</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <hr>
-                        <h4 class="fw-bold">Chi tiết thanh toán</h4>
-                        <div>
-                            <div class="d-flex justify-content-between">
-                                <p>Tiền sách:</p>
-                                <p id="book-price-detail"><span
-                                        class="text-dark"><span>+</span>{{ number_format(ceil($total_price * 25000), 0, ',', '.') }}đ
-                                </p>
+                <!-- Thông tin đặt hàng -->
+                <div class="col-12 col-lg-3">
+                    <div class="card border-0 shadow-sm sticky-top" style="top: 20px;">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h5 class="mb-0 fw-semibold">
+                                <i class="fa-solid fa-file-invoice me-2"></i>
+                                Thông tin đặt hàng
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="{{ route('checkout') }}" onsubmit="disableButton()">
+                                @csrf
+
+                                <!-- Thông tin người nhận -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="recipient_name">
+                                        <i class="fa-solid fa-user me-1"></i>
+                                        Họ và tên
+                                    </label>
+                                    <input class="form-control" type="text" name="recipient_name" id="recipient_name"
+                                        value="{{ $user->name }}" required>
+                                    @error('recipient_name')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="shipping_address">
+                                        <i class="fa-solid fa-location-dot me-1"></i>
+                                        Địa chỉ nhận hàng
+                                    </label>
+                                    <input class="form-control" type="text" name="shipping_address"
+                                        id="shipping_address" value="{{ $user->address }}" required>
+                                    @error('shipping_address')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="phone_number">
+                                        <i class="fa-solid fa-phone me-1"></i>
+                                        Số điện thoại
+                                    </label>
+                                    <input class="form-control" type="tel" name="phone_number" id="phone_number"
+                                        value="{{ $user->phone_number }}" required>
+                                    @error('phone_number')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="note">
+                                        <i class="fa-solid fa-note-sticky me-1"></i>
+                                        Ghi chú
+                                    </label>
+                                    <textarea class="form-control" name="note" id="note" rows="3" placeholder="Nhập ghi chú (nếu có)..."></textarea>
+                                    @error('note')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="shipping">
+                                        <i class="fa-solid fa-truck-fast me-1"></i>
+                                        Phương thức vận chuyển
+                                    </label>
+                                    <select name="shipping" id="shipping" class="form-select"
+                                        onchange="updateTotalPrice()">
+                                        <option value="0.6" data-fee="0.6">Tiết kiệm - 15.000đ</option>
+                                        <option value="1.2" data-fee="1.2">Tiêu chuẩn - 30.000đ</option>
+                                        <option value="2" data-fee="2">Nhanh - 50.000đ</option>
+                                        <option value="4" data-fee="4">Hỏa tốc - 100.000đ</option>
+                                    </select>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <!-- Chi tiết thanh toán -->
+                                <h6 class="fw-bold mb-3">Chi tiết thanh toán</h6>
+
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">Tạm tính:</span>
+                                    <span class="fw-semibold" id="book-price-detail">
+                                        {{ number_format(ceil($total_price * 25000), 0, ',', '.') }}đ
+                                    </span>
+                                </div>
                                 <input name="books-price" id="book-price-detail-i" type="number" step="0.01"
                                     value="{{ number_format($total_price, 2) }}" hidden>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p>Phí vận chuyển:</p>
-                                <p><span>+</span><span id="shipping-fee" class="text-dark">$</p>
+
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">Phí vận chuyển:</span>
+                                    <span class="fw-semibold text-success" id="shipping-fee">15.000đ</span>
+                                </div>
+
+                                <hr class="my-3">
+
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h5 class="fw-bold mb-0">Tổng cộng:</h5>
+                                    <h5 class="fw-bold mb-0 text-danger total-price">
+                                        {{ number_format(ceil($total_price * 25000), 0, ',', '.') }}đ
+                                    </h5>
+                                </div>
+                                <input name="total-price" id="total-price" class="total-price" type="number"
+                                    step="0.01" value="{{ $total_price }}" hidden>
+
+                                <button id="submit-button" class="btn btn-primary btn-lg w-100" type="submit">
+                                    <i class="fa-solid fa-check-circle me-2"></i>
+                                    Đặt hàng ngay
+                                </button>
+
+                                <!-- Phương thức thanh toán -->
+                                <div class="mt-3 p-3 bg-light rounded">
+                                    <small class="text-muted d-block mb-2">
+                                        <i class="fa-solid fa-shield-halved me-1"></i>
+                                        Chúng tôi hỗ trợ:
+                                    </small>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <span class="badge bg-white text-dark border">
+                                            <i class="fa-solid fa-money-bill-wave me-1"></i>COD
+                                        </span>
+                                        <span class="badge bg-white text-dark border">
+                                            <i class="fa-brands fa-cc-visa me-1"></i>Visa
+                                        </span>
+                                        <span class="badge bg-white text-dark border">
+                                            <i class="fa-brands fa-cc-mastercard me-1"></i>Mastercard
+                                        </span>
+                                        <span class="badge bg-white text-dark border">
+                                            <i class="fa-solid fa-wallet me-1"></i>Ví điện tử
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Khuyến mãi -->
+                    <div class="card border-0 shadow-sm mt-3">
+                        <div class="card-body">
+                            <h6 class="fw-bold mb-3">
+                                <i class="fa-solid fa-gift text-danger me-2"></i>
+                                Ưu đãi đặc biệt
+                            </h6>
+                            <div class="alert alert-info mb-0">
+                                <small>
+                                    <i class="fa-solid fa-circle-info me-1"></i>
+                                    Miễn phí vận chuyển cho đơn hàng trên 500.000đ
+                                </small>
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex-row align-items-end mb-3">
-                        <hr>
-                        <div class="d-flex justify-content-between">
-                            <h4 class="fw-bold">Tổng chi phí:</h4>
-                            <div class="d-flex justify-content-end">
-                                <h4 class="total-price"></h4>
-                                <input name="total-price" id="total-price"
-                                    class="p-0 form-control w-50 text-end fs-4 fw-bold border-0 total-price"
-                                    type="number" step="0.01" value="{{ $total_price }}" readonly hidden>
-                            </div>
-                            {{-- <h4> <span id="total-price" class="text-dark">${{ number_format($total_price, 2) }}</h4> --}}
-                        </div>
-                    </div>
-                    <button id="submit-button" class="btn btn-dark form-control" type="submit">
-                        Đặt hàng
-                    </button>
-                </form>
+                </div>
             </div>
         @endif
     </div>
-    <script>
-        function updateTotalPrice() {
-            let shippingSelect = document.getElementById("shipping");
-            let selectedOption = shippingSelect.options[shippingSelect.selectedIndex];
-            let fee = parseFloat(selectedOption.getAttribute("data-fee"));
-
-            document.getElementById('shipping-fee').textContent = Math.ceil(fee * 25000).toLocaleString('vi-VN') + "đ";
-
-            let totalBookPrice = 0;
-
-            document.querySelectorAll('.book').forEach(element => {
-                let quantity = parseInt(element.querySelector('.book-quantity').value);
-                let price = parseFloat(element.querySelector('.book-price').value);
-                totalBookPrice += quantity * price;
-            });
-
-            document.getElementById('book-price-detail').textContent = "+" + Math.ceil(totalBookPrice * 25000)
-                .toLocaleString('vi-VN') + "đ";
-
-            document.getElementById('book-price-detail-i').value = totalBookPrice.toFixed(2);
-
-            let totalPrice = (totalBookPrice + fee).toFixed(2);
-            console.log(totalPrice);
-
-            document.querySelectorAll('.total-price').forEach(element => {
-                if (element.tagName === "INPUT") {
-                    element.value = totalPrice;
-                } else {
-                    element.textContent = Math.ceil(totalPrice * 25000).toLocaleString('vi-VN') + "đ";
-                }
-            });
-        }
-
-
-        function updateCart(bookId) {
-            let quantityInput = document.getElementById("quantity-" + bookId);
-            let quantity = parseInt(quantityInput.value);
-
-            if (!quantity || quantity < 1 || quantity > 50) {
-                quantityInput.value = 1;
-            }
-
-            updateTotalPrice();
-
-            fetch(`/cart/update`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
-                    },
-                    body: JSON.stringify({
-                        book_id: bookId,
-                        quantity: quantity
-                    })
-                }).then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log("Cập nhật giỏ hàng thành công");
-                    }
-                }).catch(error => console.error("Lỗi cập nhật giỏ hàng:", error));
-
-        }
-
-        window.onload = function() {
-            updateTotalPrice();
-        };
-
-        function disableButton() {
-            let button = document.getElementById('submit-button');
-            button.disabled = true;
-            button.innerText = 'Đang xử lý...';
-        }
-    </script>
-
 @endsection

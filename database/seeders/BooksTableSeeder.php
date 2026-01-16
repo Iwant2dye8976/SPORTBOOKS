@@ -22,7 +22,7 @@ class BooksTableSeeder extends Seeder
         $book_titles = array_keys($books); // Lấy danh sách tiêu đề sách
         $book_images = array_values($books); // Lấy danh sách link ảnh
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             // Random một sách từ danh sách có sẵn
             $index = array_rand($book_titles);
             $title = $book_titles[$index];
@@ -33,8 +33,8 @@ class BooksTableSeeder extends Seeder
                 'author'      => $faker->name, // Tác giả ngẫu nhiên
                 'category'    => $faker->randomElement(['Tình cảm', 'Tâm lý', 'Tài chính', 'Thể thao']), // Random thể loại
                 'description' => $faker->paragraph(4), // Mô tả sách ngẫu nhiên
-                'price'       => $faker->randomFloat(2, 5, 100), // Giá ngẫu nhiên từ 5 đến 100
-                // 'isOnDiscount' => $faker->boolean(20), // 20% có giảm giá
+                'origin_price'       => $faker->randomFloat(2, 5, 100), // Giá ngẫu nhiên từ 5 đến 100
+                'discount'    => $faker->boolean(30) ? $faker->numberBetween(10, 50) : 0, // 20% có giảm giá
                 'image_url'   => $image_url, // Lấy link ảnh từ file JSON
                 'created_at'  => now(),
                 'updated_at'  => now(),

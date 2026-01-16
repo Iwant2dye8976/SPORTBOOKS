@@ -20,7 +20,8 @@ class OrderController extends Controller
         $orders = Order::with('user')->where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
         $order_count = Order::where('user_id', Auth::user()->id)->count();
         $cart_count = Cart::where('user_id', Auth::user()->id)->count();
-        return view('user.orders', compact('orders', 'order_count', 'cart_count'));
+        $order_details = OrderDetail::all();
+        return view('user.orders', compact('orders', 'order_count', 'cart_count', 'order_details'));
     }
 
     /**
@@ -69,7 +70,7 @@ class OrderController extends Controller
             'book_id'   => $request->id,
             'order_id'  => $order->id,
             'book_quantity'  => $request->quantity,
-            'price'     => $book->price,
+            'price'     => $book->final_price,
         ]);
         return redirect()->back()->with('success', 'Đặt thành công, vui lòng chờ xử lý');
     }
@@ -114,7 +115,7 @@ class OrderController extends Controller
                 'book_id'   => $item->book_id,
                 'order_id'  => $order->id,
                 'book_quantity'  => $item->book_quantity,
-                'price'     => $item->book->price,
+                'price'     => $item->book->final_price,
             ]);
         }
 
@@ -192,8 +193,27 @@ class OrderController extends Controller
     public function cancel(Request $request)
     {
         $order = Order::where('id', $request->order_id)->first();
-        $order->status = 0;
+        $order->status = -1;
         $order->save();
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy.');
+    }
+
+    public function searchdById(Request $request)
+    {
+        $query = $request->input('q');
+        $status = $request->query('status');
+        $orders = Order::with('user')->where('user_id', Auth::user()->id)
+            ->when($query, function ($q) use ($query) {
+                $q->where('id', 'like', '%' . $query . '%');
+            })
+            ->when($status !== null && $status !== '', function ($q) use ($status) {
+                $q->where('status', $status);
+            })
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10)
+            ->appends(['q' => $query, 'status' => $status]);
+        $order_count = Order::where('user_id', Auth::user()->id)->count();
+        $cart_count = Cart::where('user_id', Auth::user()->id)->count();
+        return view('user.orders', compact('orders', 'order_count', 'cart_count'));
     }
 }

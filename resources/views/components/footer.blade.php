@@ -1,6 +1,6 @@
 <footer class="text-center text-lg-start text-white" style="background-color: #1c2331">
     <!-- Section: Social media -->
-    <section class="d-flex justify-content-between p-4" style="background-color: #6351ce">
+    <section class="d-flex justify-content-between p-4" style="background-color: #213C51">
         <!-- Left -->
         <div class="me-5">
             <span>Hãy kết nối với chúng tôi trên các mạng xã hội:</span>

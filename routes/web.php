@@ -31,10 +31,12 @@ Route::middleware(['user', 'auth'])->group(function () {
     Route::get('/cart', [CartProcessController::class, 'getcart'])->name('cart');
     Route::post('/cart/update', [CartProcessController::class, 'updateCart'])->name('cart.update');
     Route::post('/checkout', [OrderController::class, 'store'])->name('checkout');
+    Route::delete('/cart/clear', [CartProcessController::class, 'clearAll'])->name('cart.clear');
     Route::delete('/cart/remove/{id}', [CartProcessController::class, 'destroy'])->name('cart.remove');
 
     //Đơn hàng
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+    Route::get('/orders/search', [OrderController::class, 'searchdById'])->name('orders.search');
     Route::get('/orders/detail/{id}', [OrderController::class, 'show'])->name('orders.details');
     Route::post('/orders/detail/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
     Route::get('/orders/{id}/payment', [OrderController::class, 'cancel'])->name('orders.payment');
@@ -48,6 +50,9 @@ Route::middleware(['user', 'auth'])->group(function () {
     //VN PAY
     Route::post('/vnpay/payment/{id}', [CheckoutController::class, 'vnpay_payment'])->name('checkout.vnpay');
     Route::get('/vnpay/payment/{id}/return', [PaymentController::class, 'handleVnpayReturn'])->name('vnpay.return');
+
+    //Rating và Review
+    Route::post('/review', [App\Http\Controllers\BookReviewController::class, 'store'])->name('book.review');
 });
 
 Route::middleware(['user'])->group(function () {
