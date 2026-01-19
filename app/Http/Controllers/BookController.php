@@ -10,37 +10,44 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\InteractionHelper;
 use App\Models\BookReviews;
 use App\Http\Controllers\BookReviewController as BookReviewControllers;
+use App\Services\RecommendationService;
 
 class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function getall()
+    public function getall(RecommendationService $reco)
     {
-        $books = Book::paginate(20);
+        $books = Book::paginate(10);
         $totalBooks = Book::count();
         $categories = Book::select('category')->distinct()->get();
-
+        $recommendedBooks = [];
         $cart_count = 0;
         $order_count = 0;
 
         if (Auth::check()) {
             $cart_count = Cart::where('user_id', Auth::user()->id)->count();
             $order_count = Order::where('user_id', Auth::user()->id)->count();
+            $recommendedBooks = $reco->recommendForUser(Auth::user()->id, 10);
             // if (Auth::user()->type === 'admin') {
             //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
             // }
+        } else {
+            $recommendedBooks = $reco->recommendForSession(
+                session('viewed_books', []),
+                10
+            );
         }
 
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
+        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count', 'recommendedBooks'));
     }
 
 
     /**
      * Show the form for creating a new resource.
      */
-    public function getDetail($id)
+    public function getDetail($id, RecommendationService $reco)
     {
 
         $book = Book::findOrFail($id);
@@ -55,11 +62,14 @@ class BookController extends Controller
                 'url' => request()->path(),
             ]
         );
-        $relatedBooks = Book::where('category', $book->category)
-            ->where('id', '!=', $id)
-            ->inRandomOrder()
-            ->limit(5)
-            ->get();
+        // $relatedBooks = Book::where('category', $book->category)
+        //     ->where('id', '!=', $id)
+        //     ->inRandomOrder()
+        //     ->limit(5)
+        //     ->get();
+
+        $relatedBooks = $reco->recommendForBook($book->id, 10);
+
         $cart_count = 0;
         $order_count = 0;
 
@@ -88,8 +98,6 @@ class BookController extends Controller
 
         return view('user.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count', 'reviews', 'reviews_count', 'ratingStats', 'htmlRatingStars'));
     }
-
-
 
     public function search(Request $request)
     {

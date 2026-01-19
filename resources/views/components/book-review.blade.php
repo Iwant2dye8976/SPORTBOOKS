@@ -151,12 +151,12 @@
                             </div>
 
                             <!-- Nút xem thêm -->
-                            <div class="text-center mt-4">
+                            {{-- <div class="text-center mt-4">
                                 <button class="btn btn-outline-primary">
                                     Xem thêm đánh giá
                                     <i class="fa-solid fa-chevron-down ms-2"></i>
                                 </button>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

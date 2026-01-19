@@ -15,12 +15,15 @@ use App\Http\Controllers\PaymentController;
 require __DIR__ . '/auth.php'; // Import routes từ Breeze
 
 Route::get('/', [BookController::class, 'getall'])->name('home');
-Route::get('/filter', [BookController::class, 'filter'])->name('filter');
-Route::get('/detail/{id}', [BookController::class, 'getdetail'])->name('detail');
-Route::get('/search', [BookController::class, 'search'])->name('search');
+Route::get('/books/filter', [BookController::class, 'filter'])->name('filter');
+Route::get('/books/detail/{id}', [BookController::class, 'getdetail'])->name('detail');
+Route::get('/books/search', [BookController::class, 'search'])->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 //Liên hệ
 Route::post('/contact', [ContactController::class, 'sendEmail'])->name('contact.send');
+
+//Chatbot
+Route::post('/chat', [App\Http\Controllers\ChatbotController::class, 'chat'])->name('chat');
 
 // Route yêu cầu đăng nhập
 Route::middleware(['user', 'auth'])->group(function () {

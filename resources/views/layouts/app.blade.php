@@ -138,6 +138,7 @@
     <div>
         @include('components.footer')
     </div>
+    @include('components.chatbox')
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -149,6 +150,7 @@
     <script src="{{ asset('js/amountChangeButton.js') }}"></script>
     <script src="{{ asset('js/cart.js') }}"></script>
     <script src="{{ asset('js/starRating.js') }}"></script>
+    <script src="{{ asset('js/chatbot.js') }}"></script>
 
 </body>
 
