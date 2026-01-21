@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string("author", 255);
             $table->enum("category", ['Tình cảm', 'Tâm lý', 'Tài chính', 'Thể thao']);
             $table->text("description")->nullable();
+            $table->unsignedInteger('stock')->default(0);
             $table->unsignedSmallInteger("discount")->nullable();
-            $table->double("price");
+            $table->double("origin_price", 10, 2);
+            $table->double("final_price", 10, 2)->nullable();
             $table->text('image_url')->nullable();
             $table->timestamps();
         });

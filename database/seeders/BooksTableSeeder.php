@@ -34,6 +34,7 @@ class BooksTableSeeder extends Seeder
                 'category'    => $faker->randomElement(['Tình cảm', 'Tâm lý', 'Tài chính', 'Thể thao']), // Random thể loại
                 'description' => $faker->paragraph(4), // Mô tả sách ngẫu nhiên
                 'origin_price'       => $faker->randomFloat(2, 5, 100), // Giá ngẫu nhiên từ 5 đến 100
+                'stock'       => $faker->numberBetween(1, 100),
                 'discount'    => $faker->boolean(30) ? $faker->numberBetween(10, 50) : 0, // 20% có giảm giá
                 'image_url'   => $image_url, // Lấy link ảnh từ file JSON
                 'created_at'  => now(),

@@ -39,7 +39,6 @@ return new class extends Migration
             $table->double('total')->storedAs('ROUND(books_price + shipping_fee, 2)');
             $table->smallInteger('status')->default(-1); // -1: pending, 0: canceled, 1: wait, 2: paid
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

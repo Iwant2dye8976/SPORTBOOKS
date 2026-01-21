@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'author', 'category', 'description', 'discount', 'origin_price', 'final_price', 'image_url'];
+    protected $fillable = ['title', 'author', 'category', 'description', 'stock', 'discount', 'origin_price', 'final_price', 'image_url'];
 
     public function cart()
     {

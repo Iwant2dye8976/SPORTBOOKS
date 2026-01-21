@@ -38,6 +38,9 @@ class CartProcessController extends Controller
             'book_id' => $book->id,
             'book_quantity' => $amount == null ? 1 : $amount,
         ]);
+
+        $book->decrement('stock', $amount == null ? 1 : $amount);
+
         return redirect()->back()->with('success', 'Đã thêm vào giỏ hàng!');
         // return redirect()->back()->with('error', 'Hành động không hợp lệ!');
     }
@@ -70,8 +73,17 @@ class CartProcessController extends Controller
             ->where('book_id', $request->book_id)
             ->first();
 
+        $oldQuantity = $cartItem ? $cartItem->book_quantity : 0;
+
         if ($cartItem) {
             $cartItem->update(['book_quantity' => $request->quantity]);
+            $book = Book::find($request->book_id);
+            $change = $oldQuantity - $request->quantity;
+            if ($change > 0) {
+                $book->increment('stock', $change);
+            } else {
+                $book->decrement('stock', abs($change));
+            }
         } else {
             Cart::create([
                 'user_id' => Auth::id(),
@@ -80,12 +92,19 @@ class CartProcessController extends Controller
             ]);
         }
 
+
+
         return response()->json(['success' => true]);
     }
 
     public function clearAll()
     {
-        Cart::where('user_id', Auth::id())->delete();
+        $cart = Cart::where('user_id', Auth::id());
+        foreach ($cart->get() as $item) {
+            $book = Book::find($item->book_id);
+            $book->increment('stock', $item->book_quantity);
+        }
+        $cart->delete();
         return redirect()->back()->with('success', 'Đã xóa tất cả sản phẩm khỏi giỏ hàng.');
     }
 
@@ -100,11 +119,14 @@ class CartProcessController extends Controller
             return redirect()->route('cart')->with('error', 'Sản phẩm không tồn tại trong giỏ hàng.');
         }
 
-        $item->delete();
+
         if (Auth::check()) {
             // if (Auth::user()->type === 'admin') {
             //     return redirect()->route('admin.cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
             // } else {
+            $book = Book::find($item->book_id);
+            $book->increment('stock', $item->book_quantity);
+            $item->delete();
             return redirect()->route('cart')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
             // }
         }
