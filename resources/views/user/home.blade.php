@@ -112,6 +112,10 @@
                 @endforeach
             </div>
         @endif
+
+        <div>
+            <a href="{{route('gemini.index')}}">TEST</a>
+        </div>
     </div>
     <script>
         setTimeout(function() {

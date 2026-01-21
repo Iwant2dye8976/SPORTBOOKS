@@ -19,8 +19,19 @@ Route::get('/books/filter', [BookController::class, 'filter'])->name('filter');
 Route::get('/books/detail/{id}', [BookController::class, 'getdetail'])->name('detail');
 Route::get('/books/search', [BookController::class, 'search'])->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/books-json', function () {
+    return response()->json(
+        \App\Models\Book::select('id', 'title', 'author', 'category', 'discount', 'final_price')->get()
+    );
+});
+
+
 //Liên hệ
 Route::post('/contact', [ContactController::class, 'sendEmail'])->name('contact.send');
+
+//Gemini AI
+Route::get('/gemini/index', [App\Http\Controllers\GeminiController::class, 'index'])->name('gemini.index');
+Route::post('/gemini/index/chat', [App\Http\Controllers\GeminiController::class, 'chat'])->name('gemini.chat');
 
 //Chatbot
 Route::post('/chat', [App\Http\Controllers\ChatbotController::class, 'chat'])->name('chat');

@@ -3,22 +3,29 @@
         💬
     </div>
 
-    <div id="chatbot-box" class="hidden" hidden>
+    <div id="chatbot-box" class="hidden">
         <div class="chatbot-header">
-            <span>Chatbot hỗ trợ</span>
+            <span>
+                <i class="fa-solid fa-robot me-2"></i>
+                Chatbot hỗ trợ
+            </span>
             <button id="chatbot-close">✖</button>
         </div>
 
         <div id="chatbot-messages">
             <div class="message bot">
-                Xin chào 👋 Tôi có thể giúp bạn tìm và gợi ý sách.
-                <a id="chatbot-book-link"></a>
+                <div class="message-content">
+                    <strong>Xin chào 👋</strong>
+                    <p class="mb-0">Tôi có thể giúp bạn tìm kiếm và gợi ý sách. Hãy hỏi tôi bất kỳ điều gì!</p>
+                </div>
             </div>
         </div>
 
         <div class="chatbot-input">
-            <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi..." />
-            <button id="chatbot-send">Gửi</button>
+            <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi của bạn..." />
+            <button id="chatbot-send" onclick="sendMessage();">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
         </div>
     </div>
 </div>

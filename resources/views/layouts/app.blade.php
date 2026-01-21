@@ -150,7 +150,8 @@
     <script src="{{ asset('js/amountChangeButton.js') }}"></script>
     <script src="{{ asset('js/cart.js') }}"></script>
     <script src="{{ asset('js/starRating.js') }}"></script>
-    <script src="{{ asset('js/chatbot.js') }}"></script>
+    {{-- <script src="{{ asset('js/chatbot.js') }}"></script> --}}
+    <script src="{{ asset('js/gemini.js') }}"></script>
 
 </body>
 
