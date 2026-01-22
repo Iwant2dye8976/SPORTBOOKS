@@ -45,8 +45,8 @@ async function sendMessage() {
 
         const data = await response.json();
         removeTypingIndicator();
-        if (data.success) {
-            addMessage(data.response, 'bot', data.books);
+        if (data.data) {
+            addMessage('Đây là những cuốn sách tôi gợi ý:', 'bot', data.data);
         } else {
             addMessage('Xin lỗi, đã có lỗi xảy ra. Vui lòng thử lại sau.', 'bot');
         }
@@ -101,8 +101,9 @@ function addMessage(text, type, books = null) {
                 ${text}
                 ${books.map(book => `
                     <div class="book-suggestion">
-                        <a href="${book.url}" target="_blank">
-                            📚 ${book.title}
+                        <a href="books/detail/${book.id}" target="_blank">
+                        <img src="${book.image_url}" alt="${book.title}" class="book-image">
+                            ${book.title}
                         </a>
                         ${book.author ? `<br><small class="text-muted">Tác giả: ${book.author}</small>` : ''}
                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\BookService;
 use App\Services\GeminiService;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,15 @@ class GeminiController extends Controller
         // GeminiService::version();
 
         $reply = $geminiService->generate($request->input('message'));
-        // $reply = env('BOOKS_JSON_URL');
-        return view('user.gemini', compact('reply'));
+
+        $books = [];
+
+        foreach ($reply->books as $book) {
+            $books[] = BookService::getByID($book->id);
+        }
+
+        return response()->json([
+            'data' => $books,
+        ]);
     }
 }

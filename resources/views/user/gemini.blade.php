@@ -12,7 +12,8 @@
         <div class="card mt-5">
             <h3 class="card-header p-3">Laravel 11 Integrate Chat GPT API Example</h3>
             <div class="card-body">
-                <form method="GET" action="{{ route('gemini.chat') }}">
+                <form method="POST" action="{{ route('gemini.chat') }}">
+                    @csrf
                     <div class="form-group">
                         <label><strong>Give me your title, I will provide you domains list.</strong></label>
                         <input type="text" name="message" class="form-control" />
