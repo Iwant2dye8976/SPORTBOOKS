@@ -68,7 +68,7 @@
                                 <i class="fa-solid fa-star-half-stroke"></i> --}}
                             </div>
                             <span class="text-muted">(<i class="fa-solid fa-star text-warning"></i>
-                                {{ $book->bookreviews->avg('rating') ?? 0 }}/5.0 -
+                                {{ number_format($book->bookreviews->avg('rating') ?? 0, 1) }}/5.0 -
                                 {{ $book->bookreviews->count() ?? 0 }} đánh giá)</span>
                         </div>
 

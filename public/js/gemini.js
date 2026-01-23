@@ -2,10 +2,12 @@
 document.getElementById('chatbot-button').addEventListener('click', function () {
     const chatbox = document.getElementById('chatbot-box');
     chatbox.classList.toggle('hidden');
+    showingInstantMessage();
 });
 
 document.getElementById('chatbot-close').addEventListener('click', function () {
     document.getElementById('chatbot-box').classList.add('hidden');
+    hideInstantMessage();
 });
 
 document.getElementById('chatbot-input').addEventListener('keypress', function (e) {
@@ -27,10 +29,11 @@ async function sendMessage() {
     // Disable send button
     const sendBtn = document.getElementById('chatbot-send');
     sendBtn.disabled = true;
+    hideInstantMessage();
     showTypingIndicator();
 
     try {
-        const response = await fetch('/gemini/index/chat', {
+        const response = await fetch('/gemini/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,8 +48,8 @@ async function sendMessage() {
 
         const data = await response.json();
         removeTypingIndicator();
-        if (data.data) {
-            addMessage('Đây là những cuốn sách tôi gợi ý:', 'bot', data.data);
+        if (data.books) {
+            addMessage('Đây là những cuốn sách tôi gợi ý:', 'bot', data.books);
         } else {
             addMessage('Xin lỗi, đã có lỗi xảy ra. Vui lòng thử lại sau.', 'bot');
         }
@@ -97,7 +100,8 @@ function addMessage(text, type, books = null) {
     let content = `<div class="message-content">${text}</div>`;
 
     if (books && books.length > 0) {
-        content = `<div class="message-content">
+        content =
+            `<div class="message-content">
                 ${text}
                 ${books.map(book => `
                     <div class="book-suggestion">
@@ -138,6 +142,34 @@ function removeTypingIndicator() {
     if (typingIndicator) {
         typingIndicator.remove();
     }
+}
+
+function showingInstantMessage() {
+    fetch('/books-json/categories')
+        .then(response => response.json())
+        .then(categories => {
+            const instantMessage = document.getElementById('chatbot-instant-message-buttons');
+            if (categories && categories.length > 0) {
+                categories.forEach(category => {
+                    const instantMessageButton = document.createElement('button');
+                    instantMessageButton.className = 'inst';
+                    instantMessageButton.innerText = category;
+                    instantMessageButton.onclick = function () {
+                        document.getElementById('chatbot-input').value = category;
+                        sendMessage();
+                    };
+                    instantMessage.appendChild(instantMessageButton);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Có lỗi khi lấy thể loại:', error);
+        });
+}
+
+function hideInstantMessage() {
+    const instantMessage = document.getElementById('chatbot-instant-messages');
+    instantMessage.style.display = 'none';
 }
 
 // demo

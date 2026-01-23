@@ -21,6 +21,12 @@
             </div>
         </div>
 
+        <div id="chatbot-instant-messages">
+            <h5 id="instant-message-title">Gợi ý thể loại:</h5>
+            <div id="chatbot-instant-message-buttons">
+            </div>
+        </div>
+
         <div class="chatbot-input">
             <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi của bạn..." />
             <button id="chatbot-send" onclick="sendMessage();">

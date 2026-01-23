@@ -428,6 +428,45 @@ body {
     cursor: not-allowed;
 }
 
+#instant-message-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-left: 15px;
+}
+
+#chatbot-instant-message-buttons {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+#chatbot-instant-message-buttons::-webkit-scrollbar {
+    height: 6px;
+}
+
+#chatbot-instant-message-buttons::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+#chatbot-instant-message-buttons .inst {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#chatbot-instant-message-buttons .inst:hover {
+    background-color: #ddd;
+}
+
 .book-suggestion {
     margin-top: 8px;
     padding: 12px;

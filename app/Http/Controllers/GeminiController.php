@@ -5,14 +5,10 @@ namespace App\Http\Controllers;
 use App\Services\BookService;
 use App\Services\GeminiService;
 use Illuminate\Http\Request;
+use Gemini\Laravel\Facades\Gemini;
 
 class GeminiController extends Controller
 {
-    public function index()
-    {
-        return view('user.gemini');
-    }
-
     public function chat(Request $request)
     {
         $geminiService = new GeminiService();
@@ -23,15 +19,21 @@ class GeminiController extends Controller
         // GeminiService::version();
 
         $reply = $geminiService->generate($request->input('message'));
-
         $books = [];
 
         foreach ($reply->books as $book) {
             $books[] = BookService::getByID($book->id);
         }
 
+
         return response()->json([
-            'data' => $books,
+            'books' => $books,
         ]);
     }
+
+    // public function listCache()
+    // {
+    //     $caches = $this->geminiService->listCachedContents();
+    //     return response()->json(['cached_contents' => $caches]);
+    // }
 }

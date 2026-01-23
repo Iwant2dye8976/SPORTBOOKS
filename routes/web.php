@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\GeminiController;
 
 require __DIR__ . '/auth.php'; // Import routes từ Breeze
 
@@ -19,9 +20,14 @@ Route::get('/books/filter', [BookController::class, 'filter'])->name('filter');
 Route::get('/books/detail/{id}', [BookController::class, 'getdetail'])->name('detail');
 Route::get('/books/search', [BookController::class, 'search'])->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::get('/books-json', function () {
+Route::get('/books-json/all', function () {
     return response()->json(
         \App\Models\Book::select('id', 'title', 'author', 'category', 'discount', 'final_price')->get()
+    );
+});
+Route::get('/books-json/categories', function () {
+    return response()->json(
+        \App\Models\Book::select('category')->distinct()->pluck('category')
     );
 });
 
@@ -30,8 +36,14 @@ Route::get('/books-json', function () {
 Route::post('/contact', [ContactController::class, 'sendEmail'])->name('contact.send');
 
 //Gemini AI
-Route::get('/gemini/index', [App\Http\Controllers\GeminiController::class, 'index'])->name('gemini.index');
-Route::post('/gemini/index/chat', [App\Http\Controllers\GeminiController::class, 'chat'])->name('gemini.chat');
+Route::post('gemini/chat', [GeminiController::class, 'chat'])->name('gemini.chat');
+// Route::prefix('gemini')->group(function () {
+
+//     Route::post('/cache/clear', [GeminiController::class, 'clearCache']);
+//     Route::get('/cache/list', [GeminiController::class, 'listCache']);
+//     Route::get('/models', [GeminiController::class, 'listModels']);
+// });
+// Route::get('/gemini/index', [App\Http\Controllers\GeminiController::class, 'index'])->name('gemini.index');
 
 //Chatbot
 Route::post('/chat', [App\Http\Controllers\ChatbotController::class, 'chat'])->name('chat');

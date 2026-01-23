@@ -114,7 +114,7 @@
         @endif
 
         <div>
-            <a href="{{route('gemini.index')}}">TEST</a>
+            {{-- <a href="{{route('gemini.index')}}">TEST</a> --}}
         </div>
     </div>
     <script>
