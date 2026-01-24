@@ -31,9 +31,10 @@ class GeminiController extends Controller
         ]);
     }
 
-    // public function listCache()
-    // {
-    //     $caches = $this->geminiService->listCachedContents();
-    //     return response()->json(['cached_contents' => $caches]);
-    // }
+    public function listCache()
+    {
+        $geminiService = new GeminiService();
+        $caches = $geminiService->listCachedContents();
+        return response()->json(['cached_contents' => $caches]);
+    }
 }

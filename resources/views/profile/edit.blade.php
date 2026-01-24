@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-3">
             <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white fw-bold">
+                <div class="card-header text-white fw-bold" style="background: #6594B1;">
                     Tài khoản của tôi
                 </div>
                 <ul class="list-group list-group-flush">

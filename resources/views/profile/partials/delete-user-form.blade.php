@@ -43,7 +43,7 @@
             </div>
 
             <div class="text text-center">
-                <button type="button" class="btn btn-danger form-control" data-bs-toggle="modal"
+                <button type="button" class="btn btn-danger form-control fw-bold" data-bs-toggle="modal"
                     data-bs-target="#confirmDeleteModal" style="max-width: 500px;">
                     XÁC NHẬN
                 </button>
@@ -63,8 +63,8 @@
                             Hành động này <strong class="text-danger">không thể hoàn tác!</strong>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">HỦY</button>
-                            <button type="submit" class="btn btn-danger">XÓA</button>
+                            <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal">HỦY</button>
+                            <button type="submit" class="btn btn-danger fw-bold">XÓA</button>
                         </div>
                     </div>
                 </div>

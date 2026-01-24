@@ -21,11 +21,23 @@
             </div>
         </div>
 
-        <div id="chatbot-instant-messages">
+        {{-- <div id="chatbot-instant-messages" class="slide-in">
             <h5 id="instant-message-title">Gợi ý thể loại:</h5>
             <div id="chatbot-instant-message-buttons">
             </div>
-        </div>
+        </div> --}}
+
+        <details id="chatbot-instant-messages" class="slide-in collapsible-details" open>
+            <summary class="collapsible-summary">
+                <h5 id="instant-message-title">Gợi ý thể loại:</h5>
+                <svg class="toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                </svg>
+            </summary>
+            <div id="chatbot-instant-message-buttons" class="details-content">
+            </div>
+        </details>
 
         <div class="chatbot-input">
             <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi của bạn..." />

@@ -36,13 +36,12 @@ Route::get('/books-json/categories', function () {
 Route::post('/contact', [ContactController::class, 'sendEmail'])->name('contact.send');
 
 //Gemini AI
-Route::post('gemini/chat', [GeminiController::class, 'chat'])->name('gemini.chat');
-// Route::prefix('gemini')->group(function () {
-
-//     Route::post('/cache/clear', [GeminiController::class, 'clearCache']);
-//     Route::get('/cache/list', [GeminiController::class, 'listCache']);
-//     Route::get('/models', [GeminiController::class, 'listModels']);
-// });
+Route::prefix('gemini')->group(function () {
+    Route::post('/chat', [GeminiController::class, 'chat'])->name('gemini.chat');
+    Route::post('/cache/clear', [GeminiController::class, 'clearCache']);
+    Route::get('/cache/list', [GeminiController::class, 'listCache']);
+    Route::get('/models', [GeminiController::class, 'listModels']);
+});
 // Route::get('/gemini/index', [App\Http\Controllers\GeminiController::class, 'index'])->name('gemini.index');
 
 //Chatbot

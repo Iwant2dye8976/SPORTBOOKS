@@ -7,7 +7,7 @@ document.getElementById('chatbot-button').addEventListener('click', function () 
 
 document.getElementById('chatbot-close').addEventListener('click', function () {
     document.getElementById('chatbot-box').classList.add('hidden');
-    hideInstantMessage();
+    collapseInstantMessage();
 });
 
 document.getElementById('chatbot-input').addEventListener('keypress', function (e) {
@@ -29,7 +29,10 @@ async function sendMessage() {
     // Disable send button
     const sendBtn = document.getElementById('chatbot-send');
     sendBtn.disabled = true;
-    hideInstantMessage();
+    const instantMessageBtns = document.getElementsByClassName('inst');
+    for (let btn of instantMessageBtns) {
+        btn.disabled = true;
+    }
     showTypingIndicator();
 
     try {
@@ -60,6 +63,12 @@ async function sendMessage() {
         addMessage('Xin lỗi, không thể kết nối đến máy chủ. Vui lòng thử lại sau.', 'bot');
     } finally {
         sendBtn.disabled = false;
+        const instantMessageBtns = document.getElementsByClassName('inst');
+        for (let btn of instantMessageBtns) {
+            btn.disabled = false;
+        }
+        showingInstantMessage();
+        collapseInstantMessage();
     }
 }
 
@@ -149,13 +158,17 @@ function showingInstantMessage() {
         .then(response => response.json())
         .then(categories => {
             const instantMessage = document.getElementById('chatbot-instant-message-buttons');
+            const existingButtons = instantMessage.getElementsByClassName('inst');
+            while (existingButtons[0]) {
+                existingButtons[0].parentNode.removeChild(existingButtons[0]);
+            }
             if (categories && categories.length > 0) {
                 categories.forEach(category => {
                     const instantMessageButton = document.createElement('button');
                     instantMessageButton.className = 'inst';
                     instantMessageButton.innerText = category;
                     instantMessageButton.onclick = function () {
-                        document.getElementById('chatbot-input').value = category;
+                        document.getElementById('chatbot-input').value = "Tìm sách " + category;
                         sendMessage();
                     };
                     instantMessage.appendChild(instantMessageButton);
@@ -167,9 +180,9 @@ function showingInstantMessage() {
         });
 }
 
-function hideInstantMessage() {
-    const instantMessage = document.getElementById('chatbot-instant-messages');
-    instantMessage.style.display = 'none';
+function collapseInstantMessage() {
+    const instantMessageE = document.getElementById('chatbot-instant-messages');
+    instantMessageE.removeAttribute('open');
 }
 
 // demo

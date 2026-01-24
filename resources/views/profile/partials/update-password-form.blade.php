@@ -44,8 +44,8 @@
             </div>
 
             <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary form-control" id="submit-button"
-                    style="max-width: 300px;">
+                <button type="submit" class="btn form-control" id="submit-button"
+                    style="max-width: 300px; background: #6594B1; color: white; font-weight: bold;">
                     Xác nhận
                 </button>
             </div>

@@ -8,7 +8,7 @@ class CacheService
 {
     public static function cacheContent($model, $duration = 3600)
     {
-        $books_url = env("APP_URL") . env('BOOKS_JSON_URL');
+        $books_url = env('BOOKS_JSON_URL');
         $booksJson = json_encode(json_decode(file_get_contents($books_url), true), JSON_UNESCAPED_UNICODE);
         $cached = Gemini::cachedContents()->create(
             model: $model,
@@ -38,7 +38,7 @@ class CacheService
                 ];
             }
         }
-        if (empty($contents)) {
+        if ($contents === []) {
             return CacheService::cacheContent('gemini-3-flash-preview', 3600);
         } else {
             return $contents[0]['name'];
