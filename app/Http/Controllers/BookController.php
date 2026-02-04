@@ -99,7 +99,7 @@ class BookController extends Controller
         return view('user.detail', compact('book', 'relatedBooks', 'cart_count', 'order_count', 'reviews', 'reviews_count', 'ratingStats', 'htmlRatingStars'));
     }
 
-    public function search(Request $request)
+    public function search(Request $request, RecommendationService $reco)
     {
         $keyword = trim($request->input('keyword', ''));
 
@@ -115,15 +115,22 @@ class BookController extends Controller
         $cart_count = 0;
         $order_count = 0;
 
+
         if (Auth::check()) {
-            $cart_count = Cart::where('user_id', Auth::id())->count();
+            $cart_count = Cart::where('user_id', Auth::user()->id)->count();
             $order_count = Order::where('user_id', Auth::user()->id)->count();
+            $recommendedBooks = $reco->recommendForUser(Auth::user()->id, 10);
             // if (Auth::user()->type === 'admin') {
             //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
             // }
+        } else {
+            $recommendedBooks = $reco->recommendForSession(
+                session('viewed_books', []),
+                10
+            );
         }
 
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
+        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count', 'recommendedBooks'));
     }
 
 
@@ -131,7 +138,7 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function filter(Request $request)
+    public function filter(Request $request, RecommendationService $reco)
     {
         $query = Book::query();
 
@@ -148,15 +155,21 @@ class BookController extends Controller
         $categories = Book::select('category')->distinct()->get();
         $cart_count = 0;
         $order_count = 0;
+
         if (Auth::check()) {
-            $cart_count = Cart::where('user_id', Auth::id())->count();
+            $cart_count = Cart::where('user_id', Auth::user()->id)->count();
             $order_count = Order::where('user_id', Auth::user()->id)->count();
+            $recommendedBooks = $reco->recommendForUser(Auth::user()->id, 10);
             // if (Auth::user()->type === 'admin') {
             //     return view('admin.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
             // }
+        } else {
+            $recommendedBooks = $reco->recommendForSession(
+                session('viewed_books', []),
+                10
+            );
         }
-
-        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count'));
+        return view('user.home', compact('books', 'totalBooks', 'categories', 'cart_count', 'order_count', 'recommendedBooks'));
     }
     /**
      * Show the form for editing the specified resource.

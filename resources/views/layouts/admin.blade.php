@@ -162,6 +162,7 @@
     <script src="{{ asset('js/alert.js') }}"></script>
     <script src="{{ asset('js/disablebutton.js') }}"></script>
     <script src="{{ asset('js/showAlert.js') }}"></script>
+    <script src="{{ asset('js/adminBook.js') }}"></script>
 
 </body>
 

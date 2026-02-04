@@ -72,7 +72,10 @@ class AdminController extends Controller
             'author' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string'],
             'description' => ['nullable', 'string'],
-            'price' => ['required', 'min:1', 'numeric'],
+            'stock' => ['required', 'min:1', 'numeric'],
+            'origin_price' => ['required', 'min:1', 'numeric'],
+            'discount' => ['nullable', 'numeric'],
+            'final_price' => ['required', 'min:1', 'numeric'],
             'image_url' => ['required', 'string'],
         ], [
             'title.required' => 'Vui lòng nhập tiêu đề sách.',
@@ -88,9 +91,19 @@ class AdminController extends Controller
 
             'description.string' => 'Mô tả sách phải là chuỗi ký tự.',
 
-            'price.required' => 'Vui lòng nhập giá sách.',
-            'price.numeric' => 'Giá sách phải là một số.',
-            'price.min' => 'Giá sách phải lớn hơn hoặc bằng 1.',
+            'origin_price.required' => 'Vui lòng nhập giá gốc sách.',
+            'origin_price.numeric' => 'Giá gốc sách phải là một số.',
+            'origin_price.min' => 'Giá gốc sách phải lớn hơn hoặc bằng 1.',
+
+            'discount.numeric' => 'Giá giảm phải là một số.',
+
+            'stock.required' => 'Vui lòng nhập số lượng tồn kho.',
+            'stock.numeric' => 'Số lượng tồn kho phải là một số.',
+            'stock.min' => 'Số lượng tồn kho phải lớn hơn hoặc bằng 1.',
+
+            'final_price.required' => 'Vui lòng nhập giá bán sách.',
+            'final_price.numeric' => 'Giá bán sách phải là một số.',
+            'final_price.min' => 'Giá bán sách phải lớn hơn hoặc bằng 1.',
 
             'image_url.required' => 'Vui lòng nhập đường dẫn ảnh.',
             'image_url.string' => 'Đường dẫn ảnh phải là chuỗi ký tự.',
@@ -100,7 +113,10 @@ class AdminController extends Controller
             'author' => $request->author,
             'category' => $request->category,
             'description' => $request->description,
-            'price' => $request->price,
+            'stock' => $request->stock,
+            'oriprice' => $request->origin_price,
+            'discount' => $request->discount,
+            'final_price' => $request->final_price,
             'image_url' => $request->image_url
         ]);
         return redirect()->route('admin.book-m')->with('success', 'Thêm thành công.');
@@ -113,7 +129,9 @@ class AdminController extends Controller
             'author' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string'],
             'description' => ['nullable', 'string'],
-            'price' => ['required', 'min:1', 'numeric'],
+            'oriprice' => ['required', 'min:1', 'numeric'],
+            'stock' => ['required', 'min:1', 'numeric'],
+            'final_price' => ['required', 'min:1', 'numeric'],
             'image_url' => ['required', 'string'],
         ], [
             'title.required' => 'Vui lòng nhập tiêu đề sách.',
@@ -129,9 +147,19 @@ class AdminController extends Controller
 
             'description.string' => 'Mô tả sách phải là chuỗi ký tự.',
 
-            'price.required' => 'Vui lòng nhập giá sách.',
-            'price.numeric' => 'Giá sách phải là một số.',
-            'price.min' => 'Giá sách phải lớn hơn hoặc bằng 1.',
+            'origin_price.required' => 'Vui lòng nhập giá gốc sách.',
+            'origin_price.numeric' => 'Giá gốc sách phải là một số.',
+            'origin_price.min' => 'Giá gốc sách phải lớn hơn hoặc bằng 1.',
+
+            'discount.numeric' => 'Giá giảm phải là một số.',
+
+            'stock.required' => 'Vui lòng nhập số lượng tồn kho.',
+            'stock.numeric' => 'Số lượng tồn kho phải là một số.',
+            'stock.min' => 'Số lượng tồn kho phải lớn hơn hoặc bằng 1.',
+
+            'final_price.required' => 'Vui lòng nhập giá bán sách.',
+            'final_price.numeric' => 'Giá bán sách phải là một số.',
+            'final_price.min' => 'Giá bán sách phải lớn hơn hoặc bằng 1.',
 
             'image_url.required' => 'Vui lòng nhập đường dẫn ảnh.',
             'image_url.string' => 'Đường dẫn ảnh phải là chuỗi ký tự.',
@@ -142,7 +170,10 @@ class AdminController extends Controller
         $book->author = $request->author;
         $book->category = $request->category;
         $book->description = $request->description;
-        $book->price = $request->price;
+        $book->oriprice = $request->origin_price;
+        $book->discount = $request->discount;
+        $book->final_price = $request->final_price;
+        $book->stock = $request->stock;
         $book->image_url = $request->image_url;
         $book->save();
         return redirect()->back()->with('success', 'Cập nhật thông tin sách thành công.');
@@ -178,7 +209,7 @@ class AdminController extends Controller
         $user_count = $users->total();
 
         return view('admin.index', compact('users', 'user_count'));
-    
+
     }
 
     public function user_m_detail(Request $request)

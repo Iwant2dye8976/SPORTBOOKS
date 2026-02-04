@@ -1,77 +1,80 @@
 @if (session('error'))
-    <div class="container-fluid alert alert-danger text-center" id="error-alert">
-        <p class="p-0 m-0">{{ session('error') }}</p>
+    <div class="alert alert-danger text-center" id="error-alert">
+        {{ session('error') }}
     </div>
 @endif
+
 @if (session('success'))
-    <div class="container-fluid row alert alert-success text-center" id="success-alert">
-        <p class="p-0 m-0">{{ session('success') }}</p>
+    <div class="alert alert-success text-center" id="success-alert">
+        {{ session('success') }}
     </div>
 @endif
 
-<a class="text text-decoration-none text-dark fs-4" href="{{ url('admin/usermanagement') }}">
-    <i class="fas fa-arrow-left"></i> Quay lại
-</a>
+<div class="mb-4">
+    <a class="text-decoration-none text-dark fs-5" href="{{ url('admin/usermanagement') }}">
+        <i class="fas fa-arrow-left me-1"></i> Quay lại
+    </a>
+</div>
 
-<div class="col-12 p-4 mt-3 border border-dark rounded">
-    <h4 class="fw-bold">Thông tin cơ bản</h4>
-    <p class="text text-secondary">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
-    <hr>
-    @switch($user->type)
-        @case('user')
-            <div class="mb-3 row">
-                <h5 class="{{ $user->hasVerifiedEmail() ? 'text-primary' : 'text-warning' }}">
+<div class="card border-dark shadow-sm">
+    <div class="card-header bg-light">
+        <h4 class="fw-bold mb-0">Thông tin người dùng</h4>
+        <p class="text-muted mb-0">Quản lý hồ sơ để bảo mật tài khoản</p>
+    </div>
+
+    <div class="card-body">
+        @switch($user->type)
+            @case('user')
+                <div class="alert {{ $user->hasVerifiedEmail() ? 'alert-primary' : 'alert-warning' }}">
                     {{ $user->hasVerifiedEmail() ? 'Tài khoản này đã được xác minh.' : 'Tài khoản này chưa được xác minh.' }}
-                </h5>
+                </div>
+                @break
+        @endswitch
+
+        <div class="row mb-3">
+            <label class="col-md-3 text-end fw-semibold">Họ và tên:</label>
+            <div class="col-md-6">
+                <input class="form-control" type="text" value="{{ $user->name }}" readonly>
             </div>
-        @break
+        </div>
 
-        @default
-    @endswitch
+        <div class="row mb-3">
+            <label class="col-md-3 text-end fw-semibold">Email đăng nhập:</label>
+            <div class="col-md-6">
+                <input class="form-control" type="email" value="{{ $user->email }}" readonly>
+            </div>
+        </div>
 
-    <div class="mb-3 row">
-        <label class="align-self-center col-3 text-end me-3" for="name">Họ và tên:</label>
-        <div class="col-6">
-            <input class="form-control" id="name" type="text" name="name" value="{{ $user->name }}"
-                autocomplete="name" readonly>
+        <div class="row mb-3">
+            <label class="col-md-3 text-end fw-semibold">Số điện thoại:</label>
+            <div class="col-md-6">
+                <input class="form-control" type="text" value="{{ $user->phone_number }}" readonly>
+            </div>
         </div>
-    </div>
-    <div class="mb-3 row">
-        <label class="align-self-center col-3 text-end me-3" for="email">Email đăng nhập:</label>
-        <div class="col-6">
-            <input class="form-control" id="email" type="email" name="email" value="{{ $user->email }}"
-                readonly>
+
+        <div class="row mb-3">
+            <label class="col-md-3 text-end fw-semibold">Địa chỉ:</label>
+            <div class="col-md-6">
+                <input class="form-control" type="text" value="{{ $user->address }}" readonly>
+            </div>
         </div>
-    </div>
-    <div class="mb-3 row">
-        <label class="align-self-center col-3 text-end me-3" for="phone_number">Số điện thoại:</label>
-        <div class="col-6">
-            <input class="form-control" id="phone_number" type="tel" name="phone_number"
-                value="{{ $user->phone_number }}" readonly>
-        </div>
-    </div>
-    <div class="mb-3 row">
-        <label class="align-self-center col-3 text-end me-3" for="address">Địa chỉ:</label>
-        <div class="col-6">
-            <input class="form-control" id="address" type="text" name="address" value="{{ $user->address }}"
-                readonly>
-        </div>
-    </div>
-    <div class="mb-3 row">
-        <label class="align-self-center col-3 text-end me-3" for="account-type">Loại tài khoản:</label>
-        <div class="col-6">
-            <input class="form-control" id="account-type"
-                value="{{ ($user->type === 'user' ? 'Khách hàng' : $user->type === 'admin') ? 'Quản trị viên' : 'Người giao hàng' }}"
-                readonly>
-        </div>
-    </div>
-    @if (Auth::user()->type === 'deliverer')
-        <div class="mb-3 row">
-            <label class="align-self-center col-3 text-end me-3" for="dcount">Số đơn hàng đã được vận chuyển:</label>
-            <div class="col-6">
-                <input class="form-control" id="dcount" type="number" value="{{ $d_count > 0 ? $d_count : 0 }}"
+
+        <div class="row mb-3">
+            <label class="col-md-3 text-end fw-semibold">Loại tài khoản:</label>
+            <div class="col-md-6">
+                <input class="form-control" type="text"
+                    value="{{ $user->type === 'user' ? 'Khách hàng' : ($user->type === 'admin' ? 'Quản trị viên' : 'Người giao hàng') }}"
                     readonly>
             </div>
         </div>
-    @endif
+
+        @if (Auth::user()->type === 'deliverer')
+            <div class="row mb-3">
+                <label class="col-md-3 text-end fw-semibold">Đơn hàng đã giao:</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="number" value="{{ $d_count > 0 ? $d_count : 0 }}" readonly>
+                </div>
+            </div>
+        @endif
+    </div>
 </div>
